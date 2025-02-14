@@ -1,0 +1,8 @@
+ lien de use case 
+
+https://lucid.app/lucidspark/ff32e595-61a2-482d-a36e-822fb0de89be/edit?viewport_loc=-1218%2C-2696%2C2680%2C1218%2C0_0&invitationId=inv_1efe78d7-0b13-4f73-9c35-98c07e3b2fe6
+
+
+lien diagram de class
+
+https://lucid.app/lucidspark/41fa2a8a-6ca6-40c7-be75-2c5626b4c830/edit?viewport_loc=-635%2C-212%2C2464%2C1120%2C0_0&invitationId=inv_d472f6b0-1f95-4366-aaa6-a084770c009c
