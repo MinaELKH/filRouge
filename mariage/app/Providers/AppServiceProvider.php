@@ -4,10 +4,15 @@ namespace App\Providers;
 
 use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
+
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\DevisRepositoryInterface;
+use App\Repositories\Contracts\ReservationRepositoryInterface;
 use App\Repositories\Contracts\ServiceRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\DevisRepository;
+use App\Repositories\ReservationRepository;
 use App\Repositories\ServiceRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
+        $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
+        $this->app->bind(DevisRepositoryInterface::class, DevisRepository::class);
     }
 
     /**

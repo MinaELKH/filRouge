@@ -4,8 +4,10 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Comment;
+use App\Models\Reservation;
 use App\Models\Service;
 use App\Policies\CommentPolicy;
+use App\Policies\ReservationPolicy;
 use App\Policies\ServicePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Category;
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Category::class => CategoryPolicy::class,
         Service::class => ServicePolicy::class,
         Comment::class => CommentPolicy::class,
+        Reservation::class => ReservationPolicy::class,
     ];
 
 
