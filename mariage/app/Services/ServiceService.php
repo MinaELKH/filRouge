@@ -7,6 +7,7 @@ use App\Repositories\Contracts\ServiceRepositoryInterface;
 
 class ServiceService
 {
+
     protected $serviceRepository;
 
     public function __construct(ServiceRepositoryInterface $serviceRepository)
@@ -24,6 +25,15 @@ class ServiceService
         return $this->serviceRepository->getById($id);
     }
 
+    public function getServiceByCategory($id)
+    {
+        return $this->serviceRepository->getByCategory($id);
+    }
+    public function getServiceByVille($id)
+    {
+        return $this->serviceRepository->getByVille($id);
+    }
+
     public function createService(array $data)
     {
         return $this->serviceRepository->create($data);
@@ -38,4 +48,8 @@ class ServiceService
     {
         return $this->serviceRepository->delete($id);
     }
+
+
+
+
 }

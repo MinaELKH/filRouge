@@ -35,4 +35,14 @@ class ServiceRepository implements ServiceRepositoryInterface
         $service = Service::findOrFail($id);
         return $service->delete();
     }
+
+    public function getByCategory($id)
+    {
+        return Service::where('category_id', $id)->get();
+    }
+
+    public function getByVille($id)
+    {
+        return Service::where('ville_id', $id)->get();
+    }
 }

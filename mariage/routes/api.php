@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,9 @@ Route::middleware('auth:api') // Protège ces actions avec l'authentification
 ->apiResource('categories', CategoryController::class)
     ->only(['store', 'update', 'destroy']);
 
+//
 // service
+//
 
 use App\Http\Controllers\ServiceController;
 
@@ -51,3 +54,28 @@ Route::middleware('auth:api')->group(function () {
 // Routes publiques (consultation sans authentification)
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('services/{id}', [ServiceController::class, 'show']);
+// affiche les services d une category X
+Route::get('categories/{categoryId}/services', [ServiceController::class, 'getServicesByCategory']);
+
+
+// affiche les services d une category X
+Route::get('villes/{villeId}/services', [ServiceController::class, 'getServicesByVille']);
+
+
+//
+// comment
+//
+Route::middleware('auth:api')->group(function () {
+    // Ajouter un commentaire sur un service
+    Route::post('services/{service}/comments', [CommentController::class, 'store']);
+
+    // Modifier un commentaire
+    Route::put('comments/{comment}', [CommentController::class, 'update']);
+
+    // Supprimer un commentaire
+    Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
+
+    // Signaler un commentaire
+    Route::post('comments/{comment}/report', [CommentController::class, 'report']);
+});
+

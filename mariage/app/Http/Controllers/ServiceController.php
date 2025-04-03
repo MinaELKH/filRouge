@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,21 @@ class ServiceController extends Controller
     {
         return response()->json($this->serviceService->getServiceById($id), 200);
     }
+
+    /**
+     * @param  $category
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function getServicesByCategory($id)
+    {
+        return response()->json($this->serviceService->getServiceByCategory($id) , 200) ;
+    }
+    public function getServicesByVille($id)
+    {
+        return response()->json($this->serviceService->getServiceByVille($id) , 200) ;
+    }
+
 
     public function store(Request $request)
     {
