@@ -20,6 +20,7 @@ class DevisService
      */
     public function createDevis(array $data): Devis
     {
+        $data['status']='pending';
         // Logique de validation métier ou autres traitements avant la création
         return $this->devisRepository->create($data);
     }

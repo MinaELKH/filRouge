@@ -4,9 +4,13 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Comment;
+use App\Models\Devis;
+use App\Models\DevisItem;
 use App\Models\Reservation;
 use App\Models\Service;
 use App\Policies\CommentPolicy;
+use App\Policies\DevisItemPolicy;
+use App\Policies\DevisPolicy;
 use App\Policies\ReservationPolicy;
 use App\Policies\ServicePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -26,6 +30,8 @@ class AuthServiceProvider extends ServiceProvider
         Service::class => ServicePolicy::class,
         Comment::class => CommentPolicy::class,
         Reservation::class => ReservationPolicy::class,
+        Devis::class => DevisPolicy::class,
+        DevisItem::class => DevisItemPolicy::class,
     ];
 
 

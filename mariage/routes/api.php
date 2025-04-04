@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DevisController;
+use App\Http\Controllers\DevisItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -90,4 +92,18 @@ Route::middleware('auth:api')->group(function () {
     Route::put('reservations/{id}', [ReservationController::class, 'update']);
     Route::delete('reservations/{id}', [ReservationController::class, 'destroy']);
     Route::patch('reservations/{id}/status', [ReservationController::class, 'updateStatus']);
+});
+
+
+//devis
+
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('devis', DevisController::class);
+    Route::get('devis/reservation/{reservationId}', [DevisController::class, 'getByReservation']);
+});
+
+
+//devisItem
+Route::middleware('auth:api')->group(function () {
+    Route::post('/devis-items', [DevisItemController::class, 'storeMultiple']);
 });

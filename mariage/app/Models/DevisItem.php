@@ -24,4 +24,5 @@ class DevisItem extends Model
     {
         return $this->belongsTo(Devis::class);
     }
+
 }
