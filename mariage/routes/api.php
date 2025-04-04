@@ -100,10 +100,13 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('devis', DevisController::class);
     Route::get('devis/reservation/{reservationId}', [DevisController::class, 'getByReservation']);
+    Route::get('devis/{id}/pdf', [DevisController::class, 'generateDevisPdf']);
+
 });
 
 
 //devisItem
 Route::middleware('auth:api')->group(function () {
     Route::post('/devis-items', [DevisItemController::class, 'storeMultiple']);
+
 });

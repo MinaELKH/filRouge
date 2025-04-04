@@ -34,6 +34,12 @@ class DevisController extends Controller
         ], 201);
     }
 
+
+    public function generateDevisPdf($devisId)
+    {
+        return $this->devisService->generateDevisPdf($devisId);
+    }
+
     public function show($id)
     {
         $devis = $this->devisService->getDevis($id);

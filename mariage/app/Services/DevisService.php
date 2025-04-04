@@ -4,7 +4,11 @@ namespace App\Services;
 
 use App\Repositories\Contracts\DevisRepositoryInterface;
 use App\Models\Devis;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Exception;
+
+
 
 class DevisService
 {
@@ -56,5 +60,27 @@ class DevisService
     public function getDevisByReservationId(int $reservationId)
     {
         return $this->devisRepository->getByReservationId($reservationId);
+    }
+
+
+    public function generateDevisPdf($devisId)
+    {
+        // Récupérer le devis avec ses relations
+        //$devis = Devis::with(['client', 'prestataire', 'service', 'category', 'devisItems'])->findOrFail($devisId);
+
+        $devis = Devis::with(['reservation.client', 'reservation.service.user','reservation.service' , 'reservation.service.category', 'devisItems'])->findOrFail($devisId);
+
+        $client = $devis->client;
+        $service = $devis->reservation->service;
+        $prestataire = $service->user;
+        $categorie = $service->category;
+        // Calculer le montant total des items
+        $totalAmount = $devis->devisItems->sum('amount');
+
+        // Générer le PDF à partir de la vue Blade
+        $pdf = Pdf::loadView('devis.pdf', compact('devis', 'totalAmount'));
+
+        return $pdf->download('devis_' . $devis->id . '.pdf');
+
     }
 }

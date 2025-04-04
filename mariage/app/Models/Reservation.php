@@ -16,7 +16,17 @@ class Reservation extends Model
         'status'
     ];
 
+    /*
+     * client
+     */
+
     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    // je utlise ca dans generet de pdf
+
+    public function client()
     {
         return $this->belongsTo(User::class);
     }
