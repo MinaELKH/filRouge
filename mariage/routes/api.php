@@ -43,25 +43,25 @@ Route::middleware('auth:api') // Protège ces actions avec l'authentification
 // service
 //
 
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\FrontServiceController;
 
 Route::middleware('auth:api')->group(function () {
-    Route::apiResource('services', ServiceController::class)
+    Route::apiResource('services', FrontServiceController::class)
         ->only(['store', 'update', 'destroy']);
 
     // Route pour que l'admin puisse changer le statut d'un service
-    Route::patch('services/{id}/status', [ServiceController::class, 'manage']);
+    Route::patch('services/{id}/status', [FrontServiceController::class, 'manage']);
 });
 
 // Routes publiques (consultation sans authentification)
-Route::get('services', [ServiceController::class, 'index']);
-Route::get('services/{id}', [ServiceController::class, 'show']);
+Route::get('services', [FrontServiceController::class, 'index']);
+Route::get('services/{id}', [FrontServiceController::class, 'show']);
 // affiche les services d une category X
-Route::get('categories/{categoryId}/services', [ServiceController::class, 'getServicesByCategory']);
+Route::get('categories/{categoryId}/services', [FrontServiceController::class, 'getServicesByCategory']);
 
 
 // affiche les services d une category X
-Route::get('villes/{villeId}/services', [ServiceController::class, 'getServicesByVille']);
+Route::get('villes/{villeId}/services', [FrontServiceController::class, 'getServicesByVille']);
 
 
 //
