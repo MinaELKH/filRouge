@@ -9,7 +9,10 @@ class CategoryRepository implements CategoryRepositoryInterface
 {
     public function all()
     {
-        return Category::all();
+
+        return $categories = Category::withCount('services')->get();
+        //
+        // return Category::all();
     }
 
     public function create(array $data)

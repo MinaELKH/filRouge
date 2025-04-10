@@ -17,6 +17,7 @@ use App\Repositories\DevisRepository;
 use App\Repositories\ReservationRepository;
 use App\Repositories\ServiceRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +46,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useTailwind();
     }
 }

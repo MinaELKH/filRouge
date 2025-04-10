@@ -24,5 +24,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 use App\Http\Controllers\FrontServiceController;
 
-Route::get('/services', [FrontServiceController::class, 'index'])->name('services.index');
 Route::get('/home', [FrontHomeController::class, 'index'])->name('home');
+
+Route::get('services', [FrontServiceController::class, 'index']);
+Route::get('services/{id}', [FrontServiceController::class, 'show']);
+// affiche les services d une category X
+Route::get('categories/{categoryId}/services', [FrontServiceController::class, 'getServicesByCategory']);
+
+

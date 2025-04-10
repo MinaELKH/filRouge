@@ -38,7 +38,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function getByCategory($id)
     {
-        return Service::where('category_id', $id)->get();
+        return Service::where('category_id', $id)->paginate(6);
     }
 
     public function getByVille($id)

@@ -16,7 +16,9 @@ class FrontHomeController
     }
     public function index(){
         $services = $this->serviceService->getAllServices();
+     //   $services = 1 ;
         $categories =$this->categoryService->getAll();
+      //  $categories = Category::withCount('services')->get();
 
         return view('pages.home', compact('services','categories'));
     }
