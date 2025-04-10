@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\DevisItemController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -110,3 +111,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/devis-items', [DevisItemController::class, 'storeMultiple']);
 
 });
+
+
+
+Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
+

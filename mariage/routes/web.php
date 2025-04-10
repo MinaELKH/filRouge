@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FrontHomeController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,4 +32,6 @@ Route::get('services/{id}', [FrontServiceController::class, 'show']);
 // affiche les services d une category X
 Route::get('categories/{categoryId}/services', [FrontServiceController::class, 'getServicesByCategory']);
 
+
+Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
 

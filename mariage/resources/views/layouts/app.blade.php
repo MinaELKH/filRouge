@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Mariages.net - Tout pour organiser votre mariage')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coral: {
+                            500: '#ff6b6b',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
 </head>
 <body class="min-h-screen bg-gray-100">
 
@@ -85,6 +98,10 @@
         <p>&copy; 2025 Mariages.net - Tous droits réservés</p>
     </div>
 </footer>
+
+
+
+<script src="{{ asset('js/modalContact.js') }}"></script>
 
 </body>
 </html>
