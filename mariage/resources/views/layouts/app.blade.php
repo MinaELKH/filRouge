@@ -101,7 +101,7 @@
 
 
 
-<script src="{{ asset('js/modalContact.js') }}"></script>
+<script  src="{{ asset('js/modalContact.js') }}"></script>
 
 </body>
 </html>
