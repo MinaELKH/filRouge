@@ -35,3 +35,10 @@ Route::get('categories/{categoryId}/services', [FrontServiceController::class, '
 
 Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
 
+Route::get('/test', function () {
+    return view('services.service'); // correspond à resources/views/noti-club.blade.php
+});
+
+
+Route::get('/services/{id}', [FrontServiceController::class, 'show'])->name('services.show');
+

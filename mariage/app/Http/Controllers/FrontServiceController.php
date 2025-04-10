@@ -29,7 +29,8 @@ class FrontServiceController extends Controller
      */
     public function show($id)
     {
-        return response()->json($this->serviceService->getServiceById($id), 200);
+        $service = $this->serviceService->getServiceById($id);
+        return view('services.show', compact('service'));
     }
 
     /**
