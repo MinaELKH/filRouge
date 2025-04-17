@@ -28,4 +28,20 @@ class AuthService {
         $data['password'] = Hash::make($data['password']);
         return $this->userRepository->create($data);
     }
+
+
+    public function logout() {
+        Auth::logout();
+    }
+
+    public function checkRoleRedirecte($user)
+    {
+        if($user->role == 'admin') {
+            return redirect('/admin/dashboard');
+        }else if($user->role == 'client') {
+            return redirect('/client/home');
+        }else if($user->role == 'prestataire') {
+            return redirect('/prestataire/home');
+        }
+    }
 }

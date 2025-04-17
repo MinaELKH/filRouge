@@ -14,32 +14,23 @@ class AuthController extends Controller {
         $this->authService = $authService;
     }
 
+    // AuthController.php
+
     public function login(Request $request)
     {
-        // Valider les données de la requête
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        // Essayer de se connecter avec les informations fournies
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Obtenir l'utilisateur authentifié
-            $user = Auth::user();
-
-            // Générer le token pour cet utilisateur
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-            // Retourner une réponse avec le message et le token
-            return response()->json([
-                'message' => 'Connexion réussie',
-                'user' => $user,
-                'token' => $token
-            ]);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate(); // Sécurité contre les attaques de session fixation
+            return redirect()->intended('/dashboard'); // ou autre route
         }
 
-        // Si l'authentification échoue, retourner une erreur
-        return response()->json(['error' => 'Email ou mot de passe incorrect'], 401);
+        return back()->withErrors([
+            'email' => 'Les identifiants sont incorrects.',
+        ]);
     }
 
 
@@ -47,22 +38,27 @@ class AuthController extends Controller {
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
             'role' => 'required|in:admin,client,prestataire'
         ]);
+        // Garde seulement les données utiles
+        $data = $request->only(['name', 'email', 'password', 'role']);
+        $user = $this->authService->register($data);
 
-        // Enregistrer l'utilisateur et récupérer son instance
-        $user = $this->authService->register($request->all());
-        if (!$user || !$user->id) {
-            return response()->json(['message' => 'User creation failed'], 500);
-        }
-        // Générer le token pour cet utilisateur
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Utilisateur créé avec succès',
-            'user' => $user,
-            'token' => $token
-        ], 201);
+        // Authentifier l'utilisateur directement après inscription
+        Auth::login($user);
+        $view = $this->authService->checkRoleRedirecte($user);
+        return redirect('/dashboard');
     }
+
+
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+
+
+
 }
