@@ -27,12 +27,28 @@ Route::get('/login', function () {
 })->name('login');
 
 // Actions d'envoi des formulaires
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+
+
+// redirection apres authentification :
+Route::middleware(['auth'])->group(function () {
+    Route::view('/admin/dashboard', 'admin.dashboard')
+        ->name('admin.dashboard');
+
+    // Espace Client
+    Route::view('/client/home', 'client.home')
+        ->name('client.home');
+
+    // Dashboard Prestataire
+    Route::view('/prestataire/dashboard', 'prestataire.dashboard')
+        ->name('prestataire.dashboard');
+});
+
 
 
 use App\Http\Controllers\FrontServiceController;

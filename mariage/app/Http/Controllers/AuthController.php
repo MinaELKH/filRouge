@@ -23,9 +23,15 @@ class AuthController extends Controller {
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $request->session()->regenerate(); // Sécurité contre les attaques de session fixation
-            return redirect()->intended('/dashboard'); // ou autre route
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+
+            // Vérification du rôle et redirection
+            $routeName = $this->authService->checkRoleRedirect($user);
+            return redirect()->route($routeName);
         }
 
         return back()->withErrors([
@@ -47,8 +53,8 @@ class AuthController extends Controller {
 
         // Authentifier l'utilisateur directement après inscription
         Auth::login($user);
-        $view = $this->authService->checkRoleRedirecte($user);
-        return redirect('/dashboard');
+        $view = $this->authService->checkRoleRedirect($user);
+        return view($view , compact('user'));
     }
 
 

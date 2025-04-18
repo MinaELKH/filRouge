@@ -34,14 +34,14 @@ class AuthService {
         Auth::logout();
     }
 
-    public function checkRoleRedirecte($user)
+    public function checkRoleRedirect($user)
     {
-        if($user->role == 'admin') {
-            return redirect('/admin/dashboard');
-        }else if($user->role == 'client') {
-            return redirect('/client/home');
-        }else if($user->role == 'prestataire') {
-            return redirect('/prestataire/home');
-        }
+
+        return match($user->role) {
+            'admin'       => 'admin.dashboard',
+            'client'      => 'client.home',
+            'prestataire' => 'prestataire.dashboard',
+            default       => 'home',
+        };
     }
 }
