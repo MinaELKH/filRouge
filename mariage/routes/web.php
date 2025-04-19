@@ -54,9 +54,12 @@ Route::view('/prestataire/message', 'prestataire.crud_message')
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-    Route::get('/messages/{partnerId}', [MessageController::class, 'show'])->name('messages.show');
-    Route::post('/messages/send', [MessageController::class, 'store'])->name('messages.store');
+    Route::get('/messages', [MessageController::class, 'conversations'])->name('messages.conversations');
+    Route::get('/messages/{partnerId}', [MessageController::class, 'showConversation'])->name('messages.conversation');
+    Route::post('/messages/{partnerId}', [MessageController::class, 'send'])->name('messages.send');
+    Route::post('/messages/reply/{partnerId}', [MessageController::class, 'sendReply'])->name('messages.reply');
+
+
 });
 
 

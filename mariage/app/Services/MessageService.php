@@ -75,8 +75,8 @@ class MessageService
         $messages = $this->messageRepository->getMessagesBetween($userId, $partnerId);
         $this->messageRepository->markMessagesAsRead($partnerId, $userId);
 
-        $partner = User::with('serviceProvider')->find($partnerId);
-
+      //  $partner = User::with('serviceProvider')->find($partnerId);
+        $partner = User::find($partnerId);
         return [
             'messages' => $messages,
             'partner' => $partner,
