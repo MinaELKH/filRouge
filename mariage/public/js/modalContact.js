@@ -4,12 +4,16 @@
     const closeModalBtn = document.getElementById('closeModalBtn');
     const sendMessageForm = document.getElementById('sendMessageForm');
     const receiverInput = document.getElementById('receiver_id');
+    const serviceInput = document.getElementById('service_id');
 
     // Ouvrir le modal
     document.querySelectorAll('.openModalBtn').forEach(button => {
     button.addEventListener('click', () => {
     const receiverId = button.dataset.receiverId;
+    const serviceId = button.dataset.serviceId;
+    console.log(serviceId) ;
     receiverInput.value = receiverId;
+    serviceInput.value = serviceId;
     modalBackdrop.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 });

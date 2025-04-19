@@ -53,14 +53,21 @@ Route::view('/prestataire/message', 'prestataire.crud_message')
     ->name('prestataire.message');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/messages', [MessageController::class, 'conversations'])->name('messages.conversations');
-    Route::get('/messages/{partnerId}', [MessageController::class, 'showConversation'])->name('messages.conversation');
-    Route::post('/messages/{partnerId}', [MessageController::class, 'send'])->name('messages.send');
-    Route::post('/messages/reply/{partnerId}', [MessageController::class, 'sendReply'])->name('messages.reply');
+//Route::middleware(['auth'])->group(function () {
+//    Route::get('/messages', [MessageController::class, 'conversations'])->name('messages.conversations');
+//    Route::get('/messages/{partnerId}', [MessageController::class, 'showConversation'])->name('messages.conversation');
+//    Route::post('/messages/{partnerId}', [MessageController::class, 'send'])->name('messages.send');
+//    Route::post('/messages/reply/{partnerId}', [MessageController::class, 'sendReply'])->name('messages.reply');
+//
+//
+//});
 
+Route::middleware('auth')->get('/messages/{partnerId?}', [MessageController::class,'index'])
+    ->where('partnerId','[0-9]+')
+    ->name('messages.index');
+Route::middleware('auth')->post('/messages/{partnerId}/reply', [MessageController::class,'sendReply'])
+    ->name('messages.reply');
 
-});
 
 
 use App\Http\Controllers\FrontServiceController;
@@ -72,8 +79,8 @@ Route::get('services/{id}', [FrontServiceController::class, 'show']);
 // affiche les services d une category X
 Route::get('categories/{categoryId}/services', [FrontServiceController::class, 'getServicesByCategory']);
 
-
-Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
+Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+//Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
 
 Route::get('/test', function () {
     return view('services.service'); // correspond à resources/views/noti-club.blade.php

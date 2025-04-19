@@ -112,10 +112,11 @@
                                 <button
                                     class="openModalBtn bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded"
                                     data-receiver-id="{{ $service->user_id }}"
+                                    data-service-id="{{ $service->id }}"
                                 >
                                     Nous contacter
                                 </button>
-
+{{--                                <input type="text" value={{$service->id}}>--}}
                             </div>
                         </div>
                     </div>
@@ -131,5 +132,5 @@
 
 
 
-    <x-contact-modal :receiverId="$service->user_id" />
+    <x-contact-modal :receiverId="$service->user_id" :serviceId="$service->id" />
 @endsection

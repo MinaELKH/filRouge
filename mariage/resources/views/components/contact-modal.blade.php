@@ -9,12 +9,12 @@
         <!-- Formulaire de message -->
         <form id="sendMessageForm">
             @csrf
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="receiver_id" id="receiver_id">
-
+{{--            <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
+            <input type="text" name="receiver_id" id="receiver_id">
+            <input type="text" name="service_id" id="service_id"> <!-- j enregistre sujet de debut de conversation avec service_id-->
             <div class="mb-4">
                 <label for="subject" class="block font-medium mb-1">Objet :</label>
-                <input type="text" id="subject" name="subject" required class="form-input w-full">
+            <input type="text" id="subject" name="subject" required class="form-input w-full">
             </div>
 
             <div class="mb-4">
@@ -31,7 +31,7 @@
 
 <!-- Injecter l'URL de la route dans une variable JS -->
 <script>
-    const messageStoreUrl = "{{ route('messages.create') }}";
+    const messageStoreUrl = "{{ route('messages.store') }}";
 </script>
 
 <!-- Script JS -->
@@ -46,6 +46,7 @@
     });
 
     sendMessageForm.addEventListener('submit', function (e) {
+        alert("je suis la ")
         e.preventDefault();
 
         const formData = new FormData(sendMessageForm);
@@ -57,7 +58,20 @@
             },
             body: formData
         })
-            .then(response => response.json())
+           // .then(response => response.json())
+
+            .then(async response => {
+                if (!response.ok) {
+                    const errorHtml = await response.text();
+                    console.error('Erreur HTTP:', response.status);
+                    console.error('Contenu retourné :', errorHtml);  // 👉 Affiche le HTML retourné
+                    throw new Error('Réponse du serveur invalide');
+                }
+
+                alert(response.text) //function text() { [native code] }
+                console.log(response.json) //ƒ json() { [native code] }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     alert("Message envoyé !");

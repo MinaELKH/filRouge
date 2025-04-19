@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Service;
 use App\Models\User;
 use App\Repositories\Contracts\MessageRepositoryInterface;
 
@@ -14,9 +15,13 @@ class MessageService
         $this->messageRepository = $messageRepository;
     }
 
-    public function createMessage($receiverId, $subject, $body)
+    public function createMessage($receiverId, $subject, $body , $serviceId = null)
     {
         $senderId = auth()->id(); // ou fixe comme $senderId = 1 pour les tests
+//        if (!$subject && $serviceId) {
+//            $service = Service::find($serviceId);
+//            $subject = "Demande concernant le service : " . $service->titre;
+//        }
         return $this->messageRepository->createMessage($senderId, $receiverId, $subject, $body);
     }
 
