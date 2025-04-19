@@ -49,8 +49,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('prestataire.home');
 });
 
-Route::view('/prestataire/message', 'prestataire.crud_message')
-    ->name('prestataire.message');
+
 
 
 //Route::middleware(['auth'])->group(function () {

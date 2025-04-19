@@ -93,7 +93,22 @@ class MessageController extends Controller
 
         return view('messages.inbox', compact('receivedMessages'));
     }
+    public function index(Request $request, $partnerId = null)
+    {
+        $userId = auth()->id();
+        $conversations = $this->messageService->getConversations($userId);
 
+        $partner   = null;
+        $messages  = collect();
+
+        if ($partnerId) {
+            $data      = $this->messageService->getConversation($userId, $partnerId);
+            $partner   = $data['partner'];
+            $messages  = $data['messages'];
+        }
+
+        return view('messages.index', compact('conversations','partner','messages'));
+    }
     // Affiche les messages envoyés par l'utilisateur
     public function sentMessages()
     {

@@ -1,5 +1,5 @@
 /* resources/views/messages/index.blade.php */
-@extends('layouts.app')
+@extends('layouts.prestataire')
 
 @section('content')
     <div class="h-screen flex overflow-hidden">
@@ -36,7 +36,7 @@
 
     <script>
         function loadConversation(partnerId) {
-            fetch(`/messages/conversation/${partnerId}`)
+            fetch(`/messages/${partnerId}`)
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('conversationContainer').innerHTML = html;
