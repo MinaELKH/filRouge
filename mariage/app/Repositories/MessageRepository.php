@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Message;
+use App\Repositories\Contracts\MessageRepositoryInterface;
 
-class MessageRepository
+class MessageRepository implements MessageRepositoryInterface
 {
     // Créer un nouveau message
     public function createMessage($senderId, $receiverId, $subject, $body)
@@ -56,5 +57,57 @@ class MessageRepository
         if ($message) {
             $message->delete();
         }
+    }
+
+
+
+    public function getDistinctPartners($userId)
+    {
+        $sent = Message::where('sender_id', $userId)->select('receiver_id as partner_id');
+        $received = Message::where('receiver_id', $userId)->select('sender_id as partner_id');
+
+        return $sent->union($received)->distinct()->pluck('partner_id');
+    }
+
+    public function getLastMessageBetween($userId, $partnerId)
+    {
+        return Message::where(function($query) use ($userId, $partnerId) {
+            $query->where('sender_id', $userId)
+                ->where('receiver_id', $partnerId);
+        })->orWhere(function($query) use ($userId, $partnerId) {
+            $query->where('sender_id', $partnerId)
+                ->where('receiver_id', $userId);
+        })
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+    public function countUnreadMessages($fromId, $toId)
+    {
+        return Message::where('sender_id', $fromId)
+            ->where('receiver_id', $toId)
+            ->whereNull('read_at')
+            ->count();
+    }
+
+    public function getMessagesBetween($userId, $partnerId)
+    {
+        return Message::where(function($query) use ($userId, $partnerId) {
+            $query->where('sender_id', $userId)
+                ->where('receiver_id', $partnerId);
+        })->orWhere(function($query) use ($userId, $partnerId) {
+            $query->where('sender_id', $partnerId)
+                ->where('receiver_id', $userId);
+        })
+            ->orderBy('created_at', 'asc')
+            ->get();
+    }
+
+    public function markMessagesAsRead($fromId, $toId)
+    {
+        return Message::where('sender_id', $fromId)
+            ->where('receiver_id', $toId)
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
     }
 }

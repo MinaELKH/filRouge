@@ -40,7 +40,7 @@ class AuthService {
         return match($user->role) {
             'admin'       => 'admin.dashboard',
             'client'      => 'client.home',
-            'prestataire' => 'prestataire.dashboard',
+            'prestataire' => 'prestataire.home',
             default       => 'home',
         };
     }

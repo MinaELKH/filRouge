@@ -2,85 +2,84 @@
 
 namespace App\Services;
 
-use App\Repositories\MessageRepository;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Repositories\Contracts\MessageRepositoryInterface;
 
 class MessageService
 {
     protected $messageRepository;
 
-    public function __construct(MessageRepository $messageRepository)
+    public function __construct(MessageRepositoryInterface $messageRepository)
     {
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * Créer un message
-     *
-     * @param int $receiverId
-     * @param string $subject
-     * @param string $body
-     * @return \App\Models\Message
-     */
     public function createMessage($receiverId, $subject, $body)
     {
-        $senderId = Auth::id(); // Utilisateur connecté
-        $senderId = 1 ;
+        $senderId = auth()->id(); // ou fixe comme $senderId = 1 pour les tests
         return $this->messageRepository->createMessage($senderId, $receiverId, $subject, $body);
     }
 
-    /**
-     * Récupérer les messages reçus par un utilisateur
-     *
-     * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function getReceivedMessages($userId)
     {
         return $this->messageRepository->getReceivedMessages($userId);
     }
 
-    /**
-     * Récupérer les messages envoyés par un utilisateur
-     *
-     * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function getSentMessages($userId)
     {
         return $this->messageRepository->getSentMessages($userId);
     }
 
-    /**
-     * Marquer un message comme lu
-     *
-     * @param int $messageId
-     * @return void
-     */
     public function markMessageAsRead($messageId)
     {
         $this->messageRepository->markAsRead($messageId);
     }
 
-    /**
-     * Archiver un message
-     *
-     * @param int $messageId
-     * @return void
-     */
     public function archiveMessage($messageId)
     {
         $this->messageRepository->archiveMessage($messageId);
     }
 
-    /**
-     * Supprimer un message
-     *
-     * @param int $messageId
-     * @return void
-     */
     public function deleteMessage($messageId)
     {
         $this->messageRepository->deleteMessage($messageId);
+    }
+
+    public function getConversations($userId)
+    {
+        $partnerIds = $this->messageRepository->getDistinctPartners($userId);
+        $conversations = [];
+
+        foreach ($partnerIds as $partnerId) {
+            $lastMessage = $this->messageRepository->getLastMessageBetween($userId, $partnerId);
+
+            if ($lastMessage) {
+                $partner = User::find($partnerId);
+                $unreadCount = $this->messageRepository->countUnreadMessages($partnerId, $userId);
+
+                $conversations[] = [
+                    'partner' => $partner,
+                    'last_message' => $lastMessage,
+                    'unread_count' => $unreadCount,
+                ];
+            }
+        }
+
+        usort($conversations, fn($a, $b) => $b['last_message']->created_at <=> $a['last_message']->created_at);
+
+        return $conversations;
+    }
+
+    public function getConversation($userId, $partnerId)
+    {
+        $messages = $this->messageRepository->getMessagesBetween($userId, $partnerId);
+        $this->messageRepository->markMessagesAsRead($partnerId, $userId);
+
+        $partner = User::with('serviceProvider')->find($partnerId);
+
+        return [
+            'messages' => $messages,
+            'partner' => $partner,
+        ];
     }
 }

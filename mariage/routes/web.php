@@ -45,10 +45,19 @@ Route::middleware(['auth'])->group(function () {
         ->name('client.home');
 
     // Dashboard Prestataire
-    Route::view('/prestataire/dashboard', 'prestataire.dashboard')
-        ->name('prestataire.dashboard');
+    Route::view('/prestataire/home', 'prestataire.home')
+        ->name('prestataire.home');
 });
 
+Route::view('/prestataire/message', 'prestataire.crud_message')
+    ->name('prestataire.message');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/{partnerId}', [MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages/send', [MessageController::class, 'store'])->name('messages.store');
+});
 
 
 use App\Http\Controllers\FrontServiceController;
