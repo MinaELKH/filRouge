@@ -22,7 +22,7 @@
     </div>
 
     <!-- Input form -->
-    <form id="replyForm" class="p-4 border-t bg-white flex">
+    <form id="replyForm" data-partner-id="{{ $partner->id }}" class="p-4 border-t bg-white flex">
         @csrf
         <input type="text" name="body" placeholder="Écrire un message..."
                class="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring">
@@ -31,3 +31,42 @@
 
 
 </div>
+
+<script>
+    document.getElementById('replyForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const body = form.body.value;
+        const token = document.querySelector('input[name="_token"]').value;
+        const partnerId = form.dataset.partnerId;
+
+        fetch(`/messages/${partnerId}/reply`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ body: body })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Erreur lors de l’envoi du message');
+                form.body.value = ''; // reset input
+
+                // Recharger les messages après envoi
+                return fetch(`/messages/${partnerId}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+            })
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('conversationContainer').innerHTML = html;
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Erreur lors de l’envoi du message.');
+            });
+    });
+</script>
