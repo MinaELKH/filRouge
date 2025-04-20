@@ -71,29 +71,21 @@ class MessageController extends Controller
             'partner' => $conversation['partner'],
         ]);
     }
-
-//    public function sendReply(Request $request, $partnerId)
-//    {
-//        $request->validate([
-//            'body' => 'required|string',
-//        ]);
-//
-//        $this->messageService->createMessage($partnerId, null, $request->body);
-//
-//        return back();
-//    }
-
     public function sendReply(Request $request, $partnerId)
     {
-        $request->validate(['body' => 'required|string']);
+        $request->validate([
+            'body' => 'required|string',
+            'reservation_id' => 'required|exists:reservations,id',
+        ]);
 
         $message = $this->messageService->createMessage(
             $partnerId,
-            null ,
-            $request->input('body')
+            null,
+            $request->input('body'),
+            null,
+            $request->input('reservation_id') // 👈 ajoute ce paramètre ici
         );
 
-        // Debug: Vérifiez que le message est bien créé
         \Log::info('Message created:', $message->toArray());
 
         return response()->json([
@@ -105,7 +97,8 @@ class MessageController extends Controller
             ]
         ]);
     }
-   //  Créer un nouveau message , avec une nouvelle service , c'est clique sur le button contacter
+
+    //  Créer un nouveau message , avec une nouvelle service , c'est clique sur le button contacter
 //    public function store(Request $request)
 //    {
 //        $validated = $request->validate([

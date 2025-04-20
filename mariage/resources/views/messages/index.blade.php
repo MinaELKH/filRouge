@@ -36,8 +36,8 @@
 
 
 
-{{--Modal qui affiche la liste de devis --}}
-    <x-devis-modal :devisList="$devisList" :partner="$partner" />
+{{--Modal qui affiche la liste de devis
+    <x-devis-modal :devisList="$devisList" :partner="$partner" />--}}
 
 
 
