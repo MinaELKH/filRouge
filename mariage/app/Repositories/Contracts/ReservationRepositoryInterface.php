@@ -10,4 +10,6 @@ interface ReservationRepositoryInterface {
     public function find($id);
     public function update($reservation, $data);
     public function delete($reservation);
+
+    public function findOrCreate(array $data);
 }

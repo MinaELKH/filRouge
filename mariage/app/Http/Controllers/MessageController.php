@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Devis;
 use App\Services\MessageService;
+use App\Services\ReservationService;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
     protected $messageService;
+    protected $reservationService;
 
-    public function __construct(MessageService $messageService)
+    public function __construct(MessageService $messageService , ReservationService $reservationService )
     {
         $this->messageService = $messageService;
+        $this->reservationService = $reservationService;
     }
 
     public function index(Request $request, $partnerId = null)
@@ -103,23 +106,60 @@ class MessageController extends Controller
         ]);
     }
    //  Créer un nouveau message , avec une nouvelle service , c'est clique sur le button contacter
+//    public function store(Request $request)
+//    {
+//        $validated = $request->validate([
+//            'receiver_id' => 'required|exists:users,id',
+//            'subject' => 'required|string|max:255',
+//            'body' => 'required|string',
+//        ]);
+//        $message = $this->messageService->createMessage(
+//            $validated['receiver_id'],
+//            $validated['subject'],
+//            $validated['body'],
+//            $request->input('service_id') // récupère bien le service_id si fourni
+//        );
+//
+//
+//        return response()->json([
+//            'success' => true
+//        ]);
+//    }
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'receiver_id' => 'required|exists:users,id',
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
+            'service_id' => 'nullable|exists:services,id',
+            'event_date' => 'nullable|date|after:today'
         ]);
+
+        $sender = auth()->user();
+
+        // On vérifie s'il existe déjà une réservation similaire (optionnel)
+        $reservation = null;
+
+        $reservation = $this->reservationService->findOrCreateReservation([
+            'user_id' => $validated['receiver_id'],
+            'service_id' => $validated['service_id'],
+            'event_date' => $validated['event_date'],
+        ]);
+
+        // Créer le message avec les bons IDs
         $message = $this->messageService->createMessage(
             $validated['receiver_id'],
             $validated['subject'],
             $validated['body'],
-            $request->input('service_id') // récupère bien le service_id si fourni
+            $validated['service_id'] ?? null,
+            $reservation?->id
         );
 
-
         return response()->json([
-            'success' => true
+            'success' => true,
+            'message' => 'Message envoyé avec succès.'
         ]);
     }
 

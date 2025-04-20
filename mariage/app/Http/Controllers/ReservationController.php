@@ -156,4 +156,6 @@ class ReservationController extends Controller
             'message' => 'Réservation supprimée avec succès.'
         ]);
     }
+
+
 }

@@ -14,7 +14,10 @@ class ReservationService
     {
         $this->reservationRepository = $reservationRepository;
     }
-
+    public function findOrCreateReservation(array $data)
+    {
+        return $this->reservationRepository->findOrCreate($data);
+    }
     /**
      * Créer une réservation
      *

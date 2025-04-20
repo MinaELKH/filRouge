@@ -13,6 +13,19 @@
             <input type="text" name="receiver_id" id="receiver_id">
             <input type="text" name="service_id" id="service_id"> <!-- j enregistre sujet de debut de conversation avec service_id-->
             <div class="mb-4">
+                <label for="event_date" class="block text-sm font-medium text-gray-700 mb-1">
+                    Date de l'événement
+                </label>
+                <input
+                    type="date"
+                    name="event_date"
+                    id="event_date"
+                    class="w-full border-gray-300 rounded p-2"
+                    required
+                >
+            </div>
+
+            <div class="mb-4">
                 <label for="subject" class="block font-medium mb-1">Objet :</label>
             <input type="text" id="subject" name="subject" required class="form-input w-full">
             </div>

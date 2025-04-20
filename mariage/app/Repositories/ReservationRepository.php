@@ -16,6 +16,25 @@ class ReservationRepository implements ReservationRepositoryInterface
     {
         return Reservation::create($data);
     }
+    public function findOrCreate(array $data)
+    {
+        $reservation = Reservation::where([
+            'user_id' => $data['user_id'],
+            'service_id' => $data['service_id'],
+            'event_date' => $data['event_date'],
+        ])->first();
+
+        if (!$reservation) {
+            $reservation = Reservation::create([
+                'user_id' => $data['user_id'],
+                'service_id' => $data['service_id'],
+                'event_date' => $data['event_date'],
+                'status' => 'pending',
+            ]);
+        }
+
+        return $reservation;
+    }
 
     /**
      * Récupérer toutes les réservations pour un utilisateur

@@ -8,13 +8,15 @@ use App\Repositories\Contracts\MessageRepositoryInterface;
 class MessageRepository implements MessageRepositoryInterface
 {
     // Créer un nouveau message
-    public function createMessage($senderId, $receiverId, $subject, $body)
+    public function createMessage($senderId, $receiverId, $subject, $body, $serviceId = null, $reservationId = null)
     {
         return Message::create([
             'sender_id' => $senderId,
             'receiver_id' => $receiverId,
             'subject' => $subject,
             'body' => $body,
+            'service_id' => $serviceId,
+            'reservation_id' => $reservationId,
         ]);
     }
 
