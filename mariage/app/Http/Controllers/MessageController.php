@@ -105,11 +105,18 @@ class MessageController extends Controller
             $data      = $this->messageService->getConversation($userId, $partnerId);
             $partner   = $data['partner'];
             $messages  = $data['messages'];
-            return view('messages.index', compact('conversations','partner','messages'));
+
+            // 👇 Ici on teste si c'est une requête AJAX
+
+                return view('messages.partials.conversation', compact('partner', 'messages'));
+
+
+
         }
 
         return view('messages.index', compact('conversations','partner','messages'));
     }
+
     // Affiche les messages envoyés par l'utilisateur
     public function sentMessages()
     {
