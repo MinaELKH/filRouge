@@ -30,4 +30,6 @@ interface DevisRepositoryInterface
      * Récupérer tous les devis associés à une réservation
      */
     public function getByReservationId(int $reservationId);
+
+    public function getWithRelations(int $id, array $relations): Devis;
 }

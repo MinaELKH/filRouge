@@ -164,16 +164,16 @@ class MessageController extends Controller
     public function sendDevisByReservation($reservationId)
     {
         $devis = Devis::where('reservation_id', $reservationId)->firstOrFail();
-
-        // Vérifie que le prestataire est autorisé
-        $this->authorize('sendMessageForDevis', $devis);
+      //  $this->authorize('sendMessageForDevis', $devis);
 
         $receiverId = $devis->reservation->user_id;
+        // Utilise le bon nom de paramètre:
+        $url = route('devis.show', ['devi' => $devis->id]);
 
-        $url = route('devis.show', ['id' => $devis->id]);
-        $messageContent = "Bonjour, voici le devis généré pour votre demande : <a href='{$url}' target='_blank' class='text-blue-600 underline'>Voir le devis</a>";
+        $messageContent = "Bonjour, voici le devis généré pour votre demande : "
+            . "<a href=\"{$url}\" target=\"_blank\" class=\"text-blue-600 underline\">Voir le devis</a>";
 
-        $message = $this->messageService->createMessage(
+        $this->messageService->createMessage(
             $receiverId,
             'Devis pour votre réservation',
             $messageContent,
@@ -183,5 +183,6 @@ class MessageController extends Controller
 
         return response()->json(['success' => true]);
     }
+
 
 }

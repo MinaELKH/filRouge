@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Repositories;
-
 use App\Models\Devis;
 use App\Models\Reservation;
 use App\Repositories\Contracts\DevisRepositoryInterface;
@@ -47,5 +45,10 @@ class DevisRepository implements DevisRepositoryInterface
     public function getByReservationId(int $reservationId)
     {
         return Devis::where('reservation_id', $reservationId)->get();
+    }
+
+    public function getWithRelations(int $id, array $relations): Devis
+    {
+        return Devis::with($relations)->findOrFail($id);
     }
 }

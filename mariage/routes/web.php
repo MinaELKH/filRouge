@@ -96,4 +96,5 @@ Route::post('/devis/{id}/confirm', [DevisController::class, 'confirm'])
 Route::post('/messages/send-devis-by-reservation/{reservation}', [MessageController::class, 'sendDevisByReservation'])
     ->name('messages.sendDevisByReservation');
 
-Route::get('/devis/{id}', [DevisController::class, 'show'])->name('devis.page');
+Route::get('/devis/{devi}', [DevisController::class, 'showPage'])
+    ->name('devis.show');

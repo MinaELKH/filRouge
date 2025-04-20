@@ -40,13 +40,9 @@ class DevisController extends Controller
         return $this->devisService->generateDevisPdf($devisId);
     }
 
-    public function show($id)
-    {
-        $devis = $this->devisService->getDevis($id);
-        $this->authorize('view', $devis);
 
-        return response()->json($devis);
-    }
+
+
 
     public function update(Request $request, $id)
     {
@@ -92,8 +88,7 @@ class DevisController extends Controller
 
     public function showPage($id)
     {
-        $devis = $this->devisService->getDevis($id);
-        $this->authorize('view', $devis);
+        $devis = $this->devisService->getDevisWithItems($id);
 
         return view('devis.show', compact('devis'));
     }

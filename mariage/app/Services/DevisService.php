@@ -83,4 +83,17 @@ class DevisService
         return $pdf->download('devis_' . $devis->id . '.pdf');
 
     }
+
+    public function getDevisWithItems(int $id): Devis
+    {
+        // présuppose que ton repository expose une méthode
+        // getWithRelations($id, ['devisItems', 'reservation.client', 'reservation.service'])
+        return $this->devisRepository->getWithRelations($id, [
+            'devisItems',               // items du devis
+            'reservation.client',       // infos client
+            'reservation.service.user', // prestataire
+            'reservation.service.category'
+        ]);
+    }
+
 }

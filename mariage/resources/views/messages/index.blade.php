@@ -92,29 +92,33 @@
             if (!sendDevisBtn) return;
 
             const reservationId = sendDevisBtn.dataset.reservationId;
+            const csrfToken   = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             sendDevisBtn.addEventListener('click', async function () {
-                alert("clik");
                 if (!reservationId) {
-                    alert("Aucune réservation associée.");
-                    return;
+                    return alert("Aucune réservation associée.");
                 }
 
                 try {
                     const response = await fetch(`/messages/send-devis-by-reservation/${reservationId}`, {
                         method: 'POST',
                         headers: {
-                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept':       'application/json',
                         }
                     });
 
-                    if (!response.ok) throw new Error("Erreur lors de l’envoi du devis.");
+                    if (!response.ok) {
+                        console.error("Status:", response.status, await response.text());
+                        throw new Error("Erreur lors de l’envoi du devis.");
+                    }
 
                     const result = await response.json();
                     if (result.success) {
                         alert("✅ Devis envoyé !");
-                        loadConversation({{ $partner->id ?? 'null' }});
+                        @if(isset($partner))
+                        loadConversation({{ $partner->id }});
+                        @endif
                     }
                 } catch (error) {
                     console.error(error);
