@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Devis;
 use App\Services\MessageService;
 use Illuminate\Http\Request;
 
@@ -121,4 +122,32 @@ class MessageController extends Controller
             'success' => true
         ]);
     }
+
+    public function sendDevisMessage($request, $devisId)
+    {
+
+
+        $validated = $request->validate([
+            'receiver_id' => 'required|exists:users,id',
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+        $devis = Devis::findOrFail($devisId);
+        $url = route('devis.page', ['id' => $devis->id]);
+
+        $message = $this->messageService->createMessage(
+            $validated['receiver_id'],
+            $validated['subject'],
+           "Voici le devis généré : <a href='{$url}",
+            $request->input('service_id') // récupère bien le service_id si fourni
+        );
+
+
+        return response()->json([
+            'success' => true
+        ]);
+
+    }
+
+
 }

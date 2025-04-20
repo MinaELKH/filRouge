@@ -34,17 +34,16 @@
         </div>
     </div>
 
-{{--    <script>--}}
-{{--        function loadConversation(partnerId) {--}}
-{{--            fetch(`/messages/${partnerId}`)--}}
-{{--                .then(response => response.text())--}}
-{{--                .then(html => {--}}
-{{--                    document.getElementById('conversationContainer').innerHTML = html;--}}
-{{--                })--}}
-{{--                .catch(err => console.error('Erreur chargement conversation:', err));--}}
-{{--        }--}}
-{{--    </script>--}}
 
+
+{{--Modal qui affiche la liste de devis --}}
+    <x-devis-modal :devisList="$devisList" :partner="$partner" />
+
+
+
+
+
+{{--ce script concerne la partie d 'envoie de message sans devis --}}
     <script>
         function loadConversation(partnerId) {
             fetch(`/messages/${partnerId}`)
@@ -99,6 +98,42 @@
                 setupReplyForm(partnerId);
             }
         });
+    </script>
+{{--ce script pour afficher modal pour choisir Modal--}}
+    <script>
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modal = document.getElementById('devisModal');
+        const devisForm = document.getElementById('devisForm');
+        const devisSelect = document.getElementById('devis_id');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Mettre à jour l'URL du formulaire dynamiquement
+        devisSelect.addEventListener('change', () => {
+            const selectedId = devisSelect.value;
+            devisForm.action = `/messages/send-devis/${selectedId}`;
+        });
+
+        // Initialiser l'URL au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            if (devisSelect.value) {
+                devisForm.action = `/messages/send-devis/${devisSelect.value}`;
+            }
+        });
+
+
+
+        function closeModal() {
+            document.getElementById('devisModal').classList.add('hidden');
+        }
+
     </script>
 
 @endsection
