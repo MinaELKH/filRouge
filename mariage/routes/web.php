@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FrontHomeController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
@@ -80,3 +81,14 @@ Route::get('/test', function () {
 
 Route::get('/services/{id}', [FrontServiceController::class, 'show'])->name('services.show');
 
+
+
+
+///// devis
+///
+Route::get('/devis/{id}/show', [DevisController::class, 'showPage'])
+    ->middleware('auth')
+    ->name('devis.page');
+Route::post('/devis/{id}/confirm', [DevisController::class, 'confirm'])
+    ->middleware('auth')
+    ->name('devis.confirm');

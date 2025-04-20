@@ -89,4 +89,26 @@ class DevisController extends Controller
 
         return response()->json($devis);
     }
+
+    public function showPage($id)
+    {
+        $devis = $this->devisService->getDevis($id);
+        $this->authorize('view', $devis);
+
+        return view('devis.show', compact('devis'));
+    }
+
+
+    public function confirm($id)
+    {
+        $devis = $this->devisService->getDevis($id);
+        $this->authorize('update', $devis);
+
+        // Mettre à jour le devis en 'approved'
+        $this->devisService->updateDevis($devis, ['status' => 'approved']);
+
+        // Redirection vers le paiement (à adapter)
+        return redirect()->route('paiement.page', ['devis_id' => $id]);
+    }
+
 }
