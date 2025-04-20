@@ -22,11 +22,12 @@
     </div>
 
     <!-- Input form -->
-    <form action="{{ route('messages.store') }}" method="POST" class="p-4 border-t bg-white flex">
+    <form id="replyForm" class="p-4 border-t bg-white flex">
         @csrf
-        <input type="hidden" name="receiver_id" value="{{ $partner->id }}">
         <input type="text" name="body" placeholder="Écrire un message..."
                class="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring">
         <button type="submit" class="ml-3 bg-blue-500 text-white px-4 py-2 rounded-full">Envoyer</button>
     </form>
+
+
 </div>
