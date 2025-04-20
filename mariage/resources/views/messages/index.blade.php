@@ -78,7 +78,8 @@
                             'Accept': 'application/json'
                         }
                     });
-
+                    console.log("partnerId");
+                    console.log(partnerId);
                     if (!response.ok) {
                         throw new Error(`Erreur HTTP: ${response.status}`);
                     }

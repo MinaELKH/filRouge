@@ -34,58 +34,6 @@
     </form>
 
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('replyForm');
-
-        if (!form) {
-            console.error("ERREUR: Élément #replyForm introuvable");
-            return;
-        }
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            console.log("Debug: Événement submit capturé");
-
-            try {
-                // Debug: Vérification des données
-                const formData = new FormData(form);
-                console.log("Données du formulaire:", {
-                    body: formData.get('body'),
-                    partnerId: {{ $partner->id ?? 'null' }}
-                });
-
-                const response = await fetch(`/messages/${ {{ $partner->id }} }/reply`, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                });
-
-                console.log("Réponse du serveur:", {
-                    status: response.status,
-                    ok: response.ok
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-
-                const data = await response.json();
-                console.log("Données reçues:", data);
-
-                // Traitement de la réponse...
-
-            } catch (error) {
-                console.error("Erreur complète:", error);
-                alert("Échec de l'envoi: " + error.message);
-            }
-        });
-    });
-</script>
-
 
 
 {{--<script>--}}

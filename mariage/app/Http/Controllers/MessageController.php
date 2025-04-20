@@ -84,8 +84,8 @@ class MessageController extends Controller
         $request->validate(['body' => 'required|string']);
 
         $message = $this->messageService->createMessage(
-            auth()->id(),
             $partnerId,
+            null ,
             $request->input('body')
         );
 
