@@ -66,11 +66,16 @@ class MessageController extends Controller
         $userId = auth()->id();
         $conversation = $this->messageService->getConversation($userId, $partnerId);
 
+        $messages = $conversation['messages'];
+    //    $reservationId = $messages->first()->reservation_id ?? null;
+
         return view('messages._conversation', [
-            'messages' => $conversation['messages'],
+            'messages' => $messages,
             'partner' => $conversation['partner'],
+            'reservationId' => $messages->first()->reservation_id ?? '' ,
         ]);
     }
+
     public function sendReply(Request $request, $partnerId)
     {
         $request->validate([
@@ -156,31 +161,27 @@ class MessageController extends Controller
         ]);
     }
 
-    public function sendDevisMessage($request, $devisId)
+    public function sendDevisByReservation($reservationId)
     {
+        $devis = Devis::where('reservation_id', $reservationId)->firstOrFail();
 
+        // Vérifie que le prestataire est autorisé
+        $this->authorize('sendMessageForDevis', $devis);
 
-        $validated = $request->validate([
-            'receiver_id' => 'required|exists:users,id',
-            'subject' => 'required|string|max:255',
-            'body' => 'required|string',
-        ]);
-        $devis = Devis::findOrFail($devisId);
-        $url = route('devis.page', ['id' => $devis->id]);
+        $receiverId = $devis->reservation->user_id;
+
+        $url = route('devis.show', ['id' => $devis->id]);
+        $messageContent = "Bonjour, voici le devis généré pour votre demande : <a href='{$url}' target='_blank' class='text-blue-600 underline'>Voir le devis</a>";
 
         $message = $this->messageService->createMessage(
-            $validated['receiver_id'],
-            $validated['subject'],
-           "Voici le devis généré : <a href='{$url}",
-            $request->input('service_id') // récupère bien le service_id si fourni
+            $receiverId,
+            'Devis pour votre réservation',
+            $messageContent,
+            null,
+            $reservationId
         );
 
-
-        return response()->json([
-            'success' => true
-        ]);
-
+        return response()->json(['success' => true]);
     }
-
 
 }

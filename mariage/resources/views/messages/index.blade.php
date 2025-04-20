@@ -1,4 +1,3 @@
-{{--messages.index.blade.php--}}
 @extends('layouts.prestataire')
 
 @section('content')
@@ -9,14 +8,17 @@
             @foreach($conversations as $conv)
                 <div class="flex items-center p-4 border-b hover:bg-gray-100 cursor-pointer"
                      onclick="loadConversation({{ $conv['partner']->id }})">
-                    <img src="{{ $conv['partner']->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($conv['partner']->name) }}"
-                         class="h-10 w-10 rounded-full mr-3">
+                    <img
+                        src="{{ $conv['partner']->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($conv['partner']->name) }}"
+                        class="h-10 w-10 rounded-full mr-3">
                     <div class="flex-1">
                         <div class="font-medium">{{ $conv['partner']->name }}</div>
-                        <div class="text-sm text-gray-500 truncate">{{ Str::limit($conv['last_message']->body, 30) }}</div>
+                        <div
+                            class="text-sm text-gray-500 truncate">{{ Str::limit($conv['last_message']->body, 30) }}</div>
                     </div>
                     @if($conv['unread_count'] > 0)
-                        <span class="text-xs bg-blue-500 text-white rounded-full px-2 py-1 ml-2">{{ $conv['unread_count'] }}</span>
+                        <span
+                            class="text-xs bg-blue-500 text-white rounded-full px-2 py-1 ml-2">{{ $conv['unread_count'] }}</span>
                     @endif
                 </div>
             @endforeach
@@ -25,7 +27,11 @@
         <!-- Conversation container -->
         <div id="conversationContainer" class="flex-1 flex flex-col bg-gray-50">
             @if(isset($partner))
-                @include('messages.partials.conversation', ['partner' => $partner, 'messages' => $messages])
+                @include('messages._conversation', [
+                    'messages' => $messages,
+                    'partner' => $partner,
+                    'reservationId' => $messages->first()->reservation_id ?? ''
+                ])
             @else
                 <div class="flex-1 flex items-center justify-center text-gray-400 text-xl">
                     Sélectionnez une conversation
@@ -34,23 +40,14 @@
         </div>
     </div>
 
-
-
-{{--Modal qui affiche la liste de devis
-    <x-devis-modal :devisList="$devisList" :partner="$partner" />--}}
-
-
-
-
-
-{{--ce script concerne la partie d 'envoie de message sans devis --}}
     <script>
         function loadConversation(partnerId) {
             fetch(`/messages/${partnerId}`)
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('conversationContainer').innerHTML = html;
-                    setupReplyForm(partnerId); // Réinitialiser le form après chaque load
+                    setupReplyForm(partnerId);
+                    setupDevisButton(); // 👈 Attache le bouton "envoyer devis"
                 })
                 .catch(err => console.error('Erreur chargement conversation:', err));
         }
@@ -63,7 +60,7 @@
                 return;
             }
 
-            form.addEventListener('submit', async function(e) {
+            form.addEventListener('submit', async function (e) {
                 e.preventDefault();
 
                 const formData = new FormData(form);
@@ -77,8 +74,7 @@
                             'Accept': 'application/json'
                         }
                     });
-                    console.log("partnerId");
-                    console.log(partnerId);
+
                     if (!response.ok) {
                         throw new Error(`Erreur HTTP: ${response.status}`);
                     }
@@ -91,49 +87,49 @@
             });
         }
 
-        // Si conversation déjà chargée au démarrage, initialiser le form JS
+        function setupDevisButton() {
+            const sendDevisBtn = document.getElementById('sendDevis');
+            if (!sendDevisBtn) return;
+
+            const reservationId = sendDevisBtn.dataset.reservationId;
+
+            sendDevisBtn.addEventListener('click', async function () {
+                alert("clik");
+                if (!reservationId) {
+                    alert("Aucune réservation associée.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/messages/send-devis-by-reservation/${reservationId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'Accept': 'application/json',
+                        }
+                    });
+
+                    if (!response.ok) throw new Error("Erreur lors de l’envoi du devis.");
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("✅ Devis envoyé !");
+                        loadConversation({{ $partner->id ?? 'null' }});
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Une erreur est survenue.");
+                }
+            });
+        }
+
+        // Initialisation au premier chargement
         document.addEventListener('DOMContentLoaded', function () {
             const partnerId = {{ $partner->id ?? 'null' }};
             if (partnerId) {
                 setupReplyForm(partnerId);
+                setupDevisButton(); // 👈 Important ici aussi au 1er affichage
             }
         });
     </script>
-{{--ce script pour afficher modal pour choisir Modal--}}
-    <script>
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modal = document.getElementById('devisModal');
-        const devisForm = document.getElementById('devisForm');
-        const devisSelect = document.getElementById('devis_id');
-
-        openModalBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-
-        // Mettre à jour l'URL du formulaire dynamiquement
-        devisSelect.addEventListener('change', () => {
-            const selectedId = devisSelect.value;
-            devisForm.action = `/messages/send-devis/${selectedId}`;
-        });
-
-        // Initialiser l'URL au chargement
-        window.addEventListener('DOMContentLoaded', () => {
-            if (devisSelect.value) {
-                devisForm.action = `/messages/send-devis/${devisSelect.value}`;
-            }
-        });
-
-
-
-        function closeModal() {
-            document.getElementById('devisModal').classList.add('hidden');
-        }
-
-    </script>
-
 @endsection

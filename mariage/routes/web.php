@@ -93,5 +93,7 @@ Route::post('/devis/{id}/confirm', [DevisController::class, 'confirm'])
     ->middleware('auth')
     ->name('devis.confirm');
 
-Route::post('/messages/send-devis/{devis}', [MessageController::class, 'sendDevisMessage'])
-    ->name('messages.sendDevis');
+Route::post('/messages/send-devis-by-reservation/{reservation}', [MessageController::class, 'sendDevisByReservation'])
+    ->name('messages.sendDevisByReservation');
+
+Route::get('/devis/{id}', [DevisController::class, 'show'])->name('devis.page');

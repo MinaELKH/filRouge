@@ -36,13 +36,20 @@
 
     </form>
 
-    @if($partner)
+    @if($partner )
         <div class="p-4 border-b bg-white flex justify-end">
-            <button id="openModalBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+            <button
+                id="sendDevis"
+                data-reservation-id="{{ $messages->first()->reservation_id ?? '' }}"
+                class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
                 Envoyer un devis
             </button>
         </div>
     @endif
+
+
+
+
 
 
 </div>
