@@ -105,6 +105,7 @@ class MessageController extends Controller
             $data      = $this->messageService->getConversation($userId, $partnerId);
             $partner   = $data['partner'];
             $messages  = $data['messages'];
+            return view('messages.index', compact('conversations','partner','messages'));
         }
 
         return view('messages.index', compact('conversations','partner','messages'));

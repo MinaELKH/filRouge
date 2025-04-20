@@ -52,14 +52,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-//Route::middleware(['auth'])->group(function () {
-//    Route::get('/messages', [MessageController::class, 'conversations'])->name('messages.conversations');
-//    Route::get('/messages/{partnerId}', [MessageController::class, 'showConversation'])->name('messages.conversation');
-//    Route::post('/messages/{partnerId}', [MessageController::class, 'send'])->name('messages.send');
-//    Route::post('/messages/reply/{partnerId}', [MessageController::class, 'sendReply'])->name('messages.reply');
-//
-//
-//});
 
 Route::middleware('auth')->get('/messages/{partnerId?}', [MessageController::class,'index'])
     ->where('partnerId','[0-9]+')
