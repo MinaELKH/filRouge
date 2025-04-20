@@ -1,3 +1,4 @@
+{{--messages.index.blade.php--}}
 @extends('layouts.prestataire')
 
 @section('content')
@@ -33,14 +34,70 @@
         </div>
     </div>
 
+{{--    <script>--}}
+{{--        function loadConversation(partnerId) {--}}
+{{--            fetch(`/messages/${partnerId}`)--}}
+{{--                .then(response => response.text())--}}
+{{--                .then(html => {--}}
+{{--                    document.getElementById('conversationContainer').innerHTML = html;--}}
+{{--                })--}}
+{{--                .catch(err => console.error('Erreur chargement conversation:', err));--}}
+{{--        }--}}
+{{--    </script>--}}
+
     <script>
         function loadConversation(partnerId) {
             fetch(`/messages/${partnerId}`)
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('conversationContainer').innerHTML = html;
+                    setupReplyForm(partnerId); // Réinitialiser le form après chaque load
                 })
                 .catch(err => console.error('Erreur chargement conversation:', err));
         }
+
+        function setupReplyForm(partnerId) {
+            const form = document.getElementById('replyForm');
+
+            if (!form) {
+                console.error("replyForm introuvable");
+                return;
+            }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(`/messages/${partnerId}/reply`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP: ${response.status}`);
+                    }
+
+                    // Recharger la conversation après l’envoi du message
+                    loadConversation(partnerId);
+                } catch (error) {
+                    console.error("Erreur lors de l’envoi du message:", error);
+                }
+            });
+        }
+
+        // Si conversation déjà chargée au démarrage, initialiser le form JS
+        document.addEventListener('DOMContentLoaded', function () {
+            const partnerId = {{ $partner->id ?? 'null' }};
+            if (partnerId) {
+                setupReplyForm(partnerId);
+            }
+        });
     </script>
+
 @endsection

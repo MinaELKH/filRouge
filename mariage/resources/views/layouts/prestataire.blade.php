@@ -13,9 +13,9 @@
 <header class="container mx-auto px-4 py-6">
     <div class="flex items-center">
         <a href="#" class="flex items-center">
-            <svg class="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 24 24">
-                <path d="..."></path>
-            </svg>
+{{--            <svg class="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 24 24">--}}
+{{--                <path d="..."></path>--}}
+{{--            </svg>--}}
             <span class="ml-2 text-gray-800 font-semibold">mariages.net</span>
         </a>
     </div>
