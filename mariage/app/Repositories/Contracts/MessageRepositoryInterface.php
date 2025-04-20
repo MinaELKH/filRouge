@@ -5,7 +5,7 @@ namespace App\Repositories\Contracts;
 
 interface MessageRepositoryInterface
 {
-    public function createMessage($senderId, $receiverId, $subject, $body);
+    public function createMessage($senderId, $receiverId, $subject, $body , $reservationId = null);
     public function getReceivedMessages($userId);
     public function getSentMessages($userId);
     public function markAsRead($messageId);

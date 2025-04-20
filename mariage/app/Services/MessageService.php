@@ -33,7 +33,6 @@ class MessageService
             $receiverId,
             $subject,
             $body,
-            $serviceId,
             $reservationId,
         );
     }
