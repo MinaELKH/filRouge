@@ -46,7 +46,6 @@ class DevisRepository implements DevisRepositoryInterface
     {
         return Devis::where('reservation_id', $reservationId)->get();
     }
-
     public function getWithRelations(int $id, array $relations): Devis
     {
         return Devis::with($relations)->findOrFail($id);

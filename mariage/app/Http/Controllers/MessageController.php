@@ -103,26 +103,6 @@ class MessageController extends Controller
         ]);
     }
 
-    //  Créer un nouveau message , avec une nouvelle service , c'est clique sur le button contacter
-//    public function store(Request $request)
-//    {
-//        $validated = $request->validate([
-//            'receiver_id' => 'required|exists:users,id',
-//            'subject' => 'required|string|max:255',
-//            'body' => 'required|string',
-//        ]);
-//        $message = $this->messageService->createMessage(
-//            $validated['receiver_id'],
-//            $validated['subject'],
-//            $validated['body'],
-//            $request->input('service_id') // récupère bien le service_id si fourni
-//        );
-//
-//
-//        return response()->json([
-//            'success' => true
-//        ]);
-//    }
 
 
     public function store(Request $request)

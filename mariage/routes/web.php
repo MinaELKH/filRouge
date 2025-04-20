@@ -85,7 +85,7 @@ Route::get('/services/{id}', [FrontServiceController::class, 'show'])->name('ser
 
 
 ///// devis
-///
+
 Route::get('/devis/{id}/show', [DevisController::class, 'showPage'])
     ->middleware('auth')
     ->name('devis.page');
