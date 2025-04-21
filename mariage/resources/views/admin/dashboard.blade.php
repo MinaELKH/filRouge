@@ -1,6 +1,4 @@
-@extends('layout.admin')
-
-@section('title', 'Dashboard Admin')
+@extends('layouts.admin')
 
 @section('content')
     <div class="max-w-7xl mx-auto p-4">
@@ -27,13 +25,13 @@
                 <div class="border rounded-lg shadow-sm">
                     <div class="p-4 text-center">
                         <div class="text-gray-600 mb-2">Demandes en attente</div>
-                        <div class="text-3xl font-bold">9</div>
+                        <div class="text-3xl font-bold">{{ $pendingReservations }}</div>
                     </div>
                 </div>
                 <div class="border rounded-lg shadow-sm">
                     <div class="p-4 text-center">
                         <div class="text-gray-600 mb-2">Offres en attente</div>
-                        <div class="text-3xl font-bold">8</div>
+                        <div class="text-3xl font-bold">{{ $pendingOffers }}</div>
                     </div>
                 </div>
             </div>
@@ -45,18 +43,12 @@
                     <div class="p-4">
                         <h3 class="font-medium text-gray-700 mb-4">Top Prestataires Actifs</h3>
                         <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <div>Ines Ouss</div>
-                                <div class="text-gray-500">10 Offres</div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div>Evelyn Walker</div>
-                                <div class="text-gray-500">4 Offres</div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div>Benjamin Robinson</div>
-                                <div class="text-gray-500">4 Offres</div>
-                            </div>
+                            @foreach ($topPrestataires as $prestataire)
+                                <div class="flex justify-between items-center">
+                                    <div>{{ $prestataire->name }}</div>
+                                    <div class="text-gray-500">{{ $prestataire->offers_count }} Offres</div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -66,18 +58,12 @@
                     <div class="p-4">
                         <h3 class="font-medium text-gray-700 mb-4">Top Catégories</h3>
                         <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <div>Negafa</div>
-                                <div class="text-gray-500">5</div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div>Make up</div>
-                                <div class="text-gray-500">4</div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div>Salle de fête</div>
-                                <div class="text-gray-500">3</div>
-                            </div>
+                            @foreach ($topCategories as $category)
+                                <div class="flex justify-between items-center">
+                                    <div>{{ $category->category }}</div>
+                                    <div class="text-gray-500">{{ $category->count }}</div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -87,18 +73,12 @@
                     <div class="p-4">
                         <h3 class="font-medium text-gray-700 mb-4">Top Offres</h3>
                         <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <div>Salle de fête de rêve</div>
-                                <div class="text-gray-500">5</div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div>Robe de Noce mode Caftan</div>
-                                <div class="text-gray-500">4</div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div>Les meilleurs plats</div>
-                                <div class="text-gray-500">3</div>
-                            </div>
+                            @foreach ($topServices as $service)
+                                <div class="flex justify-between items-center">
+                                    <div>{{ $service->title }}</div>
+                                    <div class="text-gray-500">{{ $service->offers_count }} Offres</div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
