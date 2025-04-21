@@ -115,7 +115,7 @@ class CategoryController extends Controller
         $category = Category::create($request->only(['name', 'description']));
 
         // Rediriger avec un message de succès
-        return redirect()->route('category.index')->with('success', 'Catégorie ajoutée avec succès');
+        return redirect()->route('admin.manage_categorie')->with('success', 'Catégorie ajoutée avec succès');
     }
 
     public function update(Request $request, category $category)
@@ -133,6 +133,9 @@ class CategoryController extends Controller
      */
     public function destroy(category $category)
     {
-        $this->authorize('delete', Category::class);
-        return $this->categoryService->destroy($category);
+        $this->authorize('delete', $category);
+        $this->categoryService->destroy($category);
+        // Rediriger avec un message de succès
+        return redirect()->route('admin.manage_categorie')->with('success', 'Catégorie supprimé avec succès');
+
     } }

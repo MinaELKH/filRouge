@@ -44,11 +44,28 @@
                 <td class="px-6 py-4 text-sm text-gray-500">{{ $category->name }}</td>
                 <td class="px-6 py-4 text-sm text-gray-500">{{ $category->description ?? 'Pas de description' }}</td>
                 <td class="px-6 py-4 text-sm text-gray-500 text-right">
-                    <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display: inline;">
+                <td class="px-6 py-4 text-sm text-gray-500 text-right flex justify-end gap-2">
+
+                    <!-- Bouton Modifier -->
+                    <a href="{{ route('category.update', $category->id) }}" class="text-blue-600 hover:text-blue-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6 6L5 21l1.414-4.586L15 9z" />
+                        </svg>
+                    </a>
+
+                    <!-- Bouton Supprimer -->
+                    <form action="{{ route('category.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-800 ml-2">Supprimer</button>
+                        <button type="submit" class="text-red-600 hover:text-red-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7L5 7M10 11V17M14 11V17M5 7L6 19a2 2 0 002 2h8a2 2 0 002-2L19 7M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2" />
+                            </svg>
+                        </button>
                     </form>
+
+                </td>
+
                 </td>
             </tr>
         @endforeach
