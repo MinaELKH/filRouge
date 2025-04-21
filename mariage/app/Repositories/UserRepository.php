@@ -64,4 +64,36 @@ class UserRepository implements UserRepositoryInterface
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    public function countByRole(string $role): int
+    {
+        return User::where('role', $role)->count();
+    }
+
+    public function getTopPrestataires(int $limit)
+    {
+        return User::where('role', 'prestataire')
+            ->withCount('services')
+            ->orderByDesc('services_count')
+            ->take($limit)
+            ->get();
+    }
+
+    public function getTopCategories(int $limit)
+    {
+        return Service::select('category', DB::raw('count(*) as total'))
+            ->groupBy('category')
+            ->orderByDesc('total')
+            ->take($limit)
+            ->get();
+    }
+
+    public function getTopServices(int $limit)
+    {
+        return Service::withCount('reservations')
+            ->orderByDesc('reservations_count')
+            ->take($limit)
+            ->get();
+    }
+
 }

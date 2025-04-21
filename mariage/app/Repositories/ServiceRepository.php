@@ -45,4 +45,26 @@ class ServiceRepository implements ServiceRepositoryInterface
     {
         return Service::where('ville_id', $id)->get();
     }
+
+
+    public function getTopCategories(int $limit)
+    {
+        return Service::select('categories.name as category_name', \DB::raw('count(*) as total'))
+            ->join('categories', 'services.category_id', '=', 'categories.id')  // Jointure avec la table des catégories
+            ->groupBy('categories.name')  // Grouper par nom de la catégorie
+            ->orderByDesc('total')
+            ->take($limit)
+            ->get();
+    }
+
+    // Méthode pour obtenir les services les plus populaires
+    public function getTopServices(int $limit)
+    {
+        return Service::withCount('reservations')
+            ->orderByDesc('reservations_count')
+            ->take($limit)  // Utilisation de $limit
+            ->get();
+    }
+
+
 }

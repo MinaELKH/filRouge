@@ -131,4 +131,18 @@ use App\Http\Controllers\AdminUserController;
 Route::middleware(['auth', 'check.admin'])->group(function () {
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.manage_users');
     Route::patch('/admin/users/{id}/ban', [AdminUserController::class, 'toggleBan'])->name('admin.users.toggleBan');
+    Route::get('/admin/users/prestataires', [AdminUserController::class, 'showPrestataires'])->name('admin.manage_prestataires');
+    Route::get('/admin/users/clients', [AdminUserController::class, 'showClients'])->name('admin.manage_clients');
+
+
 });
+
+
+// dashboard admin
+
+use App\Http\Controllers\AdminDashboardController;
+
+Route::middleware(['auth', 'check.admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});
+

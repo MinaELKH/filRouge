@@ -14,7 +14,11 @@ interface UserRepositoryInterface
     public  function getUser($user_id);
     public function banir($user_id);
 
+
+    // dashboard admin
     public function getUsers(mixed $search, mixed $role);
+    public function countByRole(string $role): int;
+    public function getTopPrestataires(int $limit);
 
 
 }

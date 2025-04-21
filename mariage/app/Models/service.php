@@ -43,7 +43,10 @@ class Service extends Model
     {
         return $this->belongsTo(Ville::class);
     }
-
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);  // Une relation one-to-many
+    }
 
 }
 

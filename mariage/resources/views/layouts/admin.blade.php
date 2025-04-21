@@ -57,20 +57,25 @@
             </a>
 
             <!-- Utilisateurs (Prestataires & Clients) -->
-            <a href="{{ route('admin.manage_users', ['role' => 'prestataire']) }}"
+            <a href="{{ route('admin.manage_prestataires') }}"
                class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Prestataires">
                 <i class="fas fa-briefcase w-6 h-6 flex items-center justify-center"></i>
             </a>
 
-            <a href="{{ route('admin.manage_users', ['role' => 'client']) }}"
+            <a href="{{ route('admin.manage_clients') }}"
                class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Clients">
                 <i class="fas fa-user w-6 h-6 flex items-center justify-center"></i>
             </a>
 
             <!-- Déconnexion -->
-            <a href="{{ route('logout') }}" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Déconnexion">
-                <i class="fas fa-sign-out-alt w-6 h-6 flex items-center justify-center"></i>
-            </a>
+            <form method="POST" action="{{ route('logout') }}" id="logoutForm" class="inline">
+                @csrf
+                <a href="#" onclick="document.getElementById('logoutForm').submit();"  class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt w-6 h-6 flex items-center justify-center"></i>
+                </a>
+
+            </form>
+
 
         </div>
     </div>

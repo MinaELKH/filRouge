@@ -29,6 +29,24 @@ class AdminUserController extends Controller
         return view('admin.manage_users', compact('users', 'role'));
     }
 
+
+    public function showPrestataires(Request $request)
+    {
+        $search = $request->search;
+        $users = $this->userService->getUsers($search, 'prestataire');
+
+        return view('admin.manage_prestataires', compact('users'));
+    }
+
+    public function showClients(Request $request)
+    {
+        $search = $request->search;
+        $users = $this->userService->getUsers($search, 'client');
+
+        return view('admin.manage_clients', compact('users'));
+    }
+
+
 // Méthode pour bannir un utilisateur
     public function toggleBan($id)
     {

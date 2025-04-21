@@ -13,4 +13,8 @@ interface ServiceRepositoryInterface
     public function getByCategory($id);
 
     public function getByVille($id);
+
+    //dashboard admin
+    public function getTopCategories(int $limit);
+    public function getTopServices(int $limit);
 }

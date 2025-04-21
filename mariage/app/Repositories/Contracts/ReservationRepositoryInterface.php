@@ -12,4 +12,8 @@ interface ReservationRepositoryInterface {
     public function delete($reservation);
 
     public function findOrCreate(array $data);
+
+    // dashboard admin
+
+    public function countByStatus(string $status): int;
 }

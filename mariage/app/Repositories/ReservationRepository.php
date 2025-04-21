@@ -78,4 +78,10 @@ class ReservationRepository implements ReservationRepositoryInterface
     {
         $reservation->delete();
     }
+
+
+    public function countByStatus(string $status): int
+    {
+        return Reservation::where('status', $status)->count();
+    }
 }
