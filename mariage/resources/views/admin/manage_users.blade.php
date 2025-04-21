@@ -2,59 +2,63 @@
 
 @section('content')
     <div class="container mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4">Gestion des Utilisateurs</h2>
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Gestion des Utilisateurs</h2>
 
         <!-- Barre de recherche et filtre -->
-        <form method="GET" action="{{ route('admin.manage_users') }}" class="mb-4 flex gap-4">
+        <form method="GET" action="{{ route('admin.manage_users') }}" class="mb-6 flex flex-wrap gap-4 items-center">
             <input type="text" name="search" placeholder="Rechercher par nom" value="{{ request('search') }}"
-                   class="p-2 border rounded-md w-1/3">
-            <select name="role" class="p-2 border rounded-md">
-                <option value="">Tous les rôles</option>
-                <option value="client" {{ request('role') == 'client' ? 'selected' : '' }}>Client</option>
-                <option value="prestataire" {{ request('role') == 'prestataire' ? 'selected' : '' }}>Prestataire</option>
-            </select>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Filtrer</button>
+                   class="p-2 border border-gray-300 rounded-md w-1/3 focus:outline-none focus:ring focus:border-blue-300">
+
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                cherche
+            </button>
         </form>
 
         <!-- Tableau des utilisateurs -->
-        <table class="w-full table-auto border">
-            <thead>
-            <tr class="bg-gray-100">
-                <th class="px-4 py-2">Nom</th>
-                <th class="px-4 py-2">Email</th>
-                <th class="px-4 py-2">Rôle</th>
-                <th class="px-4 py-2">Statut</th>
-                <th class="px-4 py-2">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @forelse ($users as $user)
-                <tr class="text-center border-b">
-                    <td class="px-4 py-2">{{ $user->name }}</td>
-                    <td class="px-4 py-2">{{ $user->email }}</td>
-                    <td class="px-4 py-2">{{ $user->role }}</td>
-                    <td class="px-4 py-2">
-                        @if($user->is_banned)
-                            <span class="text-red-500 font-semibold">Banni</span>
-                        @else
-                            <span class="text-green-500 font-semibold">Actif</span>
-                        @endif
-                    </td>
-                    <td class="px-4 py-2">
-                        <form action="{{ route('admin.users.toggleBan', $user->id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <button class="px-3 py-1 text-white rounded-md
-                                           {{ $user->banned ? 'bg-green-500' : 'bg-red-500' }}">
-                                {{ $user->banned ? 'Débannir' : 'Bannir' }}
-                            </button>
-                        </form>
-                    </td>
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+                <thead class="bg-gray-50 text-left">
+                <tr>
+                    <th class="px-6 py-3 font-semibold">Nom</th>
+                    <th class="px-6 py-3 font-semibold">Email</th>
+                    <th class="px-6 py-3 font-semibold">Rôle</th>
+                    <th class="px-6 py-3 font-semibold">Statut</th>
+                    <th class="px-6 py-3 font-semibold text-center">Action</th>
                 </tr>
-            @empty
-                <tr><td colspan="5" class="py-4 text-center">Aucun utilisateur trouvé.</td></tr>
-            @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                @forelse ($users as $user)
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4">{{ $user->name }}</td>
+                        <td class="px-6 py-4">{{ $user->email }}</td>
+                        <td class="px-6 py-4 capitalize">{{ $user->role }}</td>
+                        <td class="px-6 py-4">
+                            @if($user->is_banned)
+                                <span class="inline-block px-2 py-1 bg-red-100 text-red-600 rounded-full text-xs font-semibold">Banni</span>
+                            @else
+                                <span class="inline-block px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs font-semibold">Actif</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <form action="{{ route('admin.users.toggleBan', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit"
+                                        class="text-white px-3 py-1 rounded-md transition
+                                               {{ $user->is_banned ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600' }}"
+                                        title="{{ $user->is_banned ? 'Débannir' : 'Bannir' }}">
+                                    {{ $user->is_banned ? '✅' : '🚫' }}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center px-6 py-4 text-gray-500">Aucun utilisateur trouvé.</td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
