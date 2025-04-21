@@ -24,6 +24,22 @@
             <div class="grid md:grid-cols-2 gap-4 mb-6">
                 <div class="border rounded-lg shadow-sm">
                     <div class="p-4 text-center">
+                        <div class="text-gray-600 mb-2">Nombre de Clients</div>
+                        <div class="text-3xl font-bold">{{ $totalClients }}</div>
+                    </div>
+                </div>
+                <div class="border rounded-lg shadow-sm">
+                    <div class="p-4 text-center">
+                        <div class="text-gray-600 mb-2">Nombre de Prestataires</div>
+                        <div class="text-3xl font-bold">{{ $totalPrestataires }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards for Pending Reservations and Offers -->
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <div class="border rounded-lg shadow-sm">
+                    <div class="p-4 text-center">
                         <div class="text-gray-600 mb-2">Demandes en attente</div>
                         <div class="text-3xl font-bold">{{ $pendingReservations }}</div>
                     </div>
@@ -36,8 +52,9 @@
                 </div>
             </div>
 
-            <!-- Three Columns -->
+            <!-- Three Columns for Top Prestataires, Categories, and Services -->
             <div class="grid md:grid-cols-3 gap-6">
+
                 <!-- Top Prestataires Actifs -->
                 <div class="border rounded-lg shadow-sm">
                     <div class="p-4">
@@ -46,12 +63,13 @@
                             @foreach ($topPrestataires as $prestataire)
                                 <div class="flex justify-between items-center">
                                     <div>{{ $prestataire->name }}</div>
-                                    <div class="text-gray-500">{{ $prestataire->offers_count }} Offres</div>
+                                    <div class="text-gray-500">{{ $prestataire->services_count }} Services</div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Top Catégories -->
                 <div class="border rounded-lg shadow-sm">
@@ -60,15 +78,15 @@
                         <div class="space-y-3">
                             @foreach ($topCategories as $category)
                                 <div class="flex justify-between items-center">
-                                    <div>{{ $category->category }}</div>
-                                    <div class="text-gray-500">{{ $category->count }}</div>
+                                    <div>{{ $category->category_name }}</div>
+                                    <div class="text-gray-500">{{ $category->total }} Offres</div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
 
-                <!-- Top Offres -->
+                <!-- Top Services -->
                 <div class="border rounded-lg shadow-sm">
                     <div class="p-4">
                         <h3 class="font-medium text-gray-700 mb-4">Top Offres</h3>
@@ -76,12 +94,13 @@
                             @foreach ($topServices as $service)
                                 <div class="flex justify-between items-center">
                                     <div>{{ $service->title }}</div>
-                                    <div class="text-gray-500">{{ $service->offers_count }} Offres</div>
+                                    <div class="text-gray-500">{{ $service->reservations_count }} Réservations</div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

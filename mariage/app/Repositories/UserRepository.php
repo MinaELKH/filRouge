@@ -73,11 +73,13 @@ class UserRepository implements UserRepositoryInterface
     public function getTopPrestataires(int $limit)
     {
         return User::where('role', 'prestataire')
+            ->select('id', 'name')  // Si vous ne souhaitez récupérer que certains champs
             ->withCount('services')
             ->orderByDesc('services_count')
             ->take($limit)
             ->get();
     }
+
 
     public function getTopCategories(int $limit)
     {
