@@ -40,8 +40,20 @@
 
             <div class="flex items-center space-x-4">
                 <a href="#" class="hidden md:block text-sm font-medium text-gray-600 hover:text-gray-800">Accès Entreprises</a>
-                <a href="#" class="text-sm font-medium text-pink-500 hover:text-pink-600">CONNEXION</a>
-                <a href="#" class="text-sm font-medium text-pink-500 hover:text-pink-600">INSCRIPTION</a>
+                <!-- Vérifier si l'utilisateur est authentifié -->
+                @guest
+                    <!-- Utilisateurs non authentifiés -->
+                    <a href="{{ route('login') }}" class="text-sm font-medium text-pink-500 hover:text-pink-600">CONNEXION</a>
+                    <a href="{{ route('register') }}" class="text-sm font-medium text-pink-500 hover:text-pink-600">INSCRIPTION</a>
+                @else
+                    <!-- Utilisateurs authentifiés -->
+                    <form method="POST" action="{{ route('logout') }}" id="logoutForm" class="inline">
+                        @csrf
+                        <a href="#" onclick="document.getElementById('logoutForm').submit();" class="text-sm font-medium text-pink-500 hover:text-pink-600">DÉCONNEXION</a>
+                    </form>
+
+                @endguest
+
             </div>
         </div>
     </div>
@@ -101,7 +113,9 @@
 </footer>
 
 
-
+<script>
+    window.isAuthenticated = @json(Auth::check());
+</script>
 <script  src="{{ asset('js/modalContact.js') }}"></script>
 
 </body>

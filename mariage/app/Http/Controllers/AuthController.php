@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Laravel\Sanctum\TransientToken;
 
 class AuthController extends Controller {
     private AuthService $authService;
@@ -57,14 +58,26 @@ class AuthController extends Controller {
         return view($view , compact('user'));
     }
 
+    public function logout(Request $request)
+    {
+        // Vérifier si l'utilisateur est authentifié via Sanctum
+        if ($request->user()) {
+            // Supprimer tous les tokens associés à l'utilisateur
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();
+            });
+        }
 
-    public function logout(Request $request) {
-        Auth::logout();
+        // Si l'utilisateur utilise une session classique (web), on effectue la déconnexion
+        Auth::guard('web')->logout(); // Déconnexion de l'utilisateur via la session web
+
+        // Invalidation de la session
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
-    }
 
+        // Redirection vers la page de connexion ou la page d'accueil
+        return redirect('/login'); // ou '/home', selon tes besoins
+    }
 
 
 }

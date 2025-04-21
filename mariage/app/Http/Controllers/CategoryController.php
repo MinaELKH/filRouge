@@ -52,15 +52,7 @@ class CategoryController extends Controller
         return $this->categoryService->show($category);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-//    public function edit(category $category)
-//    {
-//        $category = $this->categoryService->edit($category);
-//    }
 
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, category $category)

@@ -9,7 +9,15 @@
     // Ouvrir le modal
     document.querySelectorAll('.openModalBtn').forEach(button => {
     button.addEventListener('click', () => {
-    const receiverId = button.dataset.receiverId;
+
+
+        if (!isAuthenticated) {
+            alert("Vous devez être connecté pour envoyer un message.");
+            window.location.href = "/login"; // rediriger vers login si tu veux
+            return;
+        }
+
+        const receiverId = button.dataset.receiverId;
     const serviceId = button.dataset.serviceId;
     console.log(serviceId) ;
     receiverInput.value = receiverId;
@@ -32,33 +40,5 @@
 }
 });
 
-    // Envoi du message via fetch
-//     sendMessageForm.addEventListener('submit', function (e) {
-//     e.preventDefault();
-//
-//     const formData = new FormData(sendMessageForm);
-//     console.log(formData);
-//     fetch("{{ route('messages.create') }}", {
-//     method: "POST",
-//     headers: {
-//     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-// },
-//     body: formData
-// })
-//     .then(response => response.json())
-//     .then(data => {
-//     if (data.success) {
-//     alert("Message envoyé !");
-//     modalBackdrop.classList.add('hidden');
-//     document.body.style.overflow = '';
-//     sendMessageForm.reset();
-// } else {
-//     alert("Erreur lors de l'envoi.");
-// }
-// })
-//     .catch(error => {
-//     console.error(error);
-//     alert("Erreur inattendue.");
-// });
-// });
+
 });

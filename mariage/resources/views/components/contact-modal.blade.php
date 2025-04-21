@@ -10,8 +10,8 @@
         <form id="sendMessageForm">
             @csrf
 {{--            <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-            <input type="text" name="receiver_id" id="receiver_id">
-            <input type="text" name="service_id" id="service_id"> <!-- j enregistre sujet de debut de conversation avec service_id-->
+            <label>receiver_id</label>    <input type="text" name="receiver_id" id="receiver_id">
+           <label>service_id</label> <input type="text" name="service_id" id="service_id"> <!-- j enregistre sujet de debut de conversation avec service_id-->
             <div class="mb-4">
                 <label for="event_date" class="block text-sm font-medium text-gray-700 mb-1">
                     Date de l'événement
