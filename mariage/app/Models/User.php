@@ -51,4 +51,11 @@ class User extends Authenticatable
     {
     return $this->hasMany(Service::class);
     }
+
+
+    public function isBanned()
+    {
+        return $this->is_banned;
+    }
+
 }
