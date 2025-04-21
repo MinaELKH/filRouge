@@ -56,13 +56,14 @@
                 <i class="fas fa-concierge-bell w-6 h-6 flex items-center justify-center"></i>
             </a>
 
-            <!-- Prestataires -->
-            <a href="" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Prestataires">
+            <!-- Utilisateurs (Prestataires & Clients) -->
+            <a href="{{ route('admin.manage_users', ['role' => 'prestataire']) }}"
+               class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Prestataires">
                 <i class="fas fa-briefcase w-6 h-6 flex items-center justify-center"></i>
             </a>
 
-            <!-- Clients -->
-            <a href="" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Clients">
+            <a href="{{ route('admin.manage_users', ['role' => 'client']) }}"
+               class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Clients">
                 <i class="fas fa-user w-6 h-6 flex items-center justify-center"></i>
             </a>
 

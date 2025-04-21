@@ -42,4 +42,26 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::find($user_id);
     }
+
+    public function banir($user_id)
+    {
+        $user = $this->findById($user_id);
+        $user->is_banned = !$user->is_banned; // Inverse le statut du bannissement
+        $user->save();
+
+        return $user;
+    }
+
+    public function getUsers($search, $role)
+    {
+        return User::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })
+            ->when($role, function ($query, $role) {
+                return $query->where('role', $role);
+            })
+            // ici on ne filtre plus par "banned", on les prend tous
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

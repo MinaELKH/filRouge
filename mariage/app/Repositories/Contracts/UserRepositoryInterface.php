@@ -12,6 +12,9 @@ interface UserRepositoryInterface
     public  function findById($id);
     public  function findByRole($role);
     public  function getUser($user_id);
+    public function banir($user_id);
+
+    public function getUsers(mixed $search, mixed $role);
 
 
 }

@@ -121,3 +121,14 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 // manage service
 Route::get('/admin/services', [ServiceController::class, 'adminIndex'])->name('admin.manage_services');
 Route::patch('/admin/services/{id}/status', [ServiceController::class, 'manage'])->name('admin.services.status');
+
+
+
+// manage users
+
+use App\Http\Controllers\AdminUserController;
+
+Route::middleware(['auth', 'check.admin'])->group(function () {
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.manage_users');
+    Route::patch('/admin/users/{id}/ban', [AdminUserController::class, 'toggleBan'])->name('admin.users.toggleBan');
+});
