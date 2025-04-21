@@ -119,5 +119,5 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 
 
 // manage service
-Route::get('/admin/services', [ServiceController::class, 'adminIndex'])->name('admin.services.index');
+Route::get('/admin/services', [ServiceController::class, 'adminIndex'])->name('admin.manage_services');
 Route::patch('/admin/services/{id}/status', [ServiceController::class, 'manage'])->name('admin.services.status');

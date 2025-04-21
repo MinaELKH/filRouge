@@ -111,7 +111,7 @@ class ServiceController extends Controller
         // Mise à jour du statut
         $service->update(['status' => $request->status]);
 
-        return response()->json(['message' => 'Statut mis à jour avec succès.', 'service' => $service], 200);
+        return redirect()->route('admin.manage_services')->with('success', 'services modifiée avec succès');
     }
 
 

@@ -52,7 +52,7 @@
             </a>
 
             <!-- Services -->
-            <a href="" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Services">
+            <a href="{{ route('admin.manage_services') }}" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Services">
                 <i class="fas fa-concierge-bell w-6 h-6 flex items-center justify-center"></i>
             </a>
 
