@@ -102,3 +102,16 @@ Route::post('/messages/send-devis-by-reservation/{reservation}', [MessageControl
 
 Route::get('/devis/{devi}', [DevisController::class, 'showPage'])
     ->name('devis.show');
+
+
+// espace admin :
+// categorie
+
+use App\Http\Controllers\CategoryController;
+
+Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
+    Route::get('/categories/manage', [CategoryController::class, 'index'])->name('admin.manage_categorie');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+});

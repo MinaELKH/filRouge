@@ -47,7 +47,11 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('create-category', [CategoryPolicy::class, 'create']);
         Gate::define('update-category', [CategoryPolicy::class, 'update']);
         Gate::define('delete-category', [CategoryPolicy::class, 'delete']);
+        $this->registerPolicies();
 
+        Gate::define('admin', function ($user) {
+            return $user->role === 'admin';
+        });
         // service
 
 

@@ -40,27 +40,37 @@
     <!-- Sidebar -->
     <div class="hidden md:flex flex-col bg-wedding-primary text-white w-16 min-h-[calc(100vh-48px)] fixed">
         <div class="flex flex-col items-center gap-8 py-6">
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
-                <i class="fas fa-home w-6 h-6 flex items-center justify-center"></i>
-            </div>
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
-                <i class="fas fa-users w-6 h-6 flex items-center justify-center"></i>
-            </div>
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
-                <i class="fas fa-building w-6 h-6 flex items-center justify-center"></i>
-            </div>
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
-                <i class="fas fa-bell w-6 h-6 flex items-center justify-center"></i>
-            </div>
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
-                <i class="fas fa-graduation-cap w-6 h-6 flex items-center justify-center"></i>
-            </div>
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
-                <i class="fas fa-chart-pie w-6 h-6 flex items-center justify-center"></i>
-            </div>
-            <div class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer">
+
+            <!-- Dashboard -->
+            <a href="{{ route('admin.dashboard') }}" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Dashboard">
+                <i class="fas fa-tachometer-alt w-6 h-6 flex items-center justify-center"></i>
+            </a>
+
+            <!-- Catégories -->
+            <a href="{{ route('admin.manage_categorie') }}" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Catégories">
+                <i class="fas fa-folder w-6 h-6 flex items-center justify-center"></i>
+            </a>
+
+            <!-- Services -->
+            <a href="" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Services">
+                <i class="fas fa-concierge-bell w-6 h-6 flex items-center justify-center"></i>
+            </a>
+
+            <!-- Prestataires -->
+            <a href="" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Prestataires">
+                <i class="fas fa-briefcase w-6 h-6 flex items-center justify-center"></i>
+            </a>
+
+            <!-- Clients -->
+            <a href="" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Clients">
+                <i class="fas fa-user w-6 h-6 flex items-center justify-center"></i>
+            </a>
+
+            <!-- Déconnexion -->
+            <a href="{{ route('logout') }}" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Déconnexion">
                 <i class="fas fa-sign-out-alt w-6 h-6 flex items-center justify-center"></i>
-            </div>
+            </a>
+
         </div>
     </div>
 
