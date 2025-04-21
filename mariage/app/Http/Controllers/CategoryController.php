@@ -120,12 +120,12 @@ class CategoryController extends Controller
 
     public function update(Request $request, category $category)
     {
-        $this->authorize('update', Category::class);
+        $this->authorize('delete', $category);
         $validated = $request->validate([
             'name' => 'required|string',
             'description'=>'nullable|string',
         ]) ;
-        return $this->categoryService->update($request,$category);
+        return redirect()->route('admin.manage_categorie')->with('success', 'Catégorie modifiée avec succès');
     }
 
     /**
