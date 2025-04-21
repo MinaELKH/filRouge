@@ -3,6 +3,7 @@
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FrontHomeController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -115,3 +116,8 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
+
+
+// manage service
+Route::get('/admin/services', [ServiceController::class, 'adminIndex'])->name('admin.services.index');
+Route::patch('/admin/services/{id}/status', [ServiceController::class, 'manage'])->name('admin.services.status');

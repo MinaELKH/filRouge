@@ -115,6 +115,16 @@ class ServiceController extends Controller
     }
 
 
+    public function adminIndex()
+    {
+        $services = Service::with(['category', 'user', 'ville'])
+            ->orderByDesc('created_at') // Tri décroissant
+            ->get();
+
+        return view('admin.manage_services', compact('services'));
+    }
+
+
 
 
 }
