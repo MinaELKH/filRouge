@@ -161,5 +161,5 @@ Route::get('/services/{id}/edit', [ServiceController::class, 'edit'])->name('edi
 
 Route::patch('/services/{id}/update', [ServiceController::class, 'update'])->name('service.update');
 Route::patch('/services/{id}/archive', [ServiceController::class, 'archive'])->name('service.archive');
-// Archiver un service
-Route::patch('/services/{id}/archive', [ServiceController::class, 'archive'])->name('services.archive');
+Route::patch('/services/{id}/desarchive', [ServiceController::class, 'desarchive'])->name('services.desarchive');
+

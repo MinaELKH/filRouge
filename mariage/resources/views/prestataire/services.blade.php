@@ -5,7 +5,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($services as $service)
-            <div class="bg-white rounded-xl shadow-md overflow-hidden relative">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden relative" id="service-{{ $service->id }}">
                 <img src="{{ $service->cover_image }}" alt="{{ $service->title }}" class="h-48 w-full object-cover">
 
                 <div class="p-4 space-y-2">
@@ -24,17 +24,30 @@
                     </a>
 
                     <!-- Archiver -->
-                    @if($service->status != 'archived')
-                        <form action="{{ route('services.archive', $service->id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="text-yellow-500 hover:text-yellow-700">
-                                <i class="fas fa-box-archive fa-lg"></i>
-                            </button>
-                        </form>
+                    @if($service->archived != true)
+                        <button type="button"
+                                class="text-yellow-500 hover:text-yellow-700 archive-btn"
+                                data-id="{{ $service->id }}"
+                                aria-label="Archiver">
+                            <i class="fas fa-box-archive fa-lg"></i>
+                        </button>
                     @else
                         <span class="text-gray-400">
                             <i class="fas fa-box-archive"></i>
+                        </span>
+                    @endif
+
+                    <!-- Désarchiver -->
+                    @if($service->archived == true)
+                        <button type="button"
+                                class="text-green-500 hover:text-green-700 desarchive-btn"
+                                data-id="{{ $service->id }}"
+                                aria-label="Désarchiver">
+                            <i class="fas fa-undo fa-lg"></i>
+                        </button>
+                    @else
+                        <span class="text-gray-400">
+                            <i class="fas fa-undo"></i>
                         </span>
                     @endif
                 </div>
@@ -43,27 +56,55 @@
     </div>
 @endsection
 
-
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $('.archive-btn').on('click', function (e) {
-            e.preventDefault();
-            let button = $(this);
-            let serviceId = button.data('id');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Archive Service
+            document.querySelectorAll('.archive-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const serviceId = this.dataset.id;
 
-            $.ajax({
-                url: '/prestataire/services/' + serviceId + '/archive',
-                method: 'PATCH',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function () {
-                    button.closest('.service-item').fadeOut(); // ou changer l'état visuellement
-                },
-                error: function (xhr) {
-                    alert('Erreur lors de l\'archivage.');
-                }
+                    fetch(`/services/${serviceId}/archive`, {
+                        method: 'PATCH',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            alert(data.message);
+                            location.reload(); // Recharge la page pour afficher l'état mis à jour
+                        })
+                        .catch(err => {
+                            console.error('Erreur lors de l\'archivage:', err);
+                            alert('Une erreur s\'est produite lors de l\'archivage.');
+                        });
+                });
+            });
+
+            // Desarchive Service
+            document.querySelectorAll('.desarchive-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const serviceId = this.dataset.id;
+
+                    fetch(`/services/${serviceId}/desarchive`, {
+                        method: 'PATCH',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            alert(data.message);
+                            location.reload(); // Recharge la page pour afficher l'état mis à jour
+                        })
+                        .catch(err => {
+                            console.error('Erreur lors du désarchivage:', err);
+                            alert('Une erreur s\'est produite lors du désarchivage.');
+                        });
+                });
             });
         });
     </script>

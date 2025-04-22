@@ -63,8 +63,16 @@ class ServiceService
 
     public function archive($id)
     {
-       return $this->serviceRepository->update($id,['status'=>'archived']);
+        $service = $this->serviceRepository->findById($id);
+        $service->archived = true;
+        $this->serviceRepository->save($service);
     }
 
+    public function desarchive($id)
+    {
+        $service = $this->serviceRepository->findById($id);
+        $service->archived = false;
+        $this->serviceRepository->save($service);
+    }
 
 }

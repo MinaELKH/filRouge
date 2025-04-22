@@ -17,4 +17,9 @@ interface ServiceRepositoryInterface
     //dashboard admin
     public function getTopCategories(int $limit);
     public function getTopServices(int $limit);
+
+
+    public function findById($id) ;
+    public function save(Service $service) ;
+
 }

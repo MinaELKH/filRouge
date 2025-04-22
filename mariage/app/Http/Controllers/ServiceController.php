@@ -152,7 +152,12 @@ class ServiceController extends Controller
     {
         $this->serviceService->archive($id);
         return response()->json(['message' => 'Service archivé avec succès']);
+    }
 
+    public function desarchive($id)
+    {
+        $this->serviceService->desarchive($id);
+        return response()->json(['message' => 'Service désarchivé avec succès']);
     }
 
 

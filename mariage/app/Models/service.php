@@ -22,6 +22,7 @@ class Service extends Model
 
     protected $casts = [
         'gallery' => 'array',
+        'archived' => 'boolean',
     ];
 
     public function category()

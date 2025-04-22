@@ -67,6 +67,14 @@ class ServiceRepository implements ServiceRepositoryInterface
         ->get();
     }
 
+    public function findById($id)
+    {
+        return Service::findOrFail($id);
+    }
 
+    public function save(Service $service)
+    {
+        $service->save();
+    }
 
 }
