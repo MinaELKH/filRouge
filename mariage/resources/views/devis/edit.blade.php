@@ -1,6 +1,10 @@
 @extends('layouts.prestataire')
-
 @section('content')
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
         <h1 class="text-2xl font-semibold mb-4">Modifier le devis #{{ $devis->id }}</h1>
 
@@ -19,7 +23,7 @@
                 @foreach($devis->devisItems as $index => $item)
                 <div class="mb-4 p-4 border rounded bg-gray-50">
                         <label class="block text-gray-600">Description</label>
-                        <input type="text" name="items[{{ $index }}][service_name" value="{{ $item->service_name }}"
+                        <input type="text" name="items[{{ $index }}][service_name]" value="{{ $item->service_name }}"
                                class="w-full border rounded px-3 py-1" required>
 
                         <label class="block text-gray-600 mt-2">Prix</label>

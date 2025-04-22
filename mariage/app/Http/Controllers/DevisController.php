@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Devis;
 
+use App\Services\DevisItemService;
 use App\Services\DevisService;
 use Illuminate\Http\Request;
 
 class DevisController extends Controller
 {
     protected $devisService;
+    private $devisItemService;
 
-    public function __construct(DevisService $devisService)
+    public function __construct(DevisService $devisService , DevisItemService $devisItemService)
     {
-        $this->middleware('auth:api');
+       //$this->middleware('auth:api');
         $this->devisService = $devisService;
+        $this->devisItemService = $devisItemService;
     }
 
     public function store(Request $request)
@@ -47,14 +50,12 @@ class DevisController extends Controller
     public function update(Request $request, $id)
     {
         $devis = $this->devisService->getDevis($id);
-        // $this->authorize('update', $devis);
 
         $data = $request->validate([
-            'status'       => 'required|in:pending,approved,rejected',
             'total_amount' => 'nullable|numeric',
             'items'        => 'nullable|array',
             'items.*.id'          => 'required|exists:devis_items,id',
-            'items.*.description' => 'required|string',
+            'items.*.service_name' => 'required|string',
             'items.*.quantity'    => 'required|integer|min:1',
             'items.*.unit_price'  => 'required|numeric|min:0',
         ]);
@@ -65,11 +66,12 @@ class DevisController extends Controller
             $this->devisItemService->updateItems($data['items']);
         }
 
-        return response()->json([
-            'message' => 'Devis et ses éléments mis à jour avec succès.',
-            'devis'   => $devisUpdated
-        ]);
+        // 🔁 Redirection vers la même page avec un message de session
+        return redirect()
+            ->back()
+            ->with('success', 'Devis et ses éléments mis à jour avec succès.');
     }
+
 
 
     public function destroy($id)

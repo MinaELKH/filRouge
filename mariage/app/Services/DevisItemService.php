@@ -59,18 +59,20 @@ class DevisItemService
      * @param array $data
      * @return bool
      */
-    public function updateDevisItem(int $id, array $data): bool
+    public function updateItems(array $items)
     {
-        // Si la quantité ou le prix unitaire sont modifiés, recalculer le prix total
-        if (isset($data['quantity']) || isset($data['unit_price'])) {
-            $devisItem = $this->devisItemRepository->find($id);
-            $data['quantity'] = $data['quantity'] ?? $devisItem->quantity;
-            $data['unit_price'] = $data['unit_price'] ?? $devisItem->unit_price;
-            $data['total_price'] = $data['quantity'] * $data['unit_price'];
-        }
+        foreach ($items as $itemData) {
+            $item = DevisItem::findOrFail($itemData['id']);
 
-        return $this->devisItemRepository->update($id, $data);
+            $item->update([
+                'service_name' => $itemData['service_name'],
+                'quantity'    => $itemData['quantity'],
+                'unit_price'  => $itemData['unit_price'],
+                'total_price' => $itemData['quantity'] * $itemData['unit_price'],
+            ]);
+        }
     }
+
 
     /**
      * Supprime un élément de devis.
