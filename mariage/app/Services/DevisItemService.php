@@ -108,6 +108,14 @@ class DevisItemService
         return $this->devisItemRepository->delete($id);
     }
 
+
+        public function deleteItems(array $ids)
+    {
+         return DevisItem::whereIn('id', $ids)->delete();
+
+
+    }
+
 /*
  * ajout massif
  */
