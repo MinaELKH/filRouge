@@ -8,10 +8,10 @@ use App\Repositories\Contracts\villeRepositoryInterface;
 class villeRepository implements VilleRepositoryInterface
 {
     public function findById($id){
-        $ville = Ville::find($id);
+       return  $ville = Ville::find($id);
     }
-    public function getAllVilles(){
-        $villes = Ville::all();
+    public function getAll(){
+       return  $villes = Ville::all();
     }
 
 }

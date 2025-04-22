@@ -1,36 +1,40 @@
-@extends('layouts.app')
+@extends('layouts.prestataire')
 
 @section('content')
-    <h1>Modifier le Service</h1>
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Modifier le Service</h1>
 
-    <form action="{{ route('service.update', $service->id) }}" method="POST">
+    <form action="{{ route('service.update', $service->id) }}" method="POST" class="space-y-6 bg-white p-6 rounded-xl shadow-md">
         @csrf
-        @method('PUT')
+        @method('PATCH')
 
         <div>
-            <label for="title">Titre</label>
-            <input type="text" name="title" id="title" value="{{ old('title', $service->title) }}" required>
+            <label for="title" class="block text-sm font-medium text-gray-700">Titre</label>
+            <input type="text" name="title" id="title" value="{{ old('title', $service->title) }}"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
         </div>
 
         <div>
-            <label for="description">Description</label>
-            <textarea name="description" id="description">{{ old('description', $service->description) }}</textarea>
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" id="description" rows="4"
+                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">{{ old('description', $service->description) }}</textarea>
         </div>
 
         <div>
-            <label for="price">Prix</label>
-            <input type="number" name="price" id="price" value="{{ old('price', $service->price) }}" required>
+            <label for="price" class="block text-sm font-medium text-gray-700">Prix (€)</label>
+            <input type="number" name="price" id="price" value="{{ old('price', $service->price) }}"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
         </div>
 
         <div>
-            <label for="cover_image">Image de couverture</label>
-            <input type="text" name="cover_image" id="cover_image" value="{{ old('cover_image', $service->cover_image) }}" required>
+            <label for="cover_image" class="block text-sm font-medium text-gray-700">Image de couverture (URL)</label>
+            <input type="text" name="cover_image" id="cover_image" value="{{ old('cover_image', $service->cover_image) }}"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
         </div>
 
         <div>
-            <label for="category_id">Catégorie</label>
-            <select name="category_id" id="category_id" required>
-                <!-- Liste des catégories -->
+            <label for="category_id" class="block text-sm font-medium text-gray-700">Catégorie</label>
+            <select name="category_id" id="category_id"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ $category->id == $service->category_id ? 'selected' : '' }}>
                         {{ $category->name }}
@@ -40,9 +44,9 @@
         </div>
 
         <div>
-            <label for="ville_id">Ville</label>
-            <select name="ville_id" id="ville_id" required>
-                <!-- Liste des villes -->
+            <label for="ville_id" class="block text-sm font-medium text-gray-700">Ville</label>
+            <select name="ville_id" id="ville_id"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
                 @foreach($villes as $ville)
                     <option value="{{ $ville->id }}" {{ $ville->id == $service->ville_id ? 'selected' : '' }}>
                         {{ $ville->name }}
@@ -51,8 +55,11 @@
             </select>
         </div>
 
-        <div>
-            <button type="submit">Mettre à jour</button>
+        <div class="text-right">
+            <button type="submit"
+                    class="inline-flex items-center px-4 py-2 bg-pink-600 border border-transparent rounded-md font-semibold text-white hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                Mettre à jour
+            </button>
         </div>
     </form>
 @endsection

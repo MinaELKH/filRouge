@@ -9,10 +9,14 @@ class ServiceService
 {
 
     protected $serviceRepository;
+    protected $categoryService;
+    protected $villeService;
 
-    public function __construct(ServiceRepositoryInterface $serviceRepository)
+    public function __construct(ServiceRepositoryInterface $serviceRepository , CategoryService $categoryService, VilleService $villeService)
     {
         $this->serviceRepository = $serviceRepository;
+        $this->categoryService = $categoryService;
+        $this->villeService = $villeService;
     }
 
     public function getAllServices()
@@ -49,7 +53,18 @@ class ServiceService
         return $this->serviceRepository->delete($id);
     }
 
+    public function  editService($id){
+        $service = $this->serviceRepository->getById($id);
+        $categories = $this->categoryService->getAll();
+        $villes = $this->villeService->getAll();
+        $data = [ 'service'=>$service , 'categories' => $categories , 'villes' => $villes ];
+        return $data ;
+    }
 
+    public function archive($id)
+    {
+       return $this->serviceRepository->update($id,['status'=>'archived']);
+    }
 
 
 }

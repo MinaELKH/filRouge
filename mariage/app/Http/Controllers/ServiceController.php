@@ -9,13 +9,12 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    protected $serviceService;
-    private $categoryService;
 
-    public function __construct(ServiceService $serviceService , CategoryService $categoryService)
+
+    public function __construct(ServiceService $serviceService)
     {
         $this->serviceService = $serviceService;
-        $this->categoryService = $categoryService;
+
     }
 
     /**
@@ -149,16 +148,25 @@ class ServiceController extends Controller
         // Passe la variable $services à la vue
         return view('prestataire.services', compact('services'));
     }
+    public function archive($id)
+    {
+        $this->serviceService->archive($id);
+        return response()->json(['message' => 'Service archivé avec succès']);
+
+    }
 
 
     public function edit($id)
     {
-        $service = $this->serviceService->getServiceById($id);
-        $categories = $this->categoryService->getAll();
-        $villes = $this->villeService->getAll();
       //  $this->authorize('update', $service);
+        $data = $this->serviceService->editService($id);
+        // data contient allcartegory + allVIlle + service a modifier
+        $service = $data['service'];
+        $categories = $data['categories'];
+        $villes = $data['villes'];
 
-        return view('prestataire.edit_service', compact('service' , 'categories'));
+
+        return view('prestataire.edit_service', compact('service' , 'categories' , 'villes'));
     }
 
 

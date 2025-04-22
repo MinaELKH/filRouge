@@ -5,6 +5,6 @@ namespace App\Repositories\Contracts;
 interface villeRepositoryInterface
 {
     public function findById($id);
-    public function getAllVilles();
+    public function getAll();
 
 }

@@ -158,6 +158,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('/services/{id}/edit', [ServiceController::class, 'edit'])->name('edite_service');
+
 Route::patch('/services/{id}/update', [ServiceController::class, 'update'])->name('service.update');
+Route::patch('/services/{id}/archive', [ServiceController::class, 'archive'])->name('service.archive');
 // Archiver un service
 Route::patch('/services/{id}/archive', [ServiceController::class, 'archive'])->name('services.archive');
