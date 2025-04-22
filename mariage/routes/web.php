@@ -146,3 +146,18 @@ Route::middleware(['auth', 'check.admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
 
+
+
+// espace prestataire
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/prestataire/mes-services', [ServiceController::class, 'myServices'])->name('prestataire.services');
+});
+
+
+
+
+Route::get('/services/{id}/edit', [ServiceController::class, 'edit'])->name('edite_service');
+Route::patch('/services/{id}/update', [ServiceController::class, 'update'])->name('service.update');
+// Archiver un service
+Route::patch('/services/{id}/archive', [ServiceController::class, 'archive'])->name('services.archive');

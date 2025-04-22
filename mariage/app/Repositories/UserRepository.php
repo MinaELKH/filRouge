@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Service;
 use App\Models\User;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
@@ -69,7 +70,6 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::where('role', $role)->count();
     }
-
     public function getTopPrestataires(int $limit)
     {
         return User::where('role', 'prestataire')
@@ -79,8 +79,6 @@ class UserRepository implements UserRepositoryInterface
             ->take($limit)
             ->get();
     }
-
-
     public function getTopCategories(int $limit)
     {
         return Service::select('category', DB::raw('count(*) as total'))

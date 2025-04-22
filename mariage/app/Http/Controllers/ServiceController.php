@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Services\CategoryService;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
     protected $serviceService;
+    private $categoryService;
 
-    public function __construct(ServiceService $serviceService)
+    public function __construct(ServiceService $serviceService , CategoryService $categoryService)
     {
         $this->serviceService = $serviceService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -68,9 +71,13 @@ class ServiceController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Récupérer le service
         $service = $this->serviceService->getServiceById($id);
+
+        // Vérifie si l'utilisateur est autorisé à modifier ce service
         $this->authorize('update', $service);
 
+        // Validation des données envoyées par le formulaire
         $validated = $request->validate([
             'title'       => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
@@ -81,8 +88,13 @@ class ServiceController extends Controller
             'ville_id'    => 'sometimes|required|exists:villes,id',
         ]);
 
-        return response()->json($this->serviceService->updateService($id, $validated), 200);
+        // Mise à jour du service avec les nouvelles données
+        $this->serviceService->updateService($id, $validated);
+
+        // Redirection après la mise à jour avec un message de succès
+        return redirect()->route('prestataire.services')->with('success', 'Service mis à jour avec succès');
     }
+
 
     public function destroy($id)
     {
@@ -124,7 +136,30 @@ class ServiceController extends Controller
         return view('admin.manage_services', compact('services'));
     }
 
+    public function myServices()
+    {
+        $user = auth()->user();
 
+
+        $services = Service::with(['category', 'ville'])
+            ->where('user_id', $user->id)
+            ->latest()
+            ->get();
+
+        // Passe la variable $services à la vue
+        return view('prestataire.services', compact('services'));
+    }
+
+
+    public function edit($id)
+    {
+        $service = $this->serviceService->getServiceById($id);
+        $categories = $this->categoryService->getAll();
+        $villes = $this->villeService->getAll();
+      //  $this->authorize('update', $service);
+
+        return view('prestataire.edit_service', compact('service' , 'categories'));
+    }
 
 
 }
