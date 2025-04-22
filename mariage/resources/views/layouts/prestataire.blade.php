@@ -41,6 +41,6 @@
 </footer>
 
 
-@yield('scripts')
+@stack('script')
 </body>
 </html>

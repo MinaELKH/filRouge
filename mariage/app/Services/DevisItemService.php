@@ -59,20 +59,43 @@ class DevisItemService
      * @param array $data
      * @return bool
      */
-    public function updateItems(array $items)
+    /**
+     * Met à jour un seul élément de devis par son ID.
+     *
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function updateItem(int $id, array $data)
     {
-        foreach ($items as $itemData) {
-            $item = DevisItem::findOrFail($itemData['id']);
+        $item = $this->findDevisItemById($id);
 
-            $item->update([
-                'service_name' => $itemData['service_name'],
-                'quantity'    => $itemData['quantity'],
-                'unit_price'  => $itemData['unit_price'],
-                'total_price' => $itemData['quantity'] * $itemData['unit_price'],
-            ]);
+        if (!$item) {
+            return false;
         }
+
+        return $item->update([
+            'service_name' => $data['service_name'],
+            'quantity'     => $data['quantity'],
+            'unit_price'   => $data['unit_price'],
+            'total_price'  => $data['quantity'] * $data['unit_price'],
+        ]);
     }
 
+    /**
+     * Crée un élément de devis lié à un devis donné.
+     *
+     * @param int $devisId
+     * @param array $data
+     * @return DevisItem
+     */
+    public function createItem(int $devisId, array $data): DevisItem
+    {
+        $data['devis_id'] = $devisId;
+        $data['total_price'] = $data['quantity'] * $data['unit_price'];
+
+        return $this->devisItemRepository->create($data);
+    }
 
     /**
      * Supprime un élément de devis.

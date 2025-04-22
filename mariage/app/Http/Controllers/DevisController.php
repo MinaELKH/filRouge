@@ -54,23 +54,38 @@ class DevisController extends Controller
         $data = $request->validate([
             'total_amount' => 'nullable|numeric',
             'items'        => 'nullable|array',
-            'items.*.id'          => 'required|exists:devis_items,id',
             'items.*.service_name' => 'required|string',
-            'items.*.quantity'    => 'required|integer|min:1',
-            'items.*.unit_price'  => 'required|numeric|min:0',
+            'items.*.quantity'     => 'required|integer|min:1',
+            'items.*.unit_price'   => 'required|numeric|min:0',
+            'items.*.id'           => 'nullable|exists:devis_items,id',
+            'deleted_item_ids'     => 'nullable|array',
+            'deleted_item_ids.*'   => 'exists:devis_items,id',
         ]);
 
+        // 1. Mise à jour du devis (montant par exemple)
         $devisUpdated = $this->devisService->updateDevis($devis, $data);
 
+        // 2. Mise à jour des éléments existants + ajout de nouveaux
         if (!empty($data['items'])) {
-            $this->devisItemService->updateItems($data['items']);
+            foreach ($data['items'] as $item) {
+                if (isset($item['id'])) {
+                    $this->devisItemService->updateItem($item['id'], $item); // méthode update par ID
+                } else {
+                    $this->devisItemService->createItem($devis->id, $item); // méthode pour créer un nouvel item
+                }
+            }
         }
 
-        // 🔁 Redirection vers la même page avec un message de session
+        // 3. Suppression des éléments supprimés
+        if (!empty($data['deleted_item_ids'])) {
+            $this->devisItemService->deleteItems($data['deleted_item_ids']);
+        }
+
         return redirect()
             ->back()
             ->with('success', 'Devis et ses éléments mis à jour avec succès.');
     }
+
 
 
 
