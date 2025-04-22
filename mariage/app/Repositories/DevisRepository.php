@@ -50,4 +50,13 @@ class DevisRepository implements DevisRepositoryInterface
     {
         return Devis::with($relations)->findOrFail($id);
     }
+
+    public function getByPrestataireId($userId)
+    {
+        return Devis::whereHas('reservation.service', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->with(['reservation.service', 'reservation.user']) // pour info service/client
+        ->latest()
+        ->get();
+    }
 }

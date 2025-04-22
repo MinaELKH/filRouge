@@ -22,7 +22,7 @@
         <ul class="flex space-x-8">
             <li><a href="#" class="text-sm text-gray-800 hover:text-gray-600">Accueil</a></li>
             <li><a href="{{route('prestataire.services')}}" class="text-sm text-gray-800 hover:text-gray-600">Ma Vitrine</a></li>
-            <li><a href="#" class="text-sm text-gray-800 hover:text-gray-600">Devis</a></li>
+            <li><a href="{{ route('devisPrestataire') }}"  class="text-sm text-gray-800 hover:text-gray-600">Devis</a></li>
             <li><a href="{{ route('messages.index') }}" class="text-sm text-gray-800 hover:text-gray-600">Message</a></li>
         </ul>
     </nav>

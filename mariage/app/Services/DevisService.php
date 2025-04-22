@@ -96,4 +96,12 @@ class DevisService
         ]);
     }
 
+    // App\Services\DevisService.php
+
+    public function getDevisByPrestataire($userId)
+    {
+        return $this->devisRepository->getByPrestataireId($userId);
+    }
+
+
 }

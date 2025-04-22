@@ -105,5 +105,10 @@ class DevisController extends Controller
         // Redirection vers le paiement (à adapter)
         return redirect()->route('paiement.page', ['devis_id' => $id]);
     }
-
+    public function DevisByPrestataire()
+    {
+        $devisList = $this->devisService->getDevisByPrestataire(auth()->id());
+    //  dd($devisList);
+        return view('devis.devisPrestataire', compact('devisList'));
+    }
 }

@@ -28,4 +28,6 @@ class DevisItemController extends Controller
             return response()->json(['errors' => $e->errors()], 422);
         }
     }
+
+
 }

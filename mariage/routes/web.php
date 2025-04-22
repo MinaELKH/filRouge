@@ -163,3 +163,9 @@ Route::patch('/services/{id}/update', [ServiceController::class, 'update'])->nam
 Route::patch('/services/{id}/archive', [ServiceController::class, 'archive'])->name('service.archive');
 Route::patch('/services/{id}/desarchive', [ServiceController::class, 'desarchive'])->name('services.desarchive');
 
+
+
+
+// affichage des devis par prestataires
+
+Route::get('/devisPrestataire', [DevisController::class, 'DevisByPrestataire'])->name('devisPrestataire');
