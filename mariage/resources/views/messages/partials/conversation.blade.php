@@ -1,6 +1,6 @@
 {{--messages.partial.conversation.blade.php--}}4
 
-<div class="flex-1 flex flex-col">
+<div class="flex-1 flex flex-col overflow-y-auto max-h-[80%]">
     <!-- Header -->
     <div class="bg-white border-b p-4 flex items-center">
         <img src="{{ $partner->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($partner->name) }}"
@@ -12,17 +12,18 @@
     </div>
 
     <!-- Messages -->
-    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+    <!-- Messages -->
+    <div id="messagesContainer" class="flex-1 overflow-y-auto p-4 space-y-4">
         @foreach($messages as $msg)
             <div class="flex {{ $msg->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
                 <div class="max-w-xs p-3 rounded-lg shadow-sm {{ $msg->sender_id === auth()->id() ? 'bg-blue-500 text-white' : 'bg-white' }}">
-{{--                    <p class="text-sm">{{ $msg->body }}</p>--}}
                     <p class="text-sm">{!! $msg->body !!}</p>
                     <div class="text-xs text-gray-400 mt-1 text-right">{{ $msg->created_at->format('d/m/Y H:i') }}</div>
                 </div>
             </div>
         @endforeach
     </div>
+
 
     <!-- Input form -->
     <form id="replyForm" class="p-4 border-t bg-white flex">
@@ -46,11 +47,7 @@
             </button>
         </div>
     @endif
-
-
-
-
-
-
 </div>
+
+
 

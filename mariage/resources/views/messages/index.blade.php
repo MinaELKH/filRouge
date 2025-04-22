@@ -136,4 +136,35 @@
             }
         });
     </script>
+
+
+
+    <script>
+        // defilment du boite messagerie
+        function scrollToBottom() {
+            const container = document.getElementById('messagesContainer');
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        // On appelle cette fonction après chargement des messages
+        document.addEventListener('DOMContentLoaded', function () {
+            scrollToBottom();
+        });
+
+        // Et aussi après avoir rechargé la conversation (dans loadConversation)
+        function loadConversation(partnerId) {
+            fetch(`/messages/${partnerId}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('conversationContainer').innerHTML = html;
+                    setupReplyForm(partnerId);
+                    setupDevisButton();
+                    scrollToBottom(); // 👈 ici aussi
+                })
+                .catch(err => console.error('Erreur chargement conversation:', err));
+        }
+    </script>
+
 @endsection
