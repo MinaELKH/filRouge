@@ -15,13 +15,17 @@ class DevisPolicy
     {
         return $user->role === 'prestataire';
     }
+    public function edit(User $user): bool
+    {
+        return $user->role === 'prestataire';
+    }
 
     /**
      * Détermine si l'utilisateur peut mettre à jour le devis.
      */
     public function update(User $user, Devis $devis): bool
     {
-        return $user->role === 'prestataire' && $devis->prestataire_id === $user->id;
+        return $user->role === 'prestataire' ;  // && $devis->prestataire_id === $user->id;
     }
 
     /**

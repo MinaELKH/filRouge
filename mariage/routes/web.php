@@ -169,3 +169,5 @@ Route::patch('/services/{id}/desarchive', [ServiceController::class, 'desarchive
 // affichage des devis par prestataires
 
 Route::get('/devisPrestataire', [DevisController::class, 'DevisByPrestataire'])->name('devisPrestataire');
+Route::get('/devis/{id}/edit', [DevisController::class, 'edit'])->name('devis.edit');
+Route::put('/devis/{id}', [DevisController::class, 'update'])->name('devis.update');

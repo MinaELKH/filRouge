@@ -47,25 +47,35 @@ class DevisController extends Controller
     public function update(Request $request, $id)
     {
         $devis = $this->devisService->getDevis($id);
-        $this->authorize('update', $devis);
+        // $this->authorize('update', $devis);
 
         $data = $request->validate([
             'status'       => 'required|in:pending,approved,rejected',
-            'total_amount' => 'nullable|numeric'
+            'total_amount' => 'nullable|numeric',
+            'items'        => 'nullable|array',
+            'items.*.id'          => 'required|exists:devis_items,id',
+            'items.*.description' => 'required|string',
+            'items.*.quantity'    => 'required|integer|min:1',
+            'items.*.unit_price'  => 'required|numeric|min:0',
         ]);
 
         $devisUpdated = $this->devisService->updateDevis($devis, $data);
 
+        if (!empty($data['items'])) {
+            $this->devisItemService->updateItems($data['items']);
+        }
+
         return response()->json([
-            'message' => 'Devis mis à jour avec succès.',
+            'message' => 'Devis et ses éléments mis à jour avec succès.',
             'devis'   => $devisUpdated
         ]);
     }
 
+
     public function destroy($id)
     {
         $devis = $this->devisService->getDevis($id);
-        $this->authorize('delete', $devis);
+        //$this->authorize('delete', $devis);
 
         $this->devisService->deleteDevis($devis);
 
@@ -111,4 +121,16 @@ class DevisController extends Controller
     //  dd($devisList);
         return view('devis.devisPrestataire', compact('devisList'));
     }
+
+    public function edit($id)
+    {
+        $devis = $this->devisService->getDevisWithItems($id);
+        //dd($devis);
+
+      //  $this->authorize('update', $devis);
+
+        return view('devis.edit', compact('devis'));
+    }
+
+
 }

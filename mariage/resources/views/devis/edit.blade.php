@@ -1,59 +1,43 @@
-@extends('layouts.app')
+@extends('layouts.prestataire')
 
 @section('content')
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
-        <h2 class="text-2xl font-semibold mb-4">Modifier le devis #{{ $devis->id }}</h2>
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
+        <h1 class="text-2xl font-semibold mb-4">Modifier le devis #{{ $devis->id }}</h1>
 
-        <form method="POST" action="{{ route('devis.update', $devis->id) }}">
+        <form action="{{ route('devis.update', $devis->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="mb-4">
-                <label class="block font-medium text-sm text-gray-700 mb-1">Montant total (€)</label>
-                <input type="number" step="0.01" name="total_amount" value="{{ $devis->total_amount }}"
-                       class="w-full px-4 py-2 border rounded focus:outline-none focus:ring" required>
+                <label class="block text-gray-700">Montant total</label>
+                <input type="number" name="total_amount" value="{{ $devis->total_amount }}"
+                       class="w-full border rounded px-3 py-2 mt-1" required>
             </div>
 
-            <div class="mb-4">
-                <label class="block font-medium text-sm text-gray-700 mb-1">Statut</label>
-                <select name="status" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring" required>
-                    <option value="pending" {{ $devis->status == 'pending' ? 'selected' : '' }}>En attente</option>
-                    <option value="approved" {{ $devis->status == 'approved' ? 'selected' : '' }}>Approuvé</option>
-                    <option value="rejected" {{ $devis->status == 'rejected' ? 'selected' : '' }}>Rejeté</option>
-                </select>
-            </div>
+            <h2 class="text-lg font-bold mt-6 mb-2">Éléments du devis</h2>
+            <div id="items">
+                @foreach($devis->devisItems as $index => $item)
+                <div class="mb-4 p-4 border rounded bg-gray-50">
+                        <label class="block text-gray-600">Description</label>
+                        <input type="text" name="items[{{ $index }}][service_name" value="{{ $item->service_name }}"
+                               class="w-full border rounded px-3 py-1" required>
 
-            <h3 class="text-lg font-semibold mt-6 mb-2">Éléments du devis</h3>
+                        <label class="block text-gray-600 mt-2">Prix</label>
+                        <input type="number" name="items[{{ $index }}][unit_price]" value="{{ $item->unit_price }}"
+                               class="w-full border rounded px-3 py-1" required>
 
-            <div id="items-wrapper" class="space-y-4">
-                @foreach($devis->items as $index => $item)
-                    <div class="bg-gray-50 p-4 rounded border">
+                    <label class="block text-gray-600 mt-2">Quantité</label>
+                    <input type="number" name="items[{{ $index }}][quantity]" value="{{ $item->quantity }}"
+                           class="w-full border rounded px-3 py-1" required>
+
+
                         <input type="hidden" name="items[{{ $index }}][id]" value="{{ $item->id }}">
-                        <div class="mb-2">
-                            <label class="block text-sm">Titre</label>
-                            <input type="text" name="items[{{ $index }}][title]" value="{{ $item->title }}"
-                                   class="w-full px-3 py-2 border rounded" required>
-                        </div>
-                        <div class="mb-2">
-                            <label class="block text-sm">Description</label>
-                            <textarea name="items[{{ $index }}][description]" rows="2"
-                                      class="w-full px-3 py-2 border rounded">{{ $item->description }}</textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm">Prix (€)</label>
-                            <input type="number" step="0.01" name="items[{{ $index }}][price]" value="{{ $item->price }}"
-                                   class="w-full px-3 py-2 border rounded" required>
-                        </div>
                     </div>
                 @endforeach
             </div>
 
-            <div class="mt-6 text-right">
-                <button type="submit"
-                        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                    Enregistrer les modifications
-                </button>
-            </div>
+            <button type="submit"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Enregistrer</button>
         </form>
     </div>
 @endsection
