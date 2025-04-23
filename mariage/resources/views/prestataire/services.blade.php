@@ -44,7 +44,7 @@
                                 data-id="{{ $service->id }}"
                                 aria-label="Désarchiver">
                             <i class="fas fa-undo fa-lg"></i>
-                        </button>
+                        </button
                     @else
                         <span class="text-gray-400">
                             <i class="fas fa-undo"></i>
