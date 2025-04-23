@@ -57,5 +57,8 @@ class User extends Authenticatable
     {
         return $this->is_banned;
     }
-
+    public function entreprise()
+    {
+        return $this->hasOne(Entreprise::class);
+    }
 }

@@ -50,7 +50,7 @@
         <nav class="flex border-t border-gray-200">
             <ul class="flex space-x-1 -mb-px">
                 <li>
-                    <a href="#" class="inline-block px-4 py-3 text-sm font-medium {{ request()->is('/') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
+                    <a href="{{route('prestataire.home')}}" class="inline-block px-4 py-3 text-sm font-medium {{ request()->routeIs('prestataire.home') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
                         <i class="fas fa-home mr-2"></i>Accueil
                     </a>
                 </li>

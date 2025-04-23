@@ -15,6 +15,8 @@ use App\Repositories\Contracts\ServiceRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\DevisItemRepository;
 use App\Repositories\DevisRepository;
+use App\Repositories\EntrepriseRepository;
+use App\Repositories\Interfaces\EntrepriseRepositoryInterface;
 use App\Repositories\MessageRepository;
 use App\Repositories\ReservationRepository;
 use App\Repositories\ServiceRepository;
@@ -38,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DevisRepositoryInterface::class, DevisRepository::class);
         $this->app->bind(DevisItemRepositoryInterface::class, DevisItemRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
+        $this->app->bind(EntrepriseRepositoryInterface::class, EntrepriseRepository::class
+        );
     }
 
 

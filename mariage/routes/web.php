@@ -175,3 +175,8 @@ Route::get('/devis/create/{id}', [DevisController::class, 'createPage'])->name('
 Route::post('/devis/store', [DevisController::class, 'store'])->name('devis.store');
 
 
+
+
+// entreprise
+Route::get('/dashboard', [App\Http\Controllers\EntrepriseController::class, 'index'])->name('dashboard');
+Route::post('/entreprise/update', [App\Http\Controllers\EntrepriseController::class, 'update'])->name('entreprise.update');
