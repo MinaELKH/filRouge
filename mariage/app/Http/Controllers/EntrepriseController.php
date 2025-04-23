@@ -18,7 +18,7 @@ class EntrepriseController extends Controller
     public function index()
     {
         $entreprise = $this->entrepriseService->getUserEntreprise();
-        return view('dashboard', compact('entreprise'));
+        return view('prestataire.dashboard', compact('entreprise'));
     }
 
     public function update(Request $request)

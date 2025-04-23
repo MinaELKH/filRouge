@@ -3,7 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Entreprise;
-use App\Repositories\Interfaces\EntrepriseRepositoryInterface;
+use App\Repositories\Contracts\EntrepriseRepositoryInterface;
+
 
 class EntrepriseRepository implements EntrepriseRepositoryInterface
 {

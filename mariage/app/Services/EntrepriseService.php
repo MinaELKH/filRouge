@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\Interfaces\EntrepriseRepositoryInterface;
+
+use App\Repositories\Contracts\EntrepriseRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 

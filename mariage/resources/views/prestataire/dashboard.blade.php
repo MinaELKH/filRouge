@@ -5,12 +5,6 @@
 @section('content')
     <h1 class="text-2xl font-bold text-gray-800 mb-4">Bienvenue dans votre espace prestataire</h1>
 
-    @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4 border border-green-200">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <main class="container mx-auto px-4 py-6">
         <!-- Business Information Section -->
         <section class="mb-12">
@@ -23,12 +17,13 @@
                 @csrf
                 <div class="flex flex-col md:flex-row gap-8">
                     <!-- Company Card -->
-                    <div class="w-full md:w-1/4">
-                        <div class="bg-gray-200 p-8 flex items-center justify-center rounded-lg border border-gray-300 h-48">
+                    <div class="w-full  md:w-1/4">
+                        <div class="bg-white p-8 flex items-center justify-center rounded-full border border-gray-300 h-48 w-48">
                             @if(isset($entreprise) && $entreprise->logo)
-                                <img src="{{ asset('storage/' . $entreprise->logo) }}" alt="{{ $entreprise->nom ?? 'Votre entreprise' }}" class="max-w-full max-h-32">
+                                <img src="{{ asset('/storage/' . $entreprise->logo) }}" alt="{{ $entreprise->nom ?? 'Votre entreprise' }}"  class="h-full object-contain">
                             @else
-                                <div class="text-center text-gray-500">
+
+                            <div class="text-center text-gray-500">
                                     <i class="fas fa-image text-4xl mb-2"></i>
                                     <p>{{ isset($entreprise) ? $entreprise->nom : 'Ajoutez votre logo' }}</p>
                                 </div>
