@@ -91,4 +91,10 @@ class ReservationService
     {
         return $this->reservationRepository->find($id);
     }
+
+    public function getReservationById($id)
+    {
+        return $this->reservationRepository->find($id);
+    }
+
 }

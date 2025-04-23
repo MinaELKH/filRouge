@@ -63,9 +63,10 @@ class DevisController extends Controller
             }
         }
 
-        return redirect()
-            ->route('devis.index', $devis->id)
-            ->with('success', 'Devis créé avec succès.');
+        //$devis = $this->devisService->getDevisWithItems((int) $id_devis);
+
+
+        return $this->showPage($devis->id);
     }
 
 
@@ -146,18 +147,22 @@ class DevisController extends Controller
 
     public function showPage($id)
     {
+
         $devis = $this->devisService->getDevisWithItems((int) $id);
-
-
+        $data = $this->devisService->enteteDevis($devis->reservation_id) ;
         return view('devis.show', compact('devis'));
     }
-    public function createPage($id)
+    public function createPage($reservationId)
     {
 
-       $this->devisService->createPage($id) ;
+       $data = $this->devisService->enteteDevis($reservationId) ;
+      // dd($data);
+        $reservation = $data['reservation'];
+        $service = $data['service'];
+        $client = $data['client'];
 
+        return view('devis.create', compact('reservationId' ,'reservation', 'service', 'client'));
 
-        return view('devis.show', compact(''));
     }
 
     public function confirm($id)

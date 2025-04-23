@@ -45,7 +45,9 @@
                 class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
                 Envoyer un devis
             </button>
-            <a href="{{route('devis.create')}}" > créer un  devis </a>
+
+            <a href="{{ route('devis.create', $messages->first()->reservation_id) }}">Créer un devis</a>
+
         </div>
     @endif
 </div>

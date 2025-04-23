@@ -14,9 +14,18 @@ class DevisService
 {
     protected $devisRepository;
 
-    public function __construct(DevisRepositoryInterface $devisRepository)
+    private $reservationService;
+    private $serviceService;
+    private $userService;
+
+    public function __construct(DevisRepositoryInterface $devisRepository , ReservationService $reservationService ,
+    ServiceService $serviceService, UserService $userService)
     {
         $this->devisRepository = $devisRepository;
+        $this->reservationService = $reservationService;
+        $this->serviceService = $serviceService;
+        $this->userService = $userService;
+
     }
 
     /**
@@ -103,13 +112,22 @@ class DevisService
         return $this->devisRepository->getByPrestataireId($userId);
     }
 
-    public function createPage($id)
+    public function enteteDevis($id)
     {
-
-        $reservation = $this->serviceReservation->getReservationById($id);
+        $reservation = $this->reservationService->getReservationById($id);
         $service = $this->serviceService->getServiceById($reservation->service_id);
+        $client = $this->userService->getClientById($reservation->user_id);
+        $data = [
+            'reservation' => $reservation,
+            'service' => $service,
+            'client' => $client,
+        ];
+        return  $data ;
 
     }
+
+
+
 
 
 }

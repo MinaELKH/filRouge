@@ -23,4 +23,10 @@ public function banirUser($user_id)
 {
 return $this->userRepository->banir($user_id);
 }
+
+    public function getClientById($client_id)
+    {
+        return $this->userRepository->getUser($client_id);
+
+    }
 }
