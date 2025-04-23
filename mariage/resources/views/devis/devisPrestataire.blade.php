@@ -24,6 +24,11 @@
             <td class="px-4 py-2">{{ $devis->total_amount }} €</td>
             <td class="px-4 py-2">{{ ucfirst($devis->status) }}</td>
             <td class="px-4 py-2">
+                <a href="{{ route('devis.show', $devis->id) }}" class="text-indigo-600 hover:underline">
+                    Voir
+                </a>
+            </td>
+            <td class="px-4 py-2">
                 <a href="{{ route('devis.edit', $devis->id) }}" class="text-blue-600 hover:underline">Modifier</a>
             </td>
         </tr>

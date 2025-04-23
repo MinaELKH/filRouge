@@ -46,9 +46,6 @@ class DevisItemService
      */
     public function createDevisItem(array $data): DevisItem
     {
-        // Calculer le prix total
-        $data['total_price'] = $data['quantity'] * $data['unit_price'];
-
         return $this->devisItemRepository->create($data);
     }
 
@@ -78,7 +75,6 @@ class DevisItemService
             'service_name' => $data['service_name'],
             'quantity'     => $data['quantity'],
             'unit_price'   => $data['unit_price'],
-            'total_price'  => $data['quantity'] * $data['unit_price'],
         ]);
     }
 
@@ -92,7 +88,6 @@ class DevisItemService
     public function createItem(int $devisId, array $data): DevisItem
     {
         $data['devis_id'] = $devisId;
-        $data['total_price'] = $data['quantity'] * $data['unit_price'];
 
         return $this->devisItemRepository->create($data);
     }
@@ -126,7 +121,6 @@ class DevisItemService
             'items.*.devis_id' => 'required|exists:devis,id',
             'items.*.service_name' => 'required|string|max:255',
             'items.*.quantity' => 'required|integer|min:1',
-            'items.*.unit_price' => 'required|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -139,7 +133,6 @@ class DevisItemService
                 'service_name' => $item['service_name'],
                 'quantity' => $item['quantity'],
                 'unit_price' => $item['unit_price'],
-                'total_price' => $item['quantity'] * $item['unit_price'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

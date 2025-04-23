@@ -14,7 +14,7 @@ class DevisItem extends Model
         'service_name',
         'quantity',
         'unit_price',
-        'total_price',
+
     ];
 
     /**
@@ -23,6 +23,13 @@ class DevisItem extends Model
     public function devis()
     {
         return $this->belongsTo(Devis::class);
+    }
+    //prix de items
+// app/Models/DevisItem.php
+
+    public function getAmountAttribute()
+    {
+        return $this->quantity * $this->unit_price;
     }
 
 }

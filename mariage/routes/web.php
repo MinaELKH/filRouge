@@ -103,7 +103,7 @@ Route::post('/messages/send-devis-by-reservation/{reservation}', [MessageControl
 
 Route::get('/devis/{devi}', [DevisController::class, 'showPage'])
     ->name('devis.show');
-
+Route::get('devis/{id}/pdf', [DevisController::class, 'generateDevisPdf'])->name('devis.pdf');
 
 // espace admin :
 // categorie

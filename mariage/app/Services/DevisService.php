@@ -18,8 +18,9 @@ class DevisService
     private $serviceService;
     private $userService;
 
+
     public function __construct(DevisRepositoryInterface $devisRepository , ReservationService $reservationService ,
-    ServiceService $serviceService, UserService $userService)
+    ServiceService $serviceService, UserService $userService , )
     {
         $this->devisRepository = $devisRepository;
         $this->reservationService = $reservationService;
@@ -70,28 +71,41 @@ class DevisService
     {
         return $this->devisRepository->getByReservationId($reservationId);
     }
-
-
-    public function generateDevisPdf($devisId)
+    public function generateDevisPdf($id)
     {
-        // Récupérer le devis avec ses relations
-        //$devis = Devis::with(['client', 'prestataire', 'service', 'category', 'devisItems'])->findOrFail($devisId);
+        $devis = $this->getDevisWithItems((int)$id);
+        $data = $this->enteteDevis($devis->reservation_id);
+        $reservation = $data['reservation'];
+        $service = $data['service'];
+        $client = $data['client'];
 
-        $devis = Devis::with(['reservation.client', 'reservation.service.user','reservation.service' , 'reservation.service.category', 'devisItems'])->findOrFail($devisId);
+        $pdf = Pdf::loadView('devis.pdf', compact('devis', 'reservation', 'service', 'client'));
 
-        $client = $devis->client;
-        $service = $devis->reservation->service;
-        $prestataire = $service->user;
-        $categorie = $service->category;
-        // Calculer le montant total des items
-        $totalAmount = $devis->devisItems->sum('amount');
-
-        // Générer le PDF à partir de la vue Blade
-        $pdf = Pdf::loadView('devis.pdf', compact('devis', 'totalAmount'));
-
-        return $pdf->download('devis_' . $devis->id . '.pdf');
-
+        return $pdf->download('devis_'.$devis->id.'.pdf');
     }
+
+//    public function generateDevisPdf($devisId)
+//    {
+//        // Récupérer le devis avec ses relations
+//        //$devis = Devis::with(['client', 'prestataire', 'service', 'category', 'devisItems'])->findOrFail($devisId);
+//
+////        $devis = Devis::with(['reservation.client', 'reservation.service.user','reservation.service' , 'reservation.service.category', 'devisItems'])->findOrFail($devisId);
+////
+////        $client = $devis->client;
+////        $service = $devis->reservation->service;
+////        $prestataire = $service->user;
+////        $categorie = $service->category;
+////        // Calculer le montant total des items
+////        $totalAmount = $devis->devisItems->sum('amount');
+//
+//
+//
+//        // Générer le PDF à partir de la vue Blade
+//        $pdf = Pdf::loadView('devis.pdf', compact('devis', 'totalAmount'));
+//
+//        return $pdf->download('devis_' . $devis->id . '.pdf');
+//
+//    }
 
     public function getDevisWithItems(int $id): Devis
     {

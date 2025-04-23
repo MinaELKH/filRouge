@@ -13,7 +13,6 @@ class Devis extends Model
 
     protected $fillable = [
         'reservation_id',
-        'total_amount',
         'status',
     ];
     // Définir la relation avec le modèle Item
@@ -60,22 +59,19 @@ class Devis extends Model
             'service_id'  // Clé étrangère dans la table reservations
         );
     }
-
-    // Relation avec le prestataire via le service
-//    public function prestataire()
-//    {
-//        return $this->service->user;
-//    }
-
-    // Relation avec la catégorie via le service
-//    public function category()
-//    {
-//        return $this->service->category;
-//    }
     protected function category(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->reservation->service->category,
         );
     }
+
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->devisItems->sum(function ($item) {
+            return $item->quantity * $item->unit_price;
+        });
+    }
+
 }

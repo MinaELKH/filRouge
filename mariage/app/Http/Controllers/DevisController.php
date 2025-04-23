@@ -20,23 +20,6 @@ class DevisController extends Controller
         $this->devisItemService = $devisItemService;
     }
 
-//    public function store(Request $request)
-//    {
-//        $this->authorize('create', Devis::class);
-//
-//        $data = $request->validate([
-//            'reservation_id' => 'required|exists:reservations,id',
-//            'total_amount'   => 'required|numeric',
-//        ]);
-//
-//        $devis = $this->devisService->createDevis($data);
-//
-//        return response()->json([
-//            'message' => 'Devis créé avec succès.',
-//            'devis'   => $devis
-//        ], 201);
-//    }
-
     public function store(Request $request)
     {
         $this->authorize('create', Devis::class);
@@ -53,7 +36,6 @@ class DevisController extends Controller
         // 1. Création du devis
         $devis = $this->devisService->createDevis([
             'reservation_id' => $data['reservation_id'],
-            'total_amount' => $data['total_amount'],
         ]);
 
         // 2. Création des éléments de devis s’ils existent
@@ -84,7 +66,6 @@ class DevisController extends Controller
         $devis = $this->devisService->getDevis($id);
 
         $data = $request->validate([
-            'total_amount' => 'nullable|numeric',
             'items'        => 'nullable|array',
             'items.*.service_name' => 'required|string',
             'items.*.quantity'     => 'required|integer|min:1',
@@ -150,7 +131,6 @@ class DevisController extends Controller
 
         $devis = $this->devisService->getDevisWithItems((int) $id);
         $data = $this->devisService->enteteDevis($devis->reservation_id) ;
-
         $reservation = $data['reservation'];
         $service = $data['service'];
         $client = $data['client'];
