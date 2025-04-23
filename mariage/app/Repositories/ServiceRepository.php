@@ -77,4 +77,16 @@ class ServiceRepository implements ServiceRepositoryInterface
         $service->save();
     }
 
+
+    public function myServicesPrestataire($user)
+    {
+
+        $services = Service::with(['category', 'ville'])
+            ->where('user_id', $user->id)
+            ->latest()
+            ->get();
+
+        // Passe la variable $services à la vue
+        return $services;
+    }
 }

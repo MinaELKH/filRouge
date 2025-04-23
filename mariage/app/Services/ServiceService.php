@@ -75,4 +75,14 @@ class ServiceService
         $this->serviceRepository->save($service);
     }
 
+
+    public function myServicesPrestataire($user)
+    {
+
+        $services = $this->serviceRepository->myServicesPrestataire($user)  ;      // Passe la variable $services à la vue
+        return $services;
+    }
+
+
+
 }

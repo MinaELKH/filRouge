@@ -140,10 +140,7 @@ class ServiceController extends Controller
         $user = auth()->user();
 
 
-        $services = Service::with(['category', 'ville'])
-            ->where('user_id', $user->id)
-            ->latest()
-            ->get();
+        $services = $this->serviceService->myServicesPrestataire($user);
 
         // Passe la variable $services à la vue
         return view('prestataire.services', compact('services'));
