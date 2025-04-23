@@ -103,5 +103,13 @@ class DevisService
         return $this->devisRepository->getByPrestataireId($userId);
     }
 
+    public function createPage($id)
+    {
+
+        $reservation = $this->serviceReservation->getReservationById($id);
+        $service = $this->serviceService->getServiceById($reservation->service_id);
+
+    }
+
 
 }

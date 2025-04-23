@@ -20,6 +20,23 @@ class DevisController extends Controller
         $this->devisItemService = $devisItemService;
     }
 
+//    public function store(Request $request)
+//    {
+//        $this->authorize('create', Devis::class);
+//
+//        $data = $request->validate([
+//            'reservation_id' => 'required|exists:reservations,id',
+//            'total_amount'   => 'required|numeric',
+//        ]);
+//
+//        $devis = $this->devisService->createDevis($data);
+//
+//        return response()->json([
+//            'message' => 'Devis créé avec succès.',
+//            'devis'   => $devis
+//        ], 201);
+//    }
+
     public function store(Request $request)
     {
         $this->authorize('create', Devis::class);
@@ -27,14 +44,28 @@ class DevisController extends Controller
         $data = $request->validate([
             'reservation_id' => 'required|exists:reservations,id',
             'total_amount'   => 'required|numeric',
+            'items' => 'nullable|array',
+            'items.*.service_name' => 'required|string',
+            'items.*.quantity'     => 'required|integer|min:1',
+            'items.*.unit_price'   => 'required|numeric|min:0',
         ]);
 
-        $devis = $this->devisService->createDevis($data);
+        // 1. Création du devis
+        $devis = $this->devisService->createDevis([
+            'reservation_id' => $data['reservation_id'],
+            'total_amount' => $data['total_amount'],
+        ]);
 
-        return response()->json([
-            'message' => 'Devis créé avec succès.',
-            'devis'   => $devis
-        ], 201);
+        // 2. Création des éléments de devis s’ils existent
+        if (!empty($data['items'])) {
+            foreach ($data['items'] as $item) {
+                $this->devisItemService->createItem($devis->id, $item);
+            }
+        }
+
+        return redirect()
+            ->route('devis.index', $devis->id)
+            ->with('success', 'Devis créé avec succès.');
     }
 
 
@@ -115,11 +146,19 @@ class DevisController extends Controller
 
     public function showPage($id)
     {
-        $devis = $this->devisService->getDevisWithItems($id);
+        $devis = $this->devisService->getDevisWithItems((int) $id);
+
 
         return view('devis.show', compact('devis'));
     }
+    public function createPage($id)
+    {
 
+       $this->devisService->createPage($id) ;
+
+
+        return view('devis.show', compact(''));
+    }
 
     public function confirm($id)
     {
