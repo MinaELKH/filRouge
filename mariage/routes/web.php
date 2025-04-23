@@ -171,3 +171,5 @@ Route::patch('/services/{id}/desarchive', [ServiceController::class, 'desarchive
 Route::get('/devisPrestataire', [DevisController::class, 'DevisByPrestataire'])->name('devisPrestataire');
 Route::get('/devis/{id}/edit', [DevisController::class, 'edit'])->name('devis.edit');
 Route::put('/devis/{id}', [DevisController::class, 'update'])->name('devis.update');
+Route::get('/devis/create', [DevisController::class, 'create'])->name('devis.create');
+
