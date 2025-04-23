@@ -1,12 +1,30 @@
-@extends('layouts.client')
+@extends('layouts.prestataire')
 
 @section('content')
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow mt-6">
-        <h1 class="text-2xl font-bold mb-4">Devis #{{ $devis->id }}</h1>
-        <p class="text-gray-600 mb-1">Date : {{ $devis->created_at->format('d/m/Y') }}</p>
-        <p class="text-gray-800 font-semibold mb-4">Total : {{ number_format($devis->total_amount, 2) }} €</p>
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow mt-6">
+        {{-- 🧾 EN-TÊTE DU DEVIS --}}
+        <div class="mb-6 border-b pb-4">
+            <h1 class="text-2xl font-bold mb-2">Devis #{{ $devis->id }}</h1>
+            <p class="text-sm text-gray-600">Date : {{ $devis->created_at->format('d/m/Y') }}</p>
 
-        <h3 class="text-lg font-medium mb-2">Éléments :</h3>
+            <div class="mt-4">
+                <h2 class="text-lg font-semibold">Client :</h2>
+                <p>{{ $client->name }} — {{ $client->email }}</p>
+            </div>
+
+            <div class="mt-2">
+                <h2 class="text-lg font-semibold">Service réservé :</h2>
+                <p>{{ $service->title }} (par {{ $service->user->name }})</p>
+            </div>
+
+            <div class="mt-2">
+                <h2 class="text-lg font-semibold">Date de l'événement :</h2>
+                <p>{{ $reservation->event_date->format('d/m/Y') }}</p>
+            </div>
+        </div>
+
+        {{-- 🧾 TABLEAU DES ÉLÉMENTS DU DEVIS --}}
+        <h3 class="text-lg font-medium mb-2">Éléments du devis :</h3>
         <div class="overflow-x-auto">
             <table class="w-full border-collapse">
                 <thead>
@@ -36,6 +54,11 @@
             </table>
         </div>
 
+        <p class="text-right mt-4 font-semibold text-lg">
+            Total TTC : {{ number_format($devis->total_amount, 2) }} €
+        </p>
+
+        {{-- ✅ BOUTON DE CONFIRMATION --}}
         @if($devis->status === 'pending')
             <form action="{{ route('devis.confirm', $devis->id) }}" method="POST" class="mt-6">
                 @csrf
@@ -47,7 +70,8 @@
                 </button>
             </form>
         @else
-            <p class="mt-6 text-green-600 font-semibold">Devis déjà confirmé.</p>
+            <p class="mt-6 text-green-600 font-semibold">✅ Devis déjà confirmé.</p>
         @endif
     </div>
 @endsection
+

@@ -15,7 +15,9 @@ class Reservation extends Model
         'event_date',
         'status'
     ];
-
+    protected $casts = [
+        'event_date' => 'date',
+    ];
     /*
      * client
      */

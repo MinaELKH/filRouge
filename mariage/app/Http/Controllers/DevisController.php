@@ -150,7 +150,13 @@ class DevisController extends Controller
 
         $devis = $this->devisService->getDevisWithItems((int) $id);
         $data = $this->devisService->enteteDevis($devis->reservation_id) ;
-        return view('devis.show', compact('devis'));
+
+        $reservation = $data['reservation'];
+        $service = $data['service'];
+        $client = $data['client'];
+
+        return view('devis.show', compact('devis' ,'reservation', 'service', 'client'));
+
     }
     public function createPage($reservationId)
     {
