@@ -1,4 +1,4 @@
-{{--messages.partial.conversation.blade.php--}}4
+{{--messages.partial.conversation.blade.php--}}
 
 <div class="flex-1 flex flex-col overflow-y-auto max-h-[80%]">
     <!-- Header -->
