@@ -7,20 +7,25 @@
     <style>
         @page {
             margin: 1cm;
+            size: A4 portrait;
         }
 
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
             color: #374151;
-            line-height: 1.4;
+            line-height: 1.3;
             background-color: #ffffff;
-            font-size: 13px;
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100%;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 10px;
+            padding: 0 0 150px 0; /* Augmenté l'espace pour inclure les conditions */
             position: relative;
         }
 
@@ -41,47 +46,46 @@
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background-color: #fce7f3;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(247, 108, 111, 0.1);
             border-radius: 50%;
             text-align: center;
-            line-height: 60px;
-            color: #db2777;
-            font-family: 'Georgia', serif;
-            font-size: 16px;
+            line-height: 50px;
+            color: #f76c6f;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         h1 {
-            font-family: 'Georgia', serif;
-            font-size: 22px;
-            color: #1f2937;
+            font-size: 20px;
+            color: #f76c6f;
             margin-top: 0;
             margin-bottom: 5px;
+            font-weight: bold;
         }
 
         h3 {
-            font-size: 16px;
+            font-size: 14px;
             color: #4b5563;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            margin-top: 0;
+            font-weight: 500;
         }
 
         .info-card {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 6px;
         }
 
-        .bg-rose {
-            background-color: #fff1f2;
+        .bg-wedding-pink {
+            background-color: rgba(247, 108, 111, 0.05);
         }
 
-        .bg-blue {
-            background-color: #eff6ff;
-        }
-
-        .bg-slate {
+        .bg-gray {
             background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
         }
 
         table {
@@ -91,17 +95,21 @@
         }
 
         th {
-            background-color: #f3f4f6;
-            padding: 8px;
-            font-size: 13px;
+            background-color: rgba(247, 108, 111, 0.05);
+            padding: 6px;
+            font-size: 12px;
             font-weight: 600;
-            color: #4b5563;
-            text-align: left;
+            color: #f76c6f;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         td {
-            padding: 8px;
+            padding: 6px;
             border-bottom: 1px solid #e5e7eb;
+            font-size: 12px;
+            text-align: center;
         }
 
         th:first-child, td:first-child {
@@ -112,89 +120,114 @@
             text-align: right;
         }
 
-        td:nth-child(2) {
-            text-align: center;
+        tfoot td {
+            font-weight: 500;
+            padding: 4px 6px;
+            font-size: 12px;
         }
 
-        td:nth-child(3) {
-            text-align: right;
+        tfoot tr:last-child {
+            background-color: rgba(247, 108, 111, 0.05);
+        }
+
+        tfoot tr:last-child td {
+            color: #f76c6f;
+            font-weight: bold;
         }
 
         .footer {
-            border-top: 1px solid #e5e7eb;
-            margin-top: 15px;
+            position: absolute;
+            /*background-color: #f9fafb;*/
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding-top: 10px;
-            text-align: center;
             color: #9ca3af;
-            font-size: 12px;
+            font-size: 11px;
+            height: 140px; /* Hauteur augmentée pour inclure les conditions */
+        }
+
+        .footer-grid {
+            display: table;
+            border-top: 1px solid #e5e7eb;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .footer-column {
+            display: table-cell;
+            width: 33.33%;
+            vertical-align: top;
+        }
+
+        .footer-column:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer-column:nth-child(3) {
+            text-align: right;
         }
 
         .total-section {
             padding-top: 10px;
-            border-top: 1px solid #e5e7eb;
             margin-bottom: 10px;
         }
 
         .total-container {
-            float: right;
             text-align: right;
-        }
-
-        .status-container {
-            margin-top: 10px;
+            width: 100%;
         }
 
         .total-label {
             color: #9ca3af;
-            font-size: 13px;
-            margin-bottom: 5px;
+            font-size: 11px;
+            margin-bottom: 2px;
         }
 
         .total-amount {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            color: #1f2937;
+            color: #f76c6f;
+            margin-top: 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
         }
 
         .status-confirmed {
-            display: inline-block;
             background-color: #d1fae5;
             color: #065f46;
-            padding: 6px 14px;
-            border-radius: 8px;
         }
 
-        .badge {
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            color: #ffffff;
-            background-color: #db2777;
-            display: inline-block;
-        }
-
-        .conditions-section {
-            margin-top: 20px;
-            clear: both;
-        }
-
-        .contact-section {
-            margin-top: 15px;
-        }
-
-        .text-small {
-            font-size: 13px;
-        }
-
-        .text-italic {
-            font-style: italic;
+        .conditions {
+            margin-top: 0;
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 10px;
         }
 
         ul {
-            padding-left: 18px;
-            margin-top: 5px;
-            color: #4b5563;
-            font-size: 13px;
+            padding-left: 15px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            /*color: #4b5563;*/
+            font-size: 11px;
+        }
+
+        li {
+            margin-bottom: 2px;
         }
 
         .page-break {
@@ -206,6 +239,20 @@
             clear: both;
             display: table;
         }
+
+        .document-reference {
+            text-align: center;
+            font-size: 9px;
+            color: #9ca3af;
+        }
+
+        p {
+            margin: 2px 0;
+        }
+
+        .compact-table td, .compact-table th {
+            padding: 4px 6px;
+        }
     </style>
 </head>
 <body>
@@ -216,37 +263,50 @@
             <div class="logo-container">
                 <div class="logo">LOGO</div>
             </div>
-            <h1>Devis #{{ $devis->id }}</h1>
-            <p class="text-italic" style="color: #9ca3af; margin-top: 5px;">
-                {{ $devis->created_at->format('d/m/Y') }}
+            <h1>Devis #{{ $devis->id }}
+                <span class="status-badge {{ $devis->status === 'pending' ? 'status-pending' : 'status-confirmed' }}">
+                    {{ $devis->status === 'pending' ? 'En attente' : 'Confirmé' }}
+                </span>
+            </h1>
+            <p style="color: #6b7280; margin-top: 2px; font-size: 11px;">
+                Émis le {{ $devis->created_at->format('d/m/Y') }}
             </p>
         </div>
     </div>
 
     <!-- Informations principales -->
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
-        <div class="info-card bg-rose" style="flex: 1 1 48%;">
-            <h3>Client</h3>
-            <p>{{ $client->name }}</p>
-            <p>{{ $client->email }}</p>
-        </div>
-
-        <div class="info-card bg-blue" style="flex: 1 1 48%;">
-            <h3>Date de l'événement</h3>
-            <p>{{ $reservation->event_date->format('d/m/Y') }}</p>
-        </div>
+    <div style="margin-bottom: 10px;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 0;">
+            <tr>
+                <td width="48%" valign="top">
+                    <div class="info-card bg-wedding-pink">
+                        <h3 style="color: #f76c6f;">Client</h3>
+                        <p style="margin-top: 5px; margin-bottom: 2px;"><strong>{{ $client->name }}</strong></p>
+                        <p style="margin-top: 0; color: #6b7280; font-size: 11px;">{{ $client->email }}</p>
+                    </div>
+                </td>
+                <td width="4%"></td>
+                <td width="48%" valign="top">
+                    <div class="info-card bg-gray">
+                        <h3>Événement</h3>
+                        <p style="margin-top: 5px; margin-bottom: 2px;"><strong>Date:</strong> {{ $reservation->event_date->format('d/m/Y') }}</p>
+                        <p style="margin-top: 0; margin-bottom: 0; font-size: 11px;"><strong>Lieu:</strong> {{ $service->ville->name ?? 'Non spécifié' }}</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <div class="info-card bg-slate">
+    <div class="info-card bg-gray" style="margin-bottom: 10px;">
         <h3>Service réservé</h3>
-        <p>{{ $service->title }}</p>
-        <p class="text-small text-italic" style="color: #6b7280;">par {{ $service->user->name }}</p>
+        <p style="margin-top: 5px; margin-bottom: 2px;"><strong>{{ $service->title }}</strong></p>
+        <p style="margin-top: 0; color: #6b7280; font-size: 11px;">par {{ $service->user->name }}</p>
     </div>
 
     <!-- Tableau des éléments -->
-    <div style="margin-bottom: 15px;">
+    <div style="margin-bottom: 10px;">
         <h3>Éléments du devis</h3>
-        <table>
+        <table class="compact-table">
             <thead>
             <tr>
                 <th>Service</th>
@@ -265,48 +325,64 @@
                 </tr>
             @endforeach
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right;">Total HT</td>
+                <td>{{ number_format($devis->total_amount / 1.2, 2) }} €</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: right;">TVA (20%)</td>
+                <td>{{ number_format($devis->total_amount - ($devis->total_amount / 1.2), 2) }} €</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: right;">Total TTC</td>
+                <td>{{ number_format($devis->total_amount, 2) }} €</td>
+            </tr>
+            </tfoot>
         </table>
     </div>
 
-    <!-- Total et statut -->
-    <div class="total-section clearfix">
+    <!-- Total -->
+    <div class="total-section">
         <div class="total-container">
             <p class="total-label">Total TTC</p>
             <p class="total-amount">{{ number_format($devis->total_amount, 2) }} €</p>
         </div>
-
-        <div class="status-container">
-            @if($devis->status === 'pending')
-                <div class="badge">En attente de confirmation</div>
-            @else
-                <div class="status-confirmed">Devis confirmé</div>
-            @endif
-        </div>
-    </div>
-
-    <!-- Conditions et mentions -->
-    <div class="conditions-section">
-        <h3>Conditions</h3>
-        <ul>
-            <li>Ce devis est valable 30 jours à compter de sa date d'émission</li>
-            <li>Un acompte de 30% sera demandé à la confirmation</li>
-            <li>Le solde devra être réglé 15 jours avant la date de l'événement</li>
-        </ul>
-    </div>
-
-    <div class="contact-section">
-        <h3>Contact</h3>
-        <p style="color: #4b5563; font-size: 13px;">
-            contact@votreentreprise.com<br>
-            +33 (0)1 23 45 67 89<br>
-            www.votreentreprise.com
-        </p>
     </div>
 
     <!-- Pied de page -->
     <div class="footer">
-        <p>Ce devis est valable 30 jours à compter de sa date d'émission.</p>
-        <p style="margin-top: 5px; font-family: 'Georgia', serif;">Merci de nous avoir choisis pour votre jour spécial!</p>
+        <!-- Conditions dans le footer -->
+        <div class="conditions">
+            <h3 style="margin-top: 0; color: #f76c6f; font-size: 12px;">Conditions de paiement</h3>
+            <ul>
+                <li>Ce devis est valable 30 jours à compter de sa date d'émission</li>
+                <li>Un acompte de 30% sera demandé à la confirmation</li>
+                <li>Le solde devra être réglé 7 jours avant la date de l'événement</li>
+            </ul>
+        </div>
+
+        <div class="footer-grid">
+            <div class="footer-column">
+                <p style="font-weight: 500; color: #6b7280; margin-bottom: 3px;">Contact prestataire</p>
+                <p style="margin-top: 0; color: #6b7280; font-size: 10px;">
+                    Tél: {{ $service->user->phone ?? '01 23 45 67 89' }}<br>
+                    Email: {{ $service->user->email ?? 'contact@mariages.net' }}
+                </p>
+            </div>
+            <div class="footer-column">
+                <p style="font-size: 10px;">Ce devis est valable 30 jours à compter de sa date d'émission.</p>
+                <p style="margin-top: 2px; font-size: 9px;">Tous les prix sont en euros et TTC.</p>
+            </div>
+            <div class="footer-column">
+                <p style="font-size: 10px;">Merci de nous avoir choisis pour votre jour spécial!</p>
+                <p style="margin-top: 2px; color: #f76c6f; font-weight: 500; font-size: 11px;">mariages.net</p>
+            </div>
+        </div>
+
+        <div class="document-reference">
+            Devis #{{ $devis->id }} | Généré le {{ now()->format('d/m/Y') }} | mariages.net
+        </div>
     </div>
 </div>
 </body>
