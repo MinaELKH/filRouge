@@ -38,4 +38,22 @@ class EntrepriseController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Informations mises à jour avec succès.');
     }
+
+    public function saveOrUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'personne_contact' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'telephone' => 'nullable|string|max:20',
+            'type_telephone' => 'nullable|string|max:255',
+            'adresse' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|max:2048'
+        ]);
+
+        $this->entrepriseService->updateOrCreate($validated);
+
+        return redirect()->route('dashboard')->with('success', 'Informations enregistrées avec succès.');
+    }
 }

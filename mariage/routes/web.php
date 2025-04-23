@@ -179,4 +179,4 @@ Route::post('/devis/store', [DevisController::class, 'store'])->name('devis.stor
 
 // entreprise
 Route::get('/dashboard', [App\Http\Controllers\EntrepriseController::class, 'index'])->name('dashboard');
-Route::post('/entreprise/update', [App\Http\Controllers\EntrepriseController::class, 'update'])->name('entreprise.update');
+Route::post('/entreprise/save', [App\Http\Controllers\EntrepriseController::class, 'saveOrUpdate'])->name('entreprise.save');

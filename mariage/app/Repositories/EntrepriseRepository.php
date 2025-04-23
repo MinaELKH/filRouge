@@ -33,4 +33,9 @@ class EntrepriseRepository implements EntrepriseRepositoryInterface
             $data
         );
     }
+
+    public function create(array $data)
+    {
+        return $this->model->create($data);
+    }
 }

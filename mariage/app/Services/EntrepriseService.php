@@ -20,7 +20,7 @@ class EntrepriseService
         return $this->entrepriseRepository->getByUserId(Auth::id());
     }
 
-    public function updateEntreprise(array $data)
+    public function updateOrCreate(array $data)
     {
         $userId = Auth::id();
 
