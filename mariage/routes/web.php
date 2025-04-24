@@ -75,7 +75,7 @@ Route::get('services', [FrontServiceController::class, 'index']);
 Route::get('services/{id}', [FrontServiceController::class, 'show']);
 // affiche les services d une category X
 Route::get('categories/{categoryId}/services', [FrontServiceController::class, 'getServicesByCategory']);
-
+// cette fonction cree la premiere message avec reservation
 Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 //Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
 
@@ -182,7 +182,15 @@ Route::get('/dashboard', [App\Http\Controllers\EntrepriseController::class, 'ind
 Route::post('/entreprise/save', [App\Http\Controllers\EntrepriseController::class, 'saveOrUpdate'])->name('entreprise.save');
 
 
-// affiche les services dont le clienta contacté
-Route::get('/messages/start/{reservation}', [MessageController::class, 'start'])->name('messages.start');
-Route::get('/devis/{devis}', [DevisController::class, 'show'])->name('devis.show');
+//client espace
+Route::middleware(['auth', 'role:client'])->group(function () {
+    Route::get('/client/dashboard', [ClientController::class, 'dashboard'])->name('client.dashboard');
+    Route::get('/client/profile', [ClientController::class, 'profile'])->name('client.profile');
+    Route::get('/client/tasks', [ClientController::class, 'tasks'])->name('client.tasks');
+    Route::get('/client/favorites', [ClientController::class, 'favorites'])->name('client.favorites');
+    Route::get('/client/devis', [ClientController::class, 'devis'])->name('client.devis');
+    Route::get('/client/reservations', [ClientController::class, 'reservations'])->name('client.reservations');
+});
+
+
 

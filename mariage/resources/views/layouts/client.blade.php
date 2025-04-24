@@ -2,45 +2,40 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Espace Prestataire')</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Mon espace client</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.css">
 </head>
-<body class="bg-white">
+<body class="bg-gray-100">
 
-{{-- Header commun --}}
-<header class="container mx-auto px-4 py-6">
-    <div class="flex items-center">
-        <a href="#" class="flex items-center">
-{{--            <svg class="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 24 24">--}}
-{{--                <path d="..."></path>--}}
-{{--            </svg>--}}
-            <span class="ml-2 text-gray-800 font-semibold">mariages.net</span>
-        </a>
+<!-- Header -->
+<header class="bg-white shadow p-4">
+    <div class="container mx-auto">
+        <h1 class="text-xl font-semibold text-gray-800">Bienvenue dans votre espace client</h1>
     </div>
-    <nav class="mt-8">
-        <ul class="flex space-x-8">
-            <li><a href="#" class="text-sm text-gray-800 hover:text-gray-600">Accueil</a></li>
-            <li><a href="#" class="text-sm text-gray-800 hover:text-gray-600">Ma Vitrine</a></li>
-            <li><a href="#" class="text-sm text-gray-800 hover:text-gray-600">Devis</a></li>
-            <li><a href="#" class="text-sm text-gray-800 hover:text-gray-600">Message</a></li>
-        </ul>
-    </nav>
 </header>
 
-{{-- Contenu dynamique --}}
+<!-- Contenu principal -->
 <main class="container mx-auto px-4 py-8">
-    @yield('content')
-</main>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-{{-- Footer commun --}}
-<footer class="bg-gray-100 py-8">
-    <div class="container mx-auto px-4 text-center text-sm text-gray-600">
-        © 2023 Mariages.net
+        <!-- Menu client -->
+        <aside class="bg-white p-4 rounded shadow">
+            <ul class="space-y-2 text-sm">
+                <li><a href="{{ route('client.dashboard') }}" class="text-blue-600 hover:underline">Mon espace</a></li>
+                <li><a href="{{ route('client.profile') }}" class="text-blue-600 hover:underline">Mes informations</a></li>
+                <li><a href="{{ route('client.tasks') }}" class="text-blue-600 hover:underline">Tâches</a></li>
+                <li><a href="{{ route('client.favorites') }}" class="text-blue-600 hover:underline">Favoris</a></li>
+                <li><a href="{{ route('client.devis') }}" class="text-blue-600 hover:underline">Devis</a></li>
+                <li><a href="{{ route('client.reservations') }}" class="text-blue-600 hover:underline">Services réservés</a></li>
+            </ul>
+        </aside>
+
+        <!-- Contenu dynamique -->
+        <section class="md:col-span-3 bg-white p-6 rounded shadow">
+            @yield('content')
+        </section>
     </div>
-</footer>
+</main>
 
 </body>
 </html>
