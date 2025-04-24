@@ -158,4 +158,13 @@ class ReservationController extends Controller
     }
 
 
+
+    public function mesReservations()
+    {
+        $reservations = auth()->user()->reservations()->with('service')->get();
+        return view('client.reservations.index', compact('reservations'));
+    }
+
+
+
 }

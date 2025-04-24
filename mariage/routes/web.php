@@ -180,3 +180,9 @@ Route::post('/devis/store', [DevisController::class, 'store'])->name('devis.stor
 // entreprise
 Route::get('/dashboard', [App\Http\Controllers\EntrepriseController::class, 'index'])->name('dashboard');
 Route::post('/entreprise/save', [App\Http\Controllers\EntrepriseController::class, 'saveOrUpdate'])->name('entreprise.save');
+
+
+// affiche les services dont le clienta contacté
+Route::get('/messages/start/{reservation}', [MessageController::class, 'start'])->name('messages.start');
+Route::get('/devis/{devis}', [DevisController::class, 'show'])->name('devis.show');
+
