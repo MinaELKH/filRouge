@@ -97,4 +97,17 @@ class ReservationService
         return $this->reservationRepository->find($id);
     }
 
+    public function getClientReservations(int|string|null $id)
+    {
+        // Si l'id est fourni, on l'utilise pour récupérer les réservations d'un client spécifique
+        if ($id) {
+            // Récupérer les réservations de l'utilisateur spécifié (id)
+            return $this->reservationRepository->getUserReservations($id);
+        }
+
+        // Si aucun id n'est fourni, on récupère les réservations de l'utilisateur connecté (auth)
+        return $this->reservationRepository->getUserReservations(auth()->id());
+    }
+
+
 }

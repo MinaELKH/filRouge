@@ -1,3 +1,5 @@
+{{--services.show.blade.php--}}
+
 @extends('layouts.app')
 
 @section('title', 'Service - ' . $service->title)
