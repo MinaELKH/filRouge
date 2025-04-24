@@ -32,4 +32,6 @@ interface DevisRepositoryInterface
     public function getByReservationId(int $reservationId);
 
     public function getWithRelations(int $id, array $relations): Devis;
+
+    public function getDevisByClientId($clientId);
 }

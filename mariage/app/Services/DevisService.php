@@ -141,7 +141,10 @@ class DevisService
     }
 
 
-
+    public function getClientDevis($clientId)
+    {
+        return $this->devisRepository->getDevisByClientId($clientId);
+    }
 
 
 }

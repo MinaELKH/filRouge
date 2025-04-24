@@ -59,4 +59,11 @@ class DevisRepository implements DevisRepositoryInterface
         ->latest()
         ->get();
     }
+
+    public function getDevisByClientId($clientId)
+    {
+        return Devis::whereHas('reservation', function ($query) use ($clientId) {
+            $query->where('user_id', $clientId);
+        })->get();
+    }
 }

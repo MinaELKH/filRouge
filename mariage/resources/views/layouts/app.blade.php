@@ -40,25 +40,31 @@
 
             <div class="flex items-center space-x-4">
                 <a href="#" class="hidden md:block text-sm font-medium text-gray-600 hover:text-gray-800">Accès Entreprises</a>
-                <!-- Vérifier si l'utilisateur est authentifié -->
+
                 @guest
-                    <!-- Utilisateurs non authentifiés -->
                     <a href="{{ route('login') }}" class="text-sm font-medium text-pink-500 hover:text-pink-600">CONNEXION</a>
                     <a href="{{ route('register') }}" class="text-sm font-medium text-pink-500 hover:text-pink-600">INSCRIPTION</a>
                 @else
-                    <!-- Utilisateurs authentifiés -->
+                    @if(Auth::user()->role === 'client')
+                        <!-- Icône espace client -->
+                        <a href="{{ route('client.dashboard') }}" class="flex items-center space-x-1 text-sm font-medium text-pink-500 hover:text-pink-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 1.293a1 1 0 00-1.414 0l-7 7A1 1 0 003 9h1v6a2 2 0 002 2h2a1 1 0 001-1v-3h2v3a1 1 0 001 1h2a2 2 0 002-2V9h1a1 1 0 00.707-1.707l-7-7z" />
+                            </svg>
+                            <span>Espace client</span>
+                        </a>
+                    @endif
+
+                    <!-- Déconnexion -->
                     <form method="POST" action="{{ route('logout') }}" id="logoutForm" class="inline">
                         @csrf
                         <a href="#" onclick="document.getElementById('logoutForm').submit();" class="text-sm font-medium text-pink-500 hover:text-pink-600">DÉCONNEXION</a>
                     </form>
-
                 @endguest
-
             </div>
         </div>
     </div>
 </header>
-
 
 <!-- Hero Section -->
 <section class="relative">
@@ -112,11 +118,10 @@
     </div>
 </footer>
 
-
 <script>
     window.isAuthenticated = @json(Auth::check());
 </script>
-<script  src="{{ asset('js/modalContact.js') }}"></script>
+<script src="{{ asset('js/modalContact.js') }}"></script>
 
 </body>
 </html>
