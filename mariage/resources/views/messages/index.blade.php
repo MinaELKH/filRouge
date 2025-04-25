@@ -28,7 +28,7 @@
         <!-- Conversation container -->
         <div id="conversationContainer" class="flex-1 flex flex-col bg-gray-50">
             @if(isset($partner))
-                @include('messages._conversation', [
+                @include('messages.partials.conversation', [
                     'messages' => $messages,
                     'partner' => $partner,
                     'reservationId' => $messages->first()->reservation_id ?? ''

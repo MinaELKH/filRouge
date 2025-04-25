@@ -18,31 +18,32 @@ class MessageController extends Controller
         $this->reservationService = $reservationService;
     }
 // Dans MessageController.php
-    public function index($partnerId = null)
+    public function index(Request $request, $partnerId = null)
     {
-        // Récupérer toutes les conversations pour la sidebar
-        $conversations = // votre code pour les conversations
+        $userId = auth()->id();
+        $conversations = $this->messageService->getConversations($userId);
 
-    if ($partnerId) {
-        // Récupérer les données de la conversation spécifique
-        $partner = User::findOrFail($partnerId);
-        $messages = Message::where(function($query) use ($partnerId) {
-            $query->where('sender_id', auth()->id())
-                ->where('receiver_id', $partnerId);
-        })->orWhere(function($query) use ($partnerId) {
-            $query->where('sender_id', $partnerId)
-                ->where('receiver_id', auth()->id());
-        })->orderBy('created_at')->get();
+        $partner = null;
+        $messages = collect();
 
-        // Marquer comme lu, etc.
+        if ($partnerId) {
+            $data = $this->messageService->getConversation($userId, $partnerId);
+            $partner = $data['partner'];
+            $messages = $data['messages'];
 
-        // Toujours renvoyer la vue complète, avec les deux composants
+            // Ne retourner la vue partielle que si c'est une requête AJAX
+            if ($request->ajax()) {
+                //return view('messages.partial.conversation', compact('partner', 'messages'));
+                return view('messages.partials.conversation', compact('partner', 'messages'));
+
+            }
+
+            // Sinon, retourner la vue complète avec la conversation sélectionnée
+        }
+
+        // Toujours retourner la vue complète dans le cas non-AJAX
         return view('messages.index', compact('conversations', 'partner', 'messages'));
     }
-
-    // Renvoyer la vue sans conversation sélectionnée
-    return view('messages.index', compact('conversations'));
-}
 //    public function index(Request $request, $partnerId = null)
 //    {
 //        $userId = auth()->id();
