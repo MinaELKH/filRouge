@@ -17,30 +17,55 @@ class MessageController extends Controller
         $this->messageService = $messageService;
         $this->reservationService = $reservationService;
     }
-
-    public function index(Request $request, $partnerId = null)
+// Dans MessageController.php
+    public function index($partnerId = null)
     {
-        $userId = auth()->id();
-        $conversations = $this->messageService->getConversations($userId);
+        // Récupérer toutes les conversations pour la sidebar
+        $conversations = // votre code pour les conversations
 
-        $partner   = null;
-        $messages  = collect();
+    if ($partnerId) {
+        // Récupérer les données de la conversation spécifique
+        $partner = User::findOrFail($partnerId);
+        $messages = Message::where(function($query) use ($partnerId) {
+            $query->where('sender_id', auth()->id())
+                ->where('receiver_id', $partnerId);
+        })->orWhere(function($query) use ($partnerId) {
+            $query->where('sender_id', $partnerId)
+                ->where('receiver_id', auth()->id());
+        })->orderBy('created_at')->get();
 
-        if ($partnerId) {
-            $data      = $this->messageService->getConversation($userId, $partnerId);
-            $partner   = $data['partner'];
-            $messages  = $data['messages'];
+        // Marquer comme lu, etc.
 
-            // 👇 Ici on teste si c'est une requête AJAX
-
-                return view('messages.partials.conversation', compact('partner', 'messages'));
-
-
-
-        }
-
-        return view('messages.index', compact('conversations','partner','messages'));
+        // Toujours renvoyer la vue complète, avec les deux composants
+        return view('messages.index', compact('conversations', 'partner', 'messages'));
     }
+
+    // Renvoyer la vue sans conversation sélectionnée
+    return view('messages.index', compact('conversations'));
+}
+//    public function index(Request $request, $partnerId = null)
+//    {
+//        $userId = auth()->id();
+//        $conversations = $this->messageService->getConversations($userId);
+//
+//        $partner   = null;
+//        $messages  = collect();
+//
+//        if ($partnerId) {
+//            $data      = $this->messageService->getConversation($userId, $partnerId);
+//            $partner   = $data['partner'];
+//            $messages  = $data['messages'];
+//
+//            // 👇 Ici on teste si c'est une requête AJAX
+//
+//                return view('messages.partials.conversation', compact('partner', 'messages'));
+//
+//
+//
+//        }
+//
+//        return view('messages.index', compact('conversations','partner','messages'));
+//    }
 
     // Affiche les messages envoyés par l'utilisateur
     public function sentMessages()

@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <!-- Liste des photographes / services -->
+            <!-- Liste des services -->
             <div class="md:w-3/4">
                 @foreach($services as $service)
                     <div class="bg-white rounded-lg shadow-sm mb-6 overflow-hidden flex flex-col md:flex-row">
@@ -128,7 +128,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>X
 
 
 

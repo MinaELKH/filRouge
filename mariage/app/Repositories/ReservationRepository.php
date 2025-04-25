@@ -41,7 +41,8 @@ class ReservationRepository implements ReservationRepositoryInterface
      */
     public function getUserReservations($userId)
     {
-        return Reservation::where('user_id', $userId)->get();
+        return Reservation::with(['devis', 'service.category'])->where('user_id', $userId)->get();
+
     }
 
     /**

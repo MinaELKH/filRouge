@@ -37,4 +37,10 @@ class Reservation extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
+    public function devis()
+    {
+        return $this->hasOne(Devis::class);
+    }
+
 }

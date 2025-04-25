@@ -1,4 +1,4 @@
-@extends('layouts.client')
+@extends('layouts.main')
 
 @section('content')
     <h2 class="text-2xl font-bold mb-4">Tableau de bord</h2>

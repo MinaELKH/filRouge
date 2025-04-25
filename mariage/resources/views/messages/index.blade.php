@@ -1,5 +1,5 @@
 {{--message.index.blade.php--}}
-@extends('layouts.prestataire')
+@extends('layouts.main')
 
 @section('content')
     <div class="h-screen flex overflow-hidden rounded-lg shadow-sm">
