@@ -78,6 +78,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('prestataire.reservations') }}" class="inline-flex items-center px-5 py-3 text-sm font-medium rounded-t-lg {{ request()->routeIs('prestataire.reservations') ? 'bg-pro-blue text-white' : 'text-gray-300 hover:bg-pro-blue/10 hover:text-white' }} transition-colors">
+                            <i class="fas fa-file-invoice-dollar mr-2"></i>Réservations
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('devisPrestataire') }}" class="inline-flex items-center px-5 py-3 text-sm font-medium rounded-t-lg {{ request()->routeIs('devisPrestataire') ? 'bg-pro-blue text-white' : 'text-gray-300 hover:bg-pro-blue/10 hover:text-white' }} transition-colors">
                             <i class="fas fa-file-invoice-dollar mr-2"></i>Devis
                         </a>
