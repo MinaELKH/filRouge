@@ -108,5 +108,11 @@ class ReservationService
         return $this->reservationRepository->getUserReservations(auth()->id());
     }
 
+    public function prestataireReservations($userId)
+    {
 
+        $reservations = $this->reservationRepository->getPrestataireReservations($userId);
+
+         return $reservations ;
+    }
 }

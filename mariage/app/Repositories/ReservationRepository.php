@@ -48,13 +48,21 @@ class ReservationRepository implements ReservationRepositoryInterface
     /**
      * Récupérer les réservations pour un prestataire
      */
+//    public function getPrestataireReservations($userId)
+//    {
+//        return Reservation::whereHas('service', function ($query) use ($userId) {
+//            $query->where('user_id', $userId);
+//        })->get();
+//    }
     public function getPrestataireReservations($userId)
     {
-        return Reservation::whereHas('service', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })->get();
+        return Reservation::with(['user', 'service', 'devis'])
+            ->whereHas('service', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->latest()
+            ->get();
     }
-
     /**
      * Afficher une réservation spécifique
      */

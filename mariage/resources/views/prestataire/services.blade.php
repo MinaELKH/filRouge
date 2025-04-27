@@ -69,7 +69,7 @@
                     </span>
                             </div>
 
-                            <a href="" class="text-[#f76c6f] hover:underline flex items-center">
+                            <a href="{{ route('services.show', $service->id) }}" class="text-[#f76c6f] hover:underline flex items-center">
                                 Voir <i class="fas fa-chevron-right ml-1 text-xs"></i>
                             </a>
                         </div>

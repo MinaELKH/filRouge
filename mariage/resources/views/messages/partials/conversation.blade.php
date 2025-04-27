@@ -1,8 +1,8 @@
 {{-- messages.conversation.blade.php --}}
 <div class="flex-1 flex flex-col overflow-y-auto max-h-[80%]">
     <!-- Header -->
-    <div class="bg-white border-b p-4 flex items-center justify-between ">
-        <div>
+    <div class=" py-2 bg-white border-b border-wedding-pink border-opacity-20 flex items-center justify-between ">
+        <div class="flex justify-center items-center">
         <img src="{{ $partner->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($partner->name) . '&background=f76c6f&color=ffffff' }}"
              class="h-10 w-10 rounded-full mr-3 border border-gray-100">
         <div>
@@ -11,8 +11,8 @@
         </div>
 
         </div>
-        @if($partner)
-            <div class="p-4 border-t bg-white flex justify-end space-x-3">
+        @if($partner && auth()->user()->isPrestataire())
+            <div class="bg-white flex justify-end space-x-3">
                 <button
                     id="sendDevis"
                     data-reservation-id="{{ $messages->first()->reservation_id ?? '' }}"

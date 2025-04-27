@@ -99,9 +99,9 @@
     </header>
 
     {{-- Contenu dynamique avec fil d'ariane --}}
-    <main class="flex-grow">
+    <main class="flex-grow ">
         <div class="bg-white shadow-sm border-b border-gray-200">
-            <div class="container mx-auto px-4 py-4">
+            <div class="container mx-auto px-8 py-4">
                 <div class="text-sm breadcrumbs text-gray-500">
                     <a href="#" class="hover:text-pro-blue">Tableau de bord</a>
                     <span class="mx-2">›</span>
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-4  py-8 md:px-32 ">
             @if(session('success'))
                 <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6 rounded-r-lg">
                     <div class="flex">

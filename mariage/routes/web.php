@@ -5,6 +5,7 @@ use App\Http\Controllers\DevisController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\FrontHomeController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -187,7 +188,7 @@ Route::get('/devis/{id}/edit', [DevisController::class, 'edit'])->name('devis.ed
 Route::put('/devis/{id}', [DevisController::class, 'update'])->name('devis.update');
 Route::get('/devis/create/{id}', [DevisController::class, 'createPage'])->name('devis.create'); // affichage de page
 Route::post('/devis/store', [DevisController::class, 'store'])->name('devis.store');
-
+Route::get('/prestataire/reservations', [ReservationController::class, 'prestataireReservations'])->name('prestataire.reservations');
 
 
 

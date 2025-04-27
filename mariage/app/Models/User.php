@@ -67,4 +67,18 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class);
     }
 
+    public function isPrestataire()
+    {
+        return $this->role === 'prestataire';
+    }
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    public function isClient()
+    {
+        return $this->role === 'client';
+    }
+
+
 }

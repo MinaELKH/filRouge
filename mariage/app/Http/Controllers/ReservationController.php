@@ -158,13 +158,18 @@ class ReservationController extends Controller
     }
 
 
-
+//client
     public function mesReservations()
     {
         $reservations = auth()->user()->reservations()->with('service')->get();
         return view('client.reservations.index', compact('reservations'));
     }
 
-
-
+//prestataire
+    public function prestataireReservations()
+    {
+        $userId = auth()->id();
+        $reservations = $this->reservationService->prestataireReservations($userId);
+        return view('prestataire.reservations', compact('reservations'));
+    }
 }
