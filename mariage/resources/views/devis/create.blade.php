@@ -12,10 +12,7 @@
 
             <input type="hidden" name="reservation_id" value="{{ $reservationId }}">
 
-            <div class="mb-4">
-                <label class="block text-gray-700">Montant total</label>
-                <input type="number" name="total_amount" class="w-full border rounded px-3 py-2 mt-1 focus:border-wedding-pink">
-            </div>
+
 
             <h2 class="text-lg font-bold mt-6 mb-2">Éléments du devis</h2>
             <div id="items"></div>

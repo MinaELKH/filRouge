@@ -92,6 +92,71 @@
             });
         }
 
-        // ... rest of the script ...
+
+        function setupDevisButton() {
+            const sendDevisBtn = document.getElementById('sendDevis');
+            if (!sendDevisBtn) return;
+
+            const reservationId = sendDevisBtn.dataset.reservationId;
+            const csrfToken   = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            sendDevisBtn.addEventListener('click', async function () {
+                if (!reservationId) {
+                    return alert("Aucune réservation associée.");
+                }
+
+                try {
+                    const response = await fetch(`/messages/send-devis-by-reservation/${reservationId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept':       'application/json',
+                        }
+                    });
+
+                    if (!response.ok) {
+                        console.error("Status:", response.status, await response.text());
+                        throw new Error("Erreur lors de l'envoi du devis.");
+                    }
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("✅ Devis envoyé !");
+                        @if(isset($partner))
+                        loadConversation({{ $partner->id }});
+                        @endif
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Une erreur est survenue.");
+                }
+            });
+        }
+
+        // Initialisation au premier chargement
+        document.addEventListener('DOMContentLoaded', function () {
+            const partnerId = {{ $partner->id ?? 'null' }};
+            if (partnerId) {
+                setupReplyForm(partnerId);
+                setupDevisButton(); // 👈 Important ici aussi au 1er affichage
+            }
+        });
+    </script>
+
+    <script>
+        // defilment du boite messagerie
+        function scrollToBottom() {
+            const container = document.getElementById('messagesContainer');
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        // On appelle cette fonction après chargement des messages
+        document.addEventListener('DOMContentLoaded', function () {
+            scrollToBottom();
+        });
+
+
     </script>
 @endsection

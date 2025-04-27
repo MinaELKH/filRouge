@@ -26,7 +26,6 @@ class DevisController extends Controller
 
         $data = $request->validate([
             'reservation_id' => 'required|exists:reservations,id',
-            'total_amount'   => 'required|numeric',
             'items' => 'nullable|array',
             'items.*.service_name' => 'required|string',
             'items.*.quantity'     => 'required|integer|min:1',
