@@ -46,8 +46,6 @@ class ServiceController extends Controller
     {
         return response()->json($this->serviceService->getServiceByVille($id) , 200) ;
     }
-
-
     public function store(Request $request)
     {
         $this->authorize('create', Service::class);
@@ -56,17 +54,66 @@ class ServiceController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
-            'cover_image' => 'required|string',
-            'gallery'     => 'nullable|json',
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gallery.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_id' => 'required|exists:categories,id',
             'ville_id'    => 'required|exists:villes,id',
         ]);
 
-        return response()->json($this->serviceService->createService(array_merge($validated, [
-            'user_id' => auth()->id(),
-            'status' => 'pending',
-        ])), 201);
+        // Upload cover image
+        if ($request->hasFile('cover_image')) {
+            $coverImageName = time() . '_' . $request->file('cover_image')->getClientOriginalName();
+            $request->file('cover_image')->move(public_path('images/services'), $coverImageName);
+        } else {
+            $coverImageName = null;
+        }
+
+        // Upload gallery images
+        $gallery = [];
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $image) {
+                $galleryImageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images/services/gallery'), $galleryImageName);
+                $gallery[] = $galleryImageName;
+            }
+        }
+
+        // Enregistrement du service
+        $service = $this->serviceService->createService([
+            'title'        => $validated['title'],
+            'description'  => $validated['description'] ?? null,
+            'price'        => $validated['price'],
+            'cover_image'  => $coverImageName,
+            'gallery'      => $gallery ? json_encode($gallery) : null,
+            'category_id'  => $validated['category_id'],
+            'ville_id'     => $validated['ville_id'],
+            'user_id'      => auth()->id(),
+            'status'       => 'pending',
+        ]);
+
+        return response()->json($service, 201);
     }
+
+
+//    public function store(Request $request)
+//    {
+//        $this->authorize('create', Service::class);
+//
+//        $validated = $request->validate([
+//            'title'       => 'required|string|max:255',
+//            'description' => 'nullable|string',
+//            'price'       => 'required|numeric',
+//            'cover_image' => 'required|string',
+//            'gallery'     => 'nullable|json',
+//            'category_id' => 'required|exists:categories,id',
+//            'ville_id'    => 'required|exists:villes,id',
+//        ]);
+//
+//        return response()->json($this->serviceService->createService(array_merge($validated, [
+//            'user_id' => auth()->id(),
+//            'status' => 'pending',
+//        ])), 201);
+//    }
 
 //    public function update(Request $request, $id)
 //    {

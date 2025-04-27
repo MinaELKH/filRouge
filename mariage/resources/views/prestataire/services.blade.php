@@ -24,7 +24,7 @@
                     @endif
 
                     <div class="relative">
-                        <img src="{{ $service->cover_image }}" alt="{{ $service->title }}" class="h-48 w-full object-cover">
+                        <img src="{{ asset('images/services/' . $service->cover_image) }}" alt="{{ $service->title }}" class="h-48 w-full object-cover">
 
                         <!-- Actions flottantes sur l'image -->
                         <div class="absolute top-3 right-3 flex space-x-1">

@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Ajouter un Service</h1>
 
-    <form action="{{ route('service.store') }}" method="POST" class="space-y-6 bg-white p-6 rounded-xl shadow-md">
+    <form action="{{ route('service.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6 bg-white p-6 rounded-xl shadow-md">
         @csrf
 
         <div>
@@ -25,9 +25,16 @@
         </div>
 
         <div>
-            <label for="cover_image" class="block text-sm font-medium text-gray-700">Image de couverture (URL)</label>
-            <input type="text" name="cover_image" id="cover_image" value="{{ old('cover_image') }}"
+            <label for="cover_image" class="block text-sm font-medium text-gray-700">Image de couverture</label>
+            <input type="file" name="cover_image" id="cover_image"
                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
+        </div>
+
+        <div>
+            <label for="gallery" class="block text-sm font-medium text-gray-700">Galerie de photos</label>
+            <input type="file" name="gallery[]" id="gallery" multiple
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">
+            <p class="text-xs text-gray-500 mt-1">Vous pouvez ajouter plusieurs images.</p>
         </div>
 
         <div>

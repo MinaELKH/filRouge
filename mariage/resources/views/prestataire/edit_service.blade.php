@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Modifier le Service</h1>
 
-    <form action="{{ route('service.update', $service->id) }}" method="POST" class="space-y-6 bg-white p-6 rounded-xl shadow-md">
+    <form action="{{ route('service.update', $service->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6 bg-white p-6 rounded-xl shadow-md">
         @csrf
         @method('PATCH')
 
@@ -26,9 +26,29 @@
         </div>
 
         <div>
-            <label for="cover_image" class="block text-sm font-medium text-gray-700">Image de couverture (URL)</label>
-            <input type="text" name="cover_image" id="cover_image" value="{{ old('cover_image', $service->cover_image) }}"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
+            <label for="cover_image" class="block text-sm font-medium text-gray-700">Image de couverture</label>
+            <input type="file" name="cover_image" id="cover_image"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" accept="image/*">
+
+            @if($service->cover_image)
+                <div class="mt-2">
+                    <img src="{{ asset('images/services/' . $service->cover_image) }}" alt="Image actuelle" class="h-32 rounded-md object-cover">
+                </div>
+            @endif
+        </div>
+
+        <div>
+            <label for="gallery" class="block text-sm font-medium text-gray-700">Galerie photos</label>
+            <input type="file" name="gallery[]" id="gallery" multiple
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" accept="image/*">
+
+            @if($service->gallery)
+                <div class="grid grid-cols-3 gap-2 mt-4">
+                    @foreach(json_decode($service->gallery, true) as $image)
+                        <img src="{{ asset('images/services/gallery/' . $image) }}" alt="Photo galerie" class="h-24 rounded-md object-cover">
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div>
