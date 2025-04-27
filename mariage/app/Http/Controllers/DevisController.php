@@ -6,18 +6,21 @@ use App\Models\Devis;
 
 use App\Services\DevisItemService;
 use App\Services\DevisService;
+use App\Services\ReservationService;
 use Illuminate\Http\Request;
 
 class DevisController extends Controller
 {
     protected $devisService;
     private $devisItemService;
+    private $reservationService;
 
-    public function __construct(DevisService $devisService , DevisItemService $devisItemService)
+    public function __construct(DevisService $devisService , DevisItemService $devisItemService , ReservationService $reservationService)
     {
        //$this->middleware('auth:api');
         $this->devisService = $devisService;
         $this->devisItemService = $devisItemService;
+        $this->reservationService = $reservationService;
     }
 
     public function store(Request $request)
@@ -31,7 +34,9 @@ class DevisController extends Controller
             'items.*.quantity'     => 'required|integer|min:1',
             'items.*.unit_price'   => 'required|numeric|min:0',
         ]);
-
+        // 2.changement de statut de reservation en accepted
+        $reservation = $this->reservationService->getReservationById($data['reservation_id']);
+        $this->reservationService->updateReservation($reservation, ['status' => "accepted"]);
         // 1. Création du devis
         $devis = $this->devisService->createDevis([
             'reservation_id' => $data['reservation_id'],

@@ -188,9 +188,12 @@ Route::get('/devis/{id}/edit', [DevisController::class, 'edit'])->name('devis.ed
 Route::put('/devis/{id}', [DevisController::class, 'update'])->name('devis.update');
 Route::get('/devis/create/{id}', [DevisController::class, 'createPage'])->name('devis.create'); // affichage de page
 Route::post('/devis/store', [DevisController::class, 'store'])->name('devis.store');
+
+// reservation prestatire
 Route::get('/prestataire/reservations', [ReservationController::class, 'prestataireReservations'])->name('prestataire.reservations');
 
-
+Route::put('/prestataire/reservations/{reservation}/status', [ReservationController::class, 'updateStatus'])
+    ->name('prestataire.reservations.update-status');
 
 // entreprise
 Route::get('/dashboard', [App\Http\Controllers\EntrepriseController::class, 'index'])->name('dashboard');

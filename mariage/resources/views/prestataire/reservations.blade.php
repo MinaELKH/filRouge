@@ -26,11 +26,16 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $reservation->user->name ?? '—' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $reservation->event_date->format('d/m/Y') ?? '—' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
-                                {{ $reservation->status == 'confirmed' ? 'bg-green-100 text-green-800' :
-                                   ($reservation->status == 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
-                                {{ ucfirst($reservation->status) }}
-                            </span>
+                            <select
+                                data-reservation-id="{{ $reservation->id }}"
+                                class="status-select text-sm border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-pink-500
+                                {{ $reservation->status == 'accepted' ? 'bg-green-100 text-green-800' :
+                                   ($reservation->status == 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}"
+                            >
+                                <option value="pending" {{ $reservation->status == 'pending' ? 'selected' : '' }}>En attente</option>
+                                <option value="accepted" {{ $reservation->status == 'accepted' ? 'selected' : '' }}>Acceptée</option>
+                                <option value="rejected" {{ $reservation->status == 'rejected' ? 'selected' : '' }}>Refusée</option>
+                            </select>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($reservation->devis)
@@ -53,7 +58,6 @@
                                         Voir devis
                                     </a>
                                 @else
-
                                     <a href="{{ route('devis.create',$reservation->id) }}"
                                        class="text-green-600 hover:text-green-900 bg-green-50 hover:bg-green-100 px-3 py-1 rounded-md transition-colors duration-150">
                                         Créer devis
@@ -61,8 +65,9 @@
                                 @endif
 
                                 <a href="{{ route('messages.index',  $reservation->user_id) }}"
-                                   class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-md transition-colors duration-150">
-                                    Messages
+                                   class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-md transition-colors duration-150 flex items-center"
+                                   title="Messages">
+                                    <i class="fas fa-comments text-blue-600"></i>
                                 </a>
                             </div>
                         </td>
@@ -80,3 +85,83 @@
         </div>
     </div>
 @endsection
+@push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Script loaded'); // Pour vérifier que le script est bien chargé
+
+            // Gérer le changement de statut
+            document.querySelectorAll('.status-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    console.log('Select changed'); // Pour le débogage
+
+                    const reservationId = this.dataset.reservationId;
+                    const newStatus = this.value;
+
+                    // Trouver la valeur originale avant le changement
+                    let originalValue = '';
+                    Array.from(this.options).forEach(option => {
+                        if (option.hasAttribute('selected')) {
+                            originalValue = option.value;
+                        }
+                    });
+
+                    console.log('Original:', originalValue, 'New:', newStatus); // Pour le débogage
+
+                    // Mettre à jour la couleur immédiatement
+                    this.className = 'status-select text-sm border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-pink-500';
+
+                    if (newStatus === 'accepted') {
+                        this.classList.add('bg-green-100', 'text-green-800');
+                    } else if (newStatus === 'rejected') {
+                        this.classList.add('bg-red-100', 'text-red-800');
+                    } else {
+                        this.classList.add('bg-yellow-100', 'text-yellow-800');
+                    }
+
+                    // Envoyer la mise à jour au serveur
+                    fetch(`/prestataire/reservations/${reservationId}/status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Response:', data); // Pour le débogage
+
+                            if (data.message === 'Réservation mise à jour avec succès.') {
+                                console.log('Mise à jour réussie');
+                            } else {
+                                alert('Erreur lors de la mise à jour du statut');
+                                this.value = originalValue;
+
+                                // Remettre la couleur d'origine
+                                this.className = 'status-select text-sm border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-pink-500';
+
+                                if (originalValue === 'accepted') {
+                                    this.classList.add('bg-green-100', 'text-green-800');
+                                } else if (originalValue === 'rejected') {
+                                    this.classList.add('bg-red-100', 'text-red-800');
+                                } else {
+                                    this.classList.add('bg-yellow-100', 'text-yellow-800');
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Erreur lors de la mise à jour du statut');
+                            this.value = originalValue;
+                        });
+                });
+            });
+        });
+    </script>
+@endpush
