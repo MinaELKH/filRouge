@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\EntrepriseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EntrepriseController extends Controller
 {
@@ -17,7 +18,7 @@ class EntrepriseController extends Controller
 
     public function index()
     {
-        $entreprise = $this->entrepriseService->getUserEntreprise();
+        $entreprise = $this->entrepriseService->getUserEntreprise(Auth::id());
         return view('prestataire.home', compact('entreprise'));
     }
 

@@ -34,7 +34,7 @@ class ServiceController extends Controller
     {
         // Récupérer le service avec toutes ses relations
         $service = $this->serviceService->getServiceById($id);
-
+   // dd($service);
         // Retourner la vue avec le service
         return view('services.show', compact('service'));
     }

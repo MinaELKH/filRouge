@@ -16,9 +16,9 @@ class EntrepriseService
         $this->entrepriseRepository = $entrepriseRepository;
     }
 // affiche les info de l entreprise pour son propore compte
-    public function getUserEntreprise()
+    public function getUserEntreprise($user_id)
     {
-        return $this->entrepriseRepository->getByUserId(Auth::id());
+        return $this->entrepriseRepository->getByUserId($user_id);
     }
 
 

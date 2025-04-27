@@ -29,7 +29,9 @@ class ServiceService
     public function getServiceById($id)
     {
         $service = $this->serviceRepository->getById($id);
-        $service->entreprise = $this->entrepriseService->getUserEntreprise($service->user_id);
+        $entreprise = $this->entrepriseService->getUserEntreprise(3);
+
+        $service->setRelation('entreprise', $entreprise);
         return $service;
     }
 
