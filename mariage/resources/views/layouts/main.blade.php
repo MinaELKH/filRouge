@@ -338,5 +338,9 @@
 @endif
 
 @stack('script')
+<script>
+    window.isAuthenticated = @json(Auth::check());
+</script>
+<script src="{{ asset('js/modalContact.js') }}"></script>
 </body>
 </html>

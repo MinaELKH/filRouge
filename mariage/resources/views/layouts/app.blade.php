@@ -11,12 +11,14 @@
             theme: {
                 extend: {
                     colors: {
-                        coral: {
-                            500: '#ff6b6b',
-                        },
-                    },
-                },
-            },
+                        'wedding-pink': '#f76c6f',
+                        'wedding-dark': '#454545',
+                        'pro-blue': '#2563eb',
+                        'pro-light': '#f8fafc',
+                        'pro-gray': '#1e293b',
+                    }
+                }
+            }
         }
     </script>
 </head>

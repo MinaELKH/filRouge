@@ -110,38 +110,33 @@
 
                 <!-- Informations importantes -->
                 <div class="bg-white rounded-lg shadow-lg mt-6 p-6">
-                    <h2 class="text-2xl font-bold mb-4">Informations importantes</h2>
+                    <h2 class="text-xl font-bold mb-4">Informations</h2>
                     <div class="flex items-start mb-4">
-                        <i class="fas fa-file-alt text-gray-500 mr-3 mt-1"></i>
+
                         <p class="text-gray-700">{!! $service->description !!}</p>
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-calendar-alt w-6 text-gray-500"></i>
+                        <span>Créé le {{ $service->created_at->format('d/m/Y') }}</span>
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-tag w-6 text-gray-500"></i>
+                        <span>{{ $service->category->name }}</span>
                     </div>
                 </div>
 
-                <!-- Informations supplémentaires -->
-                <div class="bg-white rounded-lg shadow-lg mt-6 p-6">
-                    <h2 class="text-2xl font-bold mb-4">Informations</h2>
-                    <div class="space-y-4">
-                        <div class="flex items-center text-gray-700">
-                            <i class="fas fa-calendar-alt w-6 text-gray-500"></i>
-                            <span>Créé le {{ $service->created_at->format('d/m/Y') }}</span>
-                        </div>
-                        <div class="flex items-center text-gray-700">
-                            <i class="fas fa-tag w-6 text-gray-500"></i>
-                            <span>{{ $service->category->name }}</span>
-                        </div>
-                    </div>
-                </div>
+
 
                 @if($service->user->description)
                     <div class="bg-white rounded-lg shadow-lg mt-6 p-6">
-                        <h2 class="text-2xl font-bold mb-4">À propos de {{ $service->user->nom ?? $service->user->name }}</h2>
+                        <h2 class="text-xl font-bold mb-4">À propos de {{ $service->user->nom ?? $service->user->name }}</h2>
                         <p class="text-gray-700">{!! $service->user->description !!}</p>
                     </div>
                 @endif
 
                 <!-- Avis -->
                 <div class="bg-white rounded-lg shadow-lg mt-6 p-6">
-                    <h2 class="text-2xl font-bold mb-6">Avis de {{ $service->title }}</h2>
+                    <h2 class="text-xl font-bold mb-6">Avis de {{ $service->title }}</h2>
 
                     <div class="text-center mb-8">
                         <div class="flex justify-center items-center mb-2">
@@ -161,7 +156,7 @@
             <!-- Sidebar fixée à droite -->
             <div class="md:w-1/3">
                 <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-                    <h2 class="text-2xl font-bold mb-2">{{ $service->title }}</h2>
+                    <h2 class="text-xl font-bold mb-2">{{ $service->title }}</h2>
 
                     <!-- Étoiles et recommandation -->
                     <div class="flex items-center mb-2">
@@ -190,7 +185,12 @@
                     </div>
 
                     <!-- Bouton de contact -->
-                    <button class="w-full bg-[#f76c6f] text-white py-3 rounded-lg font-medium hover:bg-pink-700 transition-colors mb-4">
+
+                    <button
+                        class="openModalBtn w-full bg-[#f76c6f] text-white py-3 rounded-lg font-medium hover:bg-pink-700 transition-colors mb-4"
+                        data-receiver-id="{{ $service->user_id }}"
+                        data-service-id="{{ $service->id }}"
+                    >
                         Nous contacter
                     </button>
 
@@ -212,39 +212,48 @@
         <!-- Section informations de l'entreprise -->
         <div class="mt-12">
             <div class="bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-2xl font-bold mb-6">Informations de contact</h2>
+                <h2 class="text-xl font-bold mb-6">A propos</h2>
+
+                @if($service->entreprise && $service->entreprise->description)
+                    <div class ="flex items-center">
+                        @if(isset($service->entreprise->logo))
+                            <img src="{{ asset('/storage/' . $service->entreprise->logo) }}" alt="{{ $service->entreprise->nom ?? 'Votre entreprise' }}" class="h-32 w-32 object-contain">
+                        @endif
+
+                        <p class="text-gray-600">   <span class="font-medium text-wedding-pink mb-1">{{ $service->entreprise->nom }}</span>{!! $service->entreprise->description !!}</p>
+                    </div>
+
+                @endif
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @if($service->user->email)
+
+                    @if($service->entreprise->email)
                         <div>
-                            <h3 class="font-medium text-gray-900 mb-1">Email</h3>
-                            <p class="text-gray-600">{{ $service->user->email }}</p>
+                            <h3 class="font-medium text-gray-900 mb-1">Contact</h3>
+                            <p class="text-gray-600">{{ $service->entreprise->email }}</p>
                         </div>
                     @endif
 
-                    @if($service->user->telephone)
+                    @if($service->entreprise->telephone)
                         <div>
                             <h3 class="font-medium text-gray-900 mb-1">Téléphone</h3>
-                            <p class="text-gray-600">{{ $service->user->telephone }}</p>
+                            <p class="text-gray-600">{{ $service->entreprise->telephone }}</p>
                         </div>
                     @endif
 
-                    @if($service->user->adresse)
+                    @if($service->entreprise->adresse)
                         <div>
                             <h3 class="font-medium text-gray-900 mb-1">Adresse</h3>
-                            <p class="text-gray-600">{{ $service->user->adresse }}</p>
-                        </div>
-                    @endif
-
-                    @if($service->user->personne_contact)
-                        <div>
-                            <h3 class="font-medium text-gray-900 mb-1">Personne de contact</h3>
-                            <p class="text-gray-600">{{ $service->user->personne_contact }}</p>
+                            <p class="text-gray-600">{{ $service->entreprise->adresse }}</p>
                         </div>
                     @endif
                 </div>
             </div>
+
+
         </div>
     </div>
+    <x-contact-modal :receiverId="$service->user_id ?? null" :serviceId="$service->id ?? null" />
 @endsection
 
 @push('script')
