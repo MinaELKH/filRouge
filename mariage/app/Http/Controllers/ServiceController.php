@@ -171,5 +171,17 @@ class ServiceController extends Controller
         return view('prestataire.edit_service', compact('service' , 'categories' , 'villes'));
     }
 
+    public function create()
+    {
+        //  $this->authorize('update', $service);
+        $data = $this->serviceService->createViewService();
+        // data contient allcartegory + allVIlle + service a modifier
+
+        $categories = $data['categories'];
+        $villes = $data['villes'];
+        return view('prestataire.add_service', compact( 'categories' , 'villes'));
+
+    }
+
 
 }

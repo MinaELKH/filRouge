@@ -160,6 +160,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/prestataire/mes-services', [ServiceController::class, 'myServices'])->name('prestataire.services');
 });
 
+Route::get('/prestataire/services/create', [ServiceController::class, 'create'])->name('services.create');
+Route::post('/prestataire/services', [ServiceController::class, 'store'])->name('service.store');
 
 
 

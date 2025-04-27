@@ -61,6 +61,13 @@ class ServiceService
         return $data ;
     }
 
+    public function  createViewService(){
+        $categories = $this->categoryService->getAll();
+        $villes = $this->villeService->getAll();
+        $data = [  'categories' => $categories , 'villes' => $villes ];
+        return $data ;
+    }
+
     public function archive($id)
     {
         $service = $this->serviceRepository->findById($id);
