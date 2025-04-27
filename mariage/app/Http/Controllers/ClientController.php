@@ -56,9 +56,10 @@ class ClientController extends Controller
     // Devis du client
     public function devis()
     {
-        // Récupérer les devis du client via le service
-        $devis = $this->devisService->getClientDevis(auth()->id());
-        return view('client.devis', compact('devis'));
+        // Récupérer les devis du client via le devisService
+        //$devis = $this->devisService->getClientDevis(auth()->id());
+        $reservations = $this->reservationService->getClientReservations(auth()->id());
+        return view('client.devis', compact('reservations'));
     }
 
     // Services réservés par le client
@@ -68,4 +69,7 @@ class ClientController extends Controller
         $reservations = $this->reservationService->getClientReservations(auth()->id());
         return view('client.reservations', compact('reservations'));
     }
+
+
+
 }

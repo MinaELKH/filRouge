@@ -1,4 +1,4 @@
-@extends('layouts.prestataire')
+@extends('layouts.main')
 
 @section('content')
     <div class="max-w-6xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-xl border border-pink-100">

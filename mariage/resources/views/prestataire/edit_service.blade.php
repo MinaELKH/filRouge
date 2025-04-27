@@ -1,4 +1,4 @@
-@extends('layouts.prestataire')
+@extends('layouts.main')
 
 @section('content')
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Modifier le Service</h1>

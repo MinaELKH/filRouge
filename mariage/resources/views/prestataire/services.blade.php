@@ -1,4 +1,4 @@
-@extends('layouts.prestataire')
+@extends('layouts.main')
 
 @section('title', 'Mes Services')
 
