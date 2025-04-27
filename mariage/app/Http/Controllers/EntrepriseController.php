@@ -56,4 +56,6 @@ class EntrepriseController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Informations enregistrées avec succès.');
     }
+
+
 }

@@ -34,11 +34,16 @@
             <!-- Galerie -->
             <div class="grid grid-cols-2 gap-4">
                 @if($service->gallery)
-                    @foreach(json_decode($service->gallery, true) as $image)
-                        <img src="{{ asset('images/services/gallery/' . $image) }}"
-                             alt="Galerie - {{ $service->title }}"
-                             class="w-full h-44 object-cover rounded-lg shadow cursor-pointer hover:opacity-90 transition">
-                    @endforeach
+                    @php
+                        $gallery = is_string($service->gallery) ? json_decode($service->gallery, true) : $service->gallery;
+                    @endphp
+                    @if(is_array($gallery))
+                        @foreach($gallery as $image)
+                            <img src="{{ asset('images/services/gallery/' . $image) }}"
+                                 alt="Galerie - {{ $service->title }}"
+                                 class="w-full h-44 object-cover rounded-lg shadow cursor-pointer hover:opacity-90 transition">
+                        @endforeach
+                    @endif
                 @endif
             </div>
         </div>
@@ -84,7 +89,7 @@
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-800">{{ $service->user->name }}</h3>
-                                <p class="text-gray-600">Membre depuis {{ $service->user->created_at->format('Y') }}</p>
+
                             </div>
                         </div>
                         <p class="text-gray-600">

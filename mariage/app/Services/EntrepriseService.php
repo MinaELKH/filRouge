@@ -15,11 +15,12 @@ class EntrepriseService
     {
         $this->entrepriseRepository = $entrepriseRepository;
     }
-
+// affiche les info de l entreprise pour son propore compte
     public function getUserEntreprise()
     {
         return $this->entrepriseRepository->getByUserId(Auth::id());
     }
+
 
     public function updateOrCreate(array $data)
     {

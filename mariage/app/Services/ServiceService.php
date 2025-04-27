@@ -11,12 +11,14 @@ class ServiceService
     protected $serviceRepository;
     protected $categoryService;
     protected $villeService;
+    private $entrepriseService;
 
-    public function __construct(ServiceRepositoryInterface $serviceRepository , CategoryService $categoryService, VilleService $villeService)
+    public function __construct(ServiceRepositoryInterface $serviceRepository , CategoryService $categoryService, VilleService $villeService , EntrepriseService $entrepriseService)
     {
         $this->serviceRepository = $serviceRepository;
         $this->categoryService = $categoryService;
         $this->villeService = $villeService;
+        $this->entrepriseService = $entrepriseService;
     }
 
     public function getAllServices()
@@ -26,7 +28,9 @@ class ServiceService
 
     public function getServiceById($id)
     {
-        return $this->serviceRepository->getById($id);
+        $service = $this->serviceRepository->getById($id);
+        $service->entreprise = $this->entrepriseService->getUserEntreprise($service->user_id);
+        return $service;
     }
 
     public function getServiceByCategory($id)

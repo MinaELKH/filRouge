@@ -77,18 +77,14 @@
             <!-- Liste des services -->
             <div class="md:w-3/4">
                 @foreach($services as $service)
-                    <div class="bg-white rounded-lg shadow-sm mb-6 overflow-hidden flex flex-col md:flex-row">
-
-
-                                <div class="md:w-1/3 relative">
-                                    <img
-                                        src="{{ $service->cover_image ? asset('images/services/' . $service->cover_image) : 'https://placehold.co/600x400/e9ecef/495057?text=Service+Image' }}"
-                                        alt="{{ $service->title }}"
-                                        class="object-cover rounded-t-md md:rounded-l-md w-[340px] h-[240px] mx-auto"
-                                    >
-                                </div>
-
-
+                    <a href="{{ route('services.show', $service->id) }}" class="block bg-white rounded-lg shadow-sm mb-6 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow duration-300">
+                        <div class="md:w-1/3 relative">
+                            <img
+                                src="{{ $service->cover_image ? asset('images/services/' . $service->cover_image) : 'https://placehold.co/600x400/e9ecef/495057?text=Service+Image' }}"
+                                alt="{{ $service->title }}"
+                                class="object-cover rounded-t-md md:rounded-l-md w-[340px] h-[240px] mx-auto"
+                            >
+                        </div>
 
                         <div class="p-6 md:w-2/3 flex flex-col justify-between">
                             <div>
@@ -99,7 +95,7 @@
                                         <i class="fas fa-star text-sm"></i>
                                         <i class="fas fa-star text-sm"></i>
                                     </div>
-                                    <span class="text-sm font-medium">{{ number_format($service->rating, 1) }}</span>
+                                    <span class="text-sm font-medium">{{ number_format($service->rating ?? 0, 1) }}</span>
                                     <span class="mx-2 text-gray-300">|</span>
                                     <span class="text-sm text-gray-500">{{ $service->location ?? 'Non précisé' }}</span>
                                 </div>
@@ -110,16 +106,16 @@
                             <div class="flex justify-between items-center">
                                 <div class="text-sm font-medium">À partir de {{ number_format($service->price, 0, ',', ' ') }}€</div>
                                 <button
-                                    class="openModalBtn bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded"
+                                    class="openModalBtn bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded z-10"
                                     data-receiver-id="{{ $service->user_id }}"
                                     data-service-id="{{ $service->id }}"
+                                    onclick="event.preventDefault(); event.stopPropagation();"
                                 >
                                     Nous contacter
                                 </button>
-{{--                                <input type="text" value={{$service->id}}>--}}
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
 
                 <!-- Pagination -->
@@ -128,9 +124,7 @@
                 </div>
             </div>
         </div>
-    </div>X
+    </div>
 
-
-
-    <x-contact-modal :receiverId="$service->user_id" :serviceId="$service->id" />
+    <x-contact-modal :receiverId="$service->user_id ?? null" :serviceId="$service->id ?? null" />
 @endsection
