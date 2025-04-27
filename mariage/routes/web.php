@@ -73,14 +73,14 @@ Route::middleware('auth')->post('/messages/{partnerId}/reply', [MessageControlle
 
 
 
-use App\Http\Controllers\FrontServiceController;
+
 
 Route::get('/home', [FrontHomeController::class, 'index'])->name('home');
 
-Route::get('services', [FrontServiceController::class, 'index']);
-Route::get('services/{id}', [FrontServiceController::class, 'show']);
+Route::get('services', [ServiceController::class, 'index']);
+Route::get('services/{id}', [ServiceController::class, 'show']);
 // affiche les services d une category X
-Route::get('categories/{categoryId}/services', [FrontServiceController::class, 'getServicesByCategory']);
+Route::get('categories/{categoryId}/services', [ServiceController::class, 'getServicesByCategory']);
 // cette fonction cree la premiere message avec reservation
 Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 //Route::post('/messages/create', [MessageController::class, 'create'])->name('messages.create');
@@ -90,7 +90,7 @@ Route::get('/test', function () {
 });
 
 
-Route::get('/services/{id}', [FrontServiceController::class, 'show'])->name('services.show');
+Route::get('/services/{id}', [ServiceController::class, 'show'])->name('services.show');
 
 
 

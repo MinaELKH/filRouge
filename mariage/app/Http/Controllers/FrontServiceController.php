@@ -50,52 +50,10 @@ class FrontServiceController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        $this->authorize('create', Service::class);
 
-        $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price'       => 'required|numeric',
-            'cover_image' => 'required|string',
-            'gallery'     => 'nullable|json',
-            'category_id' => 'required|exists:categories,id',
-            'ville_id'    => 'required|exists:villes,id',
-        ]);
 
-        return response()->json($this->serviceService->createService(array_merge($validated, [
-            'user_id' => auth()->id(),
-            'status' => 'pending',
-        ])), 201);
-    }
 
-    public function update(Request $request, $id)
-    {
-        $service = $this->serviceService->getServiceById($id);
-        $this->authorize('update', $service);
 
-        $validated = $request->validate([
-            'title'       => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string',
-            'price'       => 'sometimes|required|numeric',
-            'cover_image' => 'sometimes|required|string',
-            'gallery'     => 'nullable|json',
-            'category_id' => 'sometimes|required|exists:categories,id',
-            'ville_id'    => 'sometimes|required|exists:villes,id',
-        ]);
-
-        return response()->json($this->serviceService->updateService($id, $validated), 200);
-    }
-
-    public function destroy($id)
-    {
-        $service = $this->serviceService->getServiceById($id);
-        $this->authorize('delete', $service);
-
-        $this->serviceService->deleteService($id);
-        return response()->json(['message' => 'Service supprimé avec succès'], 200);
-    }
 
 
     //////////////  manage admin

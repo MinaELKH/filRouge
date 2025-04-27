@@ -22,8 +22,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return response()->json($this->serviceService->getAllServices(), 200);
+        $services = $this->serviceService->getAllServices();
+        return view('services.index', compact('services'));
     }
+
 
     /**
      * Afficher un service spécifique.
@@ -44,11 +46,13 @@ class ServiceController extends Controller
 
     public function getServicesByCategory($id)
     {
-        return response()->json($this->serviceService->getServiceByCategory($id) , 200) ;
+        $services = $this->serviceService->getServiceByCategory($id) ;
+        return view('services.serviceByCategory', compact('services'));
     }
     public function getServicesByVille($id)
     {
-        return response()->json($this->serviceService->getServiceByVille($id) , 200) ;
+        $services = $this->serviceService->getServiceByVille($id) ;
+        return view('services.serviceByCategory', compact('services'));
     }
     public function store(Request $request)
     {
