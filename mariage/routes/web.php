@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\FrontHomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ServiceController;
@@ -52,7 +53,11 @@ Route::middleware(['auth'])->group(function () {
         ->name('client.home');
 
     // Dashboard Prestataire
-    Route::view('/prestataire/home', 'prestataire.home')
+//    Route::view('/prestataire/home', 'prestataire.home')
+//        ->name('prestataire.home');
+
+
+    Route::get('/prestataire/home', [EntrepriseController::class,'index'])
         ->name('prestataire.home');
 });
 
