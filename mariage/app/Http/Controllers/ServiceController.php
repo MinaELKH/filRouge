@@ -30,7 +30,11 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        return response()->json($this->serviceService->getServiceById($id), 200);
+        // Récupérer le service avec toutes ses relations
+        $service = $this->serviceService->getServiceById($id);
+
+        // Retourner la vue avec le service
+        return view('services.show', compact('service'));
     }
 
     /**
@@ -95,52 +99,8 @@ class ServiceController extends Controller
     }
 
 
-//    public function store(Request $request)
-//    {
-//        $this->authorize('create', Service::class);
-//
-//        $validated = $request->validate([
-//            'title'       => 'required|string|max:255',
-//            'description' => 'nullable|string',
-//            'price'       => 'required|numeric',
-//            'cover_image' => 'required|string',
-//            'gallery'     => 'nullable|json',
-//            'category_id' => 'required|exists:categories,id',
-//            'ville_id'    => 'required|exists:villes,id',
-//        ]);
-//
-//        return response()->json($this->serviceService->createService(array_merge($validated, [
-//            'user_id' => auth()->id(),
-//            'status' => 'pending',
-//        ])), 201);
-//    }
 
-//    public function update(Request $request, $id)
-//    {
-//        // Récupérer le service
-//        $service = $this->serviceService->getServiceById($id);
-//
-//        // Vérifie si l'utilisateur est autorisé à modifier ce service
-//        $this->authorize('update', $service);
-//
-//        // Validation des données envoyées par le formulaire
-//        $validated = $request->validate([
-//            'title'       => 'sometimes|required|string|max:255',
-//            'description' => 'nullable|string',
-//            'price'       => 'sometimes|required|numeric',
-//            'cover_image' => 'sometimes|required|string',
-//            'gallery'     => 'nullable|json',
-//            'category_id' => 'sometimes|required|exists:categories,id',
-//            'ville_id'    => 'sometimes|required|exists:villes,id',
-//        ]);
-//
-//        // Mise à jour du service avec les nouvelles données
-//        $this->serviceService->updateService($id, $validated);
-//
-//        // Redirection après la mise à jour avec un message de succès
-//        return redirect()->route('prestataire.services')->with('success', 'Service mis à jour avec succès');
-//    }
-//
+
 
 
 

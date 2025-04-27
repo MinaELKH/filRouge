@@ -69,7 +69,7 @@
                 <ul class="flex space-x-2 -mb-px py-2">
                     <li>
                         <a href="{{route('prestataire.home')}}" class="inline-flex items-center px-5 py-3 text-sm font-medium rounded-t-lg {{ request()->routeIs('prestataire.home') ? 'bg-pro-blue text-white' : 'text-gray-300 hover:bg-pro-blue/10 hover:text-white' }} transition-colors">
-                            <i class="fas fa-tachometer-alt mr-2"></i>Accueil
+                            <i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord
                         </a>
                     </li>
                     <li>
