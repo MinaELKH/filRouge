@@ -68,6 +68,35 @@ class ServiceController extends Controller
         ])), 201);
     }
 
+//    public function update(Request $request, $id)
+//    {
+//        // Récupérer le service
+//        $service = $this->serviceService->getServiceById($id);
+//
+//        // Vérifie si l'utilisateur est autorisé à modifier ce service
+//        $this->authorize('update', $service);
+//
+//        // Validation des données envoyées par le formulaire
+//        $validated = $request->validate([
+//            'title'       => 'sometimes|required|string|max:255',
+//            'description' => 'nullable|string',
+//            'price'       => 'sometimes|required|numeric',
+//            'cover_image' => 'sometimes|required|string',
+//            'gallery'     => 'nullable|json',
+//            'category_id' => 'sometimes|required|exists:categories,id',
+//            'ville_id'    => 'sometimes|required|exists:villes,id',
+//        ]);
+//
+//        // Mise à jour du service avec les nouvelles données
+//        $this->serviceService->updateService($id, $validated);
+//
+//        // Redirection après la mise à jour avec un message de succès
+//        return redirect()->route('prestataire.services')->with('success', 'Service mis à jour avec succès');
+//    }
+//
+
+
+
     public function update(Request $request, $id)
     {
         // Récupérer le service
@@ -81,11 +110,31 @@ class ServiceController extends Controller
             'title'       => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'price'       => 'sometimes|required|numeric',
-            'cover_image' => 'sometimes|required|string',
-            'gallery'     => 'nullable|json',
+            'cover_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // fichier image
+            'gallery.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // chaque fichier de la galerie
             'category_id' => 'sometimes|required|exists:categories,id',
             'ville_id'    => 'sometimes|required|exists:villes,id',
         ]);
+
+        // Si une nouvelle image de couverture est envoyée
+        if ($request->hasFile('cover_image')) {
+            $coverImage = $request->file('cover_image');
+            $coverImageName = time() . '_cover_' . $coverImage->getClientOriginalName();
+            $coverImage->move(public_path('images/services'), $coverImageName);
+            $validated['cover_image'] = $coverImageName;
+        }
+
+        // Si une ou plusieurs nouvelles images de galerie sont envoyées
+        if ($request->hasFile('gallery')) {
+            $galleryImages = [];
+            foreach ($request->file('gallery') as $image) {
+                $galleryImageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images/services/gallery'), $galleryImageName);
+                $galleryImages[] = $galleryImageName;
+            }
+            // Stocke la galerie comme JSON dans la base
+            $validated['gallery'] = json_encode($galleryImages);
+        }
 
         // Mise à jour du service avec les nouvelles données
         $this->serviceService->updateService($id, $validated);
