@@ -187,7 +187,7 @@
                     <!-- Bouton de contact -->
 
                     <button
-                        class="openModalBtn w-full bg-[#f76c6f] text-white py-3 rounded-lg font-medium hover:bg-pink-700 transition-colors mb-4"
+                        class="openModalBtn w-full bg-gradient-to-r from-wedding-pink to-wedding-pink text-white py-3 rounded-lg font-medium hover:from-from-wedding-pink hover:to-rose-500 transition-colors mb-4"
                         data-receiver-id="{{ $service->user_id }}"
                         data-service-id="{{ $service->id }}"
                     >

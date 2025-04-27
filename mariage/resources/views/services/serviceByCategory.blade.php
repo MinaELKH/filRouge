@@ -106,7 +106,7 @@
                             <div class="flex justify-between items-center">
                                 <div class="text-sm font-medium">À partir de {{ number_format($service->price, 0, ',', ' ') }}€</div>
                                 <button
-                                    class="openModalBtn bg-wedding-pink hover:bg-pink-400 text-white font-medium py-2 px-4 rounded z-10"
+                                    class="openModalBtn bg-gradient-to-r from-wedding-pink to-wedding-pink text-white py-3 rounded-lg font-medium hover:from-from-wedding-pink hover:to-rose-500 transition-colors  py-2 px-4 rounded z-10"
                                     data-receiver-id="{{ $service->user_id }}"
                                     data-service-id="{{ $service->id }}"
                                     onclick="event.preventDefault(); event.stopPropagation();"
