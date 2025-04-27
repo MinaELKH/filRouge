@@ -18,31 +18,55 @@ class MessageController extends Controller
         $this->reservationService = $reservationService;
     }
 // Dans MessageController.php
-    public function index(Request $request, $partnerId = null)
+//    public function index(Request $request, $partnerId = null)
+//    {
+//        $userId = auth()->id();
+//        $conversations = $this->messageService->getConversations($userId);
+//
+//        $partner = null;
+//        $messages = collect();
+//
+//        if ($partnerId) {
+//            $data = $this->messageService->getConversation($userId, $partnerId);
+//            $partner = $data['partner'];
+//            $messages = $data['messages'];
+//
+//            // Ne retourner la vue partielle que si c'est une requête AJAX
+//            if ($request->ajax()) {
+//                //return view('messages.partial.conversation', compact('partner', 'messages'));
+//                return view('messages.partials.conversation', compact('partner', 'messages'));
+//
+//            }
+//
+//            // Sinon, retourner la vue complète avec la conversation sélectionnée
+//        }
+//
+//        // Toujours retourner la vue complète dans le cas non-AJAX
+//        return view('messages.index', compact('conversations', 'partner', 'messages'));
+//    }
+
+
+    public function index(Request $request, $reservationId = null)
     {
         $userId = auth()->id();
         $conversations = $this->messageService->getConversations($userId);
 
         $partner = null;
         $messages = collect();
+        $reservation = null;
 
-        if ($partnerId) {
-            $data = $this->messageService->getConversation($userId, $partnerId);
+        if ($reservationId) {
+            $data = $this->messageService->getConversationByReservation($userId, $reservationId);
             $partner = $data['partner'];
             $messages = $data['messages'];
+            $reservation = $data['reservation'];
 
-            // Ne retourner la vue partielle que si c'est une requête AJAX
             if ($request->ajax()) {
-                //return view('messages.partial.conversation', compact('partner', 'messages'));
-                return view('messages.partials.conversation', compact('partner', 'messages'));
-
+                return view('messages.partials.conversation', compact('partner', 'messages', 'reservation'));
             }
-
-            // Sinon, retourner la vue complète avec la conversation sélectionnée
         }
 
-        // Toujours retourner la vue complète dans le cas non-AJAX
-        return view('messages.index', compact('conversations', 'partner', 'messages'));
+        return view('messages.index', compact('conversations', 'partner', 'messages', 'reservation'));
     }
 
 

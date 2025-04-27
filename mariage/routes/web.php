@@ -107,6 +107,12 @@ Route::post('/devis/{id}/confirm', [DevisController::class, 'confirm'])
 Route::post('/messages/send-devis-by-reservation/{reservation}', [MessageController::class, 'sendDevisByReservation'])
     ->name('messages.sendDevisByReservation');
 
+
+
+Route::get('/messages/reservation/{reservationId}', [MessageController::class, 'index'])->name('messages.by.reservation');
+Route::post('/messages/reservation/{reservationId}/reply', [MessageController::class, 'sendReply'])->name('messages.reply.by.reservation');
+
+
 Route::get('/devis/{devi}', [DevisController::class, 'showPage'])
     ->name('devis.show');
 Route::get('devis/{id}/pdf', [DevisController::class, 'generateDevisPdf'])->name('devis.pdf');

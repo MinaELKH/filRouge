@@ -113,4 +113,49 @@ class MessageRepository implements MessageRepositoryInterface
             ->whereNull('read_at')
             ->update(['read_at' => now()]);
     }
+
+
+    public function getDistinctReservationsWithMessages($userId)
+    {
+        return Message::where(function($query) use ($userId) {
+            $query->where('sender_id', $userId)
+                ->orWhere('receiver_id', $userId);
+        })
+            ->whereNotNull('reservation_id')
+            ->with('reservation.service')
+            ->select('reservation_id')
+            ->distinct()
+            ->get()
+            ->pluck('reservation');
+    }
+
+    public function getLastMessageForReservation($reservationId)
+    {
+        return Message::where('reservation_id', $reservationId)
+            ->latest()
+            ->first();
+    }
+
+    public function getMessagesForReservation($reservationId)
+    {
+        return Message::where('reservation_id', $reservationId)
+            ->orderBy('created_at', 'asc')
+            ->get();
+    }
+
+    public function countUnreadMessagesForReservation($reservationId, $userId)
+    {
+        return Message::where('reservation_id', $reservationId)
+            ->where('receiver_id', $userId)
+            ->whereNull('read_at')
+            ->count();
+    }
+
+    public function markReservationMessagesAsRead($reservationId, $userId)
+    {
+        Message::where('reservation_id', $reservationId)
+            ->where('receiver_id', $userId)
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+    }
 }

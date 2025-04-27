@@ -16,6 +16,16 @@ interface MessageRepositoryInterface
     public function countUnreadMessages($fromId, $toId);
     public function getMessagesBetween($userId, $partnerId);
     public function markMessagesAsRead($fromId, $toId);
+
+    public function getDistinctReservationsWithMessages($userId);
+
+    public function getLastMessageForReservation($id);
+
+    public function countUnreadMessagesForReservation($id, $userId);
+
+    public function getMessagesForReservation($reservationId);
+
+    public function markReservationMessagesAsRead($reservationId, $userId);
 }
 
 

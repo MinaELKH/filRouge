@@ -1,4 +1,4 @@
-{{-- messages._conversation.blade.php --}}
+{{-- messages.conversation.blade.php --}}
 <div class="flex-1 flex flex-col overflow-y-auto max-h-[80%]">
     <!-- Header -->
     <div class="bg-white border-b p-4 flex items-center justify-between ">
