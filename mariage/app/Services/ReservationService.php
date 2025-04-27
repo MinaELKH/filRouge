@@ -101,7 +101,6 @@ class ReservationService
     {
         // Si l'id est fourni, on l'utilise pour récupérer les réservations d'un client spécifique
         if ($id) {
-            // Récupérer les réservations de l'utilisateur spécifié (id)
             return $this->reservationRepository->getUserReservations($id);
         }
 

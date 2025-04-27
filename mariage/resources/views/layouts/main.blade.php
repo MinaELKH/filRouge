@@ -243,6 +243,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('messages.index') }}" class="inline-block px-4 py-3 text-sm font-medium {{ request()->routeIs('messages.index') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
+                            <i class="fas fa-envelope mr-2"></i>Messages
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('client.favorites') }}" class="inline-block px-4 py-3 text-sm font-medium {{ request()->routeIs('client.favorites') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
                             <i class="fas fa-heart mr-2"></i>Favoris
                         </a>

@@ -67,6 +67,7 @@ class ClientController extends Controller
     {
         // Récupérer les services réservés par le client via le service
         $reservations = $this->reservationService->getClientReservations(auth()->id());
+      //  dd($reservations);
         return view('client.reservations', compact('reservations'));
     }
 

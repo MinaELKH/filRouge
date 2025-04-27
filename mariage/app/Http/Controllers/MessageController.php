@@ -44,29 +44,7 @@ class MessageController extends Controller
         // Toujours retourner la vue complète dans le cas non-AJAX
         return view('messages.index', compact('conversations', 'partner', 'messages'));
     }
-//    public function index(Request $request, $partnerId = null)
-//    {
-//        $userId = auth()->id();
-//        $conversations = $this->messageService->getConversations($userId);
-//
-//        $partner   = null;
-//        $messages  = collect();
-//
-//        if ($partnerId) {
-//            $data      = $this->messageService->getConversation($userId, $partnerId);
-//            $partner   = $data['partner'];
-//            $messages  = $data['messages'];
-//
-//            // 👇 Ici on teste si c'est une requête AJAX
-//
-//                return view('messages.partials.conversation', compact('partner', 'messages'));
-//
-//
-//
-//        }
-//
-//        return view('messages.index', compact('conversations','partner','messages'));
-//    }
+
 
     // Affiche les messages envoyés par l'utilisateur
     public function sentMessages()
@@ -147,7 +125,7 @@ class MessageController extends Controller
         $reservation = null;
 
         $reservation = $this->reservationService->findOrCreateReservation([
-            'user_id' => $validated['receiver_id'],
+            'user_id' => $sender->id,
             'service_id' => $validated['service_id'],
             'event_date' => $validated['event_date'],
         ]);

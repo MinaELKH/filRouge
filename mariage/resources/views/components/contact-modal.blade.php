@@ -83,7 +83,7 @@
             </div>
 
             <div class="pt-4">
-                <button type="submit" class="w-full bg-gradient-to-r from-wedding-pink to-wedding-pink hover:from-rose-500 hover:to-wedding-pink text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+                <button type="submit" class="w-full bg-gradient-to-r from-wedding-pink to-rose-300 hover:from-rose-500 hover:to-wedding-pink text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
                     <span>Envoyer le message</span>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>

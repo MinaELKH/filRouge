@@ -72,15 +72,19 @@
                                         <i class="fas fa-file-invoice-dollar mr-2"></i>
                                         Afficher Devis
                                     </a>
-
+                                @else
+                                    <a href="#"
+                                       class="bg-gray-300  text-white font-medium py-3 px-4 rounded-lg w-full text-center flex items-center justify-center">
+                                        <i class="fas fa-file-invoice-dollar mr-2"></i>
+                                        En attente de devis
+                                    </a>
+                                @endif
                                     <!-- Afficher le boutQ00on 'Voir Discussion' -->
                                     <a href="{{ route('messages.index', ['partnerId' => $reservation->service->user_id]) }}"
                                        class="bg-wedding-pink hover:bg-pink-600 text-white font-medium py-3 px-4 rounded-lg w-full text-center block transition duration-300 flex items-center justify-center">
                                         <i class="fas fa-comments mr-2"></i>
                                         Voir Discussion
                                     </a>
-                                @endif
-
 
                             </div>
                         </div>
