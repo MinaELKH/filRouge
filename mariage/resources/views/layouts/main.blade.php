@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/img/logo.jpg"     type="image/png">
     <title>@yield('title', (Auth::user() && Auth::user()->role == 'prestataire') ? 'Espace Prestataire' : 'Espace Client')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -32,38 +33,32 @@
     <header class="bg-pro-gray shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-5">
-                <a href="#" class="flex items-center">
-                    <span class="text-pro-blue font-bold text-2xl">mariages.net</span>
-                    <span class="ml-2 text-xs px-3 py-1 bg-pro-blue text-white rounded-full">PRO</span>
-                </a>
+                <div class="text-center mb-3">
+                    <a href="{{ route('home') }}" class="inline-flex items-center justify-center">
+                        <img src="/images/img/logo.jpg" class="h-10 mr-2">
+                        <span class="text-xl font-medium text-gray-700">mariages</span>
+                    </a>
+                </div>
 
-                <div class="flex items-center space-x-6">
-                    <span class="text-sm text-gray-300">Bonjour, {{ Auth::user()->name ?? 'Prestataire' }}</span>
-                    <div class="relative group">
-                        <button class="w-12 h-12 rounded-full bg-pro-blue/10 flex items-center justify-center hover:bg-pro-blue/20 transition-colors">
-                            <i class="fas fa-user text-pro-blue"></i>
-                        </button>
-                        <div class="absolute right-0 mt-3 w-56 bg-white rounded-lg shadow-xl py-2 hidden group-hover:block">
-                            <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-pro-blue/10 transition-colors">
-                                <i class="fas fa-user-circle w-5 text-pro-blue"></i>
-                                <span class="ml-3">Mon profil</span>
-                            </a>
-                            <a href="#" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-pro-blue/10 transition-colors">
-                                <i class="fas fa-cog w-5 text-pro-blue"></i>
-                                <span class="ml-3">Paramètres</span>
-                            </a>
-                            <div class="border-t border-gray-100"></div>
+
+
+
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-600">Bonjour, {{ Auth::user()->name ?? 'prestataire' }}</span>
+                        <div class="flex items-center space-x-3">
+                            <button class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
+                                <i class="fas fa-users text-gray-600"></i>
+                            </button>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="flex items-center w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                    <i class="fas fa-sign-out-alt w-5"></i>
-                                    <span class="ml-3">Déconnexion</span>
+                                <button type="submit" class="p-2 rounded-md hover:bg-wedding-pink/20 cursor-pointer" title="Déconnexion">
+                                    <i class="fas fa-sign-out-alt w-6 h-6 flex items-center justify-center text-wedding-pink"></i>
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
+
 
             <nav class="flex border-t border-gray-700">
                 <ul class="flex space-x-2 -mb-px py-2">
@@ -206,28 +201,32 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
-                <a href="{{ route('home') }}" class="flex items-center">
-                    <span class="text-wedding-pink font-bold text-xl">mariages.net</span>
-                    <span class="ml-2 text-xs px-2 py-1 bg-wedding-pink text-white rounded-md">Espace Client</span>
-                </a>
+                <div class="text-center">
+                    <a href="{{ route('home') }}" class="inline-flex items-center justify-center">
+                        <img src="/images/img/logo.jpg" class="h-10 mr-2">
+                        <span class="text-xl font-medium text-gray-700">mariages</span>
+                    </a>
 
+                </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-600">Bonjour, {{ Auth::user()->name ?? 'Client' }}</span>
-                    <div class="relative group">
+                    <div class="flex items-center space-x-3">
                         <button class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
-                            <i class="fas fa-user text-gray-600"></i>
+                            <i class="fas fa-users text-gray-600"></i>
                         </button>
-                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block">
-                            <a href="{{ route('client.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mon profil</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Paramètres</a>
-                            <div class="border-t border-gray-100"></div>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Déconnexion</button>
-                            </form>
-                        </div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="p-2 rounded-md hover:bg-wedding-pink/20 cursor-pointer" title="Déconnexion">
+                                <i class="fas fa-sign-out-alt w-6 h-6 flex items-center justify-center text-wedding-pink"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
+
+
+
+
+
             </div>
 
             <nav class="flex border-t border-gray-200">

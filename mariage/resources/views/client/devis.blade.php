@@ -11,9 +11,7 @@
             <div class="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
                 <i class="fas fa-file-invoice-dollar text-wedding-pink text-5xl mb-4"></i>
                 <p class="text-gray-600">Aucun devis trouvé.</p>
-                <a href="{{ route('services.index') }}" class="mt-4 inline-block bg-wedding-pink hover:bg-pink-600 text-white font-medium py-2 px-4 rounded transition duration-300">
-                    Explorer les services
-                </a>
+
             </div>
         @else
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
