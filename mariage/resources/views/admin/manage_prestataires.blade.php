@@ -45,7 +45,7 @@
                                 @method('PATCH')
                                 <button type="submit"
                                         class="text-white px-3 py-1 rounded-md transition
-                                               {{ $user->is_banned ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600' }}"
+                                               {{ $user->is_banned ? 'bg-green-500 hover:bg-green-600' : ' hover:bg-white' }}"
                                         title="{{ $user->is_banned ? 'Débannir' : 'Bannir' }}">
                                     {{ $user->is_banned ? '✅' : '🚫' }}
                                 </button>

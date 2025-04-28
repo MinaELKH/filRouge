@@ -32,13 +32,28 @@
 <body class="bg-gray-50 min-h-screen">
 
 <!-- Header -->
-<header class="bg-white p-2 border-b flex justify-between items-center">
-    <div class="text-lg font-semibold">Dashboard Admin</div>
+<header class="bg-white  w-full  border-b flex justify-between items-center fixed">
+    <div class="text-center md:mx-24 py-2">
+        <a href="{{ route('home') }}" class="inline-flex items-center justify-center">
+            <img src="/images/img/logo.jpg" class="h-10 mr-2">
+            <span class="text-xl font-medium text-gray-700">mariages</span>
+        </a>
+
+    </div>
+    <div class="flex items-center space-x-4">
+        <span class="text-sm text-gray-600">Bonjour, {{ Auth::user()->name ?? 'Client' }}</span>
+        <div class="flex items-center space-x-3">
+            <button class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
+                <i class="fas fa-users text-gray-600"></i>
+            </button>
+
+        </div>
+    </div>
 </header>
 
 <div class="flex">
     <!-- Sidebar -->
-    <div class="hidden md:flex flex-col bg-wedding-primary text-white w-16 min-h-[calc(100vh-48px)] fixed">
+    <div class="hidden md:flex flex-col bg-wedding-primary text-white w-16 min-h-[calc(100vh)] fixed">
         <div class="flex flex-col items-center gap-8 py-6">
 
             <!-- Dashboard -->
@@ -81,8 +96,8 @@
     </div>
 
     <!-- Main Content -->
-    <div class="w-full md:ml-16 p-4">
-        <div class="max-w-7xl mx-auto">
+    <div class="w-full md:ml-16 p-8">
+        <div class="max-w-7xl mx-auto py-16">
             <!-- Content will be injected here -->
             @yield('content')
         </div>
