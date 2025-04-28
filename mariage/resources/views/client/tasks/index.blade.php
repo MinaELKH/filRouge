@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Tâches de mariage')
 @section('breadcrumb', 'Tâches')

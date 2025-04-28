@@ -31,7 +31,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = $this->taskService->getAllUserTasks();
-        return view('client.tasks', compact('tasks'));
+        return view('client.tasks.index', compact('tasks'));
     }
 
     /**

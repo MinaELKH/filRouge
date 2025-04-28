@@ -215,7 +215,6 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
 
 // task pour le client
-
 Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/client/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('client.tasks');
     Route::get('/client/tasks/create', [App\Http\Controllers\TaskController::class, 'create'])->name('client.tasks.create');

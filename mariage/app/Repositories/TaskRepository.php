@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Task;
-use App\Repositories\Interfaces\TaskRepositoryInterface;
+use App\Repositories\Contracts\TaskRepositoryInterface;
 
 class TaskRepository implements TaskRepositoryInterface
 {
