@@ -22,7 +22,8 @@
     </script>
 </head>
 <body class="h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
-      style="background-image: url('https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1950&q=80');">
+      style="background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('/images/img/login.jpg');">
+
 
 <!-- Overlay -->
 <div class="absolute inset-0 bg-black bg-opacity-50"></div>
