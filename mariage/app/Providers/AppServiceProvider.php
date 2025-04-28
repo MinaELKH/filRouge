@@ -13,6 +13,7 @@ use App\Repositories\Contracts\EntrepriseRepositoryInterface;
 use App\Repositories\Contracts\MessageRepositoryInterface;
 use App\Repositories\Contracts\ReservationRepositoryInterface;
 use App\Repositories\Contracts\ServiceRepositoryInterface;
+use App\Repositories\Contracts\TaskRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\DevisItemRepository;
 use App\Repositories\DevisRepository;
@@ -20,6 +21,7 @@ use App\Repositories\EntrepriseRepository;
 use App\Repositories\MessageRepository;
 use App\Repositories\ReservationRepository;
 use App\Repositories\ServiceRepository;
+use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -40,8 +42,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DevisRepositoryInterface::class, DevisRepository::class);
         $this->app->bind(DevisItemRepositoryInterface::class, DevisItemRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
-        $this->app->bind(EntrepriseRepositoryInterface::class, EntrepriseRepository::class
-        );
+        $this->app->bind(EntrepriseRepositoryInterface::class, EntrepriseRepository::class);
+        $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
+
     }
 
 
