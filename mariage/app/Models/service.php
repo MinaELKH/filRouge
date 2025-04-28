@@ -57,5 +57,15 @@ class Service extends Model
     {
         return $this->belongsToMany(User::class, 'favorites', 'service_id', 'user_id')->withTimestamps();
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->count();
+    }
+
 }
 

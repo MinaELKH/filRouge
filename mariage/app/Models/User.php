@@ -92,4 +92,9 @@ class User extends Authenticatable
     {
         return $this->favorites()->where('service_id', $serviceId)->exists();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

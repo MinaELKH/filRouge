@@ -229,10 +229,11 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
 
 // favorite
-// Dans routes/web.php
+
 Route::middleware(['auth', 'role:client'])->group(function () {
     // Routes pour les favoris
     Route::get('/client/favorites', [FavoriteController::class, 'index'])->name('client.favorites');
     Route::post('/client/favorites/{service}', [FavoriteController::class, 'store'])->name('client.favorites.store');
     Route::delete('/client/favorites/{service}', [FavoriteController::class, 'destroy'])->name('client.favorites.destroy');
 });
+
