@@ -33,9 +33,7 @@
                 </div>
                 <div class="h-20 w-20">
                     <!-- Emplacement pour logo -->
-                    <div class="bg-wedding-pink bg-opacity-10 h-full w-full rounded-full flex items-center justify-center">
-                        <span class="text-wedding-pink font-bold text-xl">LOGO</span>
-                    </div>
+
                 </div>
             </div>
 

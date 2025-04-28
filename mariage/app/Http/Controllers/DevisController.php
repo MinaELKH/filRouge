@@ -154,17 +154,20 @@ class DevisController extends Controller
         return view('devis.create', compact('reservationId' ,'reservation', 'service', 'client'));
 
     }
-
     public function confirm($id)
     {
         $devis = $this->devisService->getDevis($id);
-        $this->authorize('update', $devis);
 
-        // Mettre à jour le devis en 'approved'
-        $this->devisService->updateDevis($devis, ['status' => 'approved']);
+        // Mettre à jour le devis en 'accepted' et indiquer qu'il est payé
+        $this->devisService->updateDevis($devis, [
+            'status' => 'accepted',
+            'is_paid' => true,
+            'paid_at' => now()
+        ]);
 
-        // Redirection vers le paiement (à adapter)
-        return redirect()->route('paiement.page', ['devis_id' => $id]);
+        // Redirection avec message de succès
+        return redirect()->route('devis.show', $id)
+            ->with('success', 'Félicitations ! Votre paiement a été effectué avec succès.');
     }
     public function DevisByPrestataire()
     {

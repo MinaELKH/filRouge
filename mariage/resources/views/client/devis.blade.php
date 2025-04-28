@@ -77,13 +77,9 @@
                                 <!-- Paiement -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($reservation->devis && $reservation->devis->status == 'accepted')
-                                        @if (isset($reservation->payment) && $reservation->payment->status == 'completed')
+
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Payé</span>
-                                        @elseif (isset($reservation->payment) && $reservation->payment->status == 'pending')
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En attente</span>
-                                        @else
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Non payé</span>
-                                        @endif
+
                                     @else
                                         <span class="text-sm text-gray-500">-</span>
                                     @endif
@@ -100,14 +96,7 @@
                                                 <i class="fas fa-file-invoice"></i>
                                             </a>
 
-                                            @if ($reservation->devis->status == 'accepted' && (!isset($reservation->payment) || $reservation->payment->status != 'completed'))
-                                                <!-- Payer -->
-                                                <a href="{{ route('payment.create', ['devis_id' => $reservation->devis->id]) }}"
-                                                   class="text-wedding-pink hover:text-pink-700"
-                                                   title="Payer maintenant">
-                                                    <i class="fas fa-credit-card"></i>
-                                                </a>
-                                            @endif
+
                                         @endif
                                     </div>
                                 </td>

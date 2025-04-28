@@ -26,7 +26,7 @@
             <form action="{{ route('category.store') }}" method="POST">
                 @csrf
                 <div>
-                    <p class="text-sm mb-1">Ajouter un Service</p>
+                    <p class="text-sm mb-1">Ajouter un categorie</p>
                     <p class="text-xs text-gray-500 mb-2">Nom du service</p>
                     <input type="text" name="name" placeholder="Entrez le nom" class="w-full max-w-md px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>

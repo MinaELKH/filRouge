@@ -75,12 +75,7 @@
                 </a>
 
             </form>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="p-2 rounded-md hover:bg-wedding-secondary cursor-pointer" title="Déconnexion">
-                    <i class="fas fa-sign-out-alt w-6 h-6 flex items-center justify-center"></i>
-                </button>
-            </form>
+
 
         </div>
     </div>
