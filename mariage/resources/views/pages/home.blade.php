@@ -3,19 +3,6 @@
 @section('title', 'Mariages.net - Accueil')
 
 @section('content')
-    <section>
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Bienvenue sur Mariages.net</h2>
-        <p class="text-gray-600 mb-6">Organisez le mariage de vos rêves avec les meilleurs prestataires.</p>
-
-        <!-- Sections supplémentaires comme des témoignages, des prestataires recommandés, etc. -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Exemple de contenu -->
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h3 class="font-semibold text-xl text-gray-800">Offre spéciale traiteur</h3>
-                <p class="text-gray-600 mt-2">Découvrez nos offres spéciales pour les traiteurs.</p>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12">
         <div class="container mx-auto px-4">

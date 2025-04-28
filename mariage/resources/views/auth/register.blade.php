@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Inscription - MariageDream</title>
+    <title>Inscription </title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .bg-blur {
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wedding-pink': '#f76c6f',
+                        'wedding-dark': '#454545',
+                        'pro-blue': '#2563eb',
+                        'pro-light': '#f8fafc',
+                        'pro-gray': '#1e293b',
+                    }
+                }
+            }
         }
-    </style>
+    </script>
 </head>
 <body class="h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
       style="background-image: url('https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1950&q=80');">
@@ -21,8 +30,11 @@
 <!-- Form Container -->
 <div class="relative z-10 w-full max-w-sm p-4 bg-white bg-opacity-20 rounded-xl shadow-lg bg-blur">
     <div class="text-center mb-3">
-        <h1 class="text-2xl font-bold text-white">Mariage</h1>
-        <p class="text-xs text-gray-200">Organisez le mariage parfait</p>
+        <a href="{{ route('home') }}" class="inline-flex items-center justify-center">
+            <img src="/images/img/logo.jpg" class="h-10 mr-2">
+            <span class="text-xl font-medium text-gray-700">mariages</span>
+        </a>
+        <p class="text-white">Votre plateforme d’organisation de mariage</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" class="space-y-3">
@@ -100,7 +112,7 @@
         </div>
 
         <button type="submit"
-                class="w-full text-sm px-3 py-2 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg transition">
+                class="w-full text-sm px-3 py-2 bg-wedding-pink hover:bg-pink-700 text-white font-semibold rounded-lg transition">
             S'inscrire
         </button>
     </form>

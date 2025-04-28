@@ -41,6 +41,22 @@ class AuthController extends Controller {
     }
 
 
+//    public function register(Request $request) {
+//        $request->validate([
+//            'name' => 'required',
+//            'email' => 'required|email|unique:users',
+//            'password' => 'required|min:6|confirmed',
+//            'role' => 'required|in:admin,client,prestataire'
+//        ]);
+//        // Garde seulement les données utiles
+//        $data = $request->only(['name', 'email', 'password', 'role']);
+//        $user = $this->authService->register($data);
+//
+//        // Authentifier l'utilisateur directement après inscription
+//        Auth::login($user);
+//        $view = $this->authService->checkRoleRedirect($user);
+//        return view($view , compact('user'));
+//    }
     public function register(Request $request) {
         $request->validate([
             'name' => 'required',
@@ -48,14 +64,19 @@ class AuthController extends Controller {
             'password' => 'required|min:6|confirmed',
             'role' => 'required|in:admin,client,prestataire'
         ]);
+
         // Garde seulement les données utiles
         $data = $request->only(['name', 'email', 'password', 'role']);
         $user = $this->authService->register($data);
 
         // Authentifier l'utilisateur directement après inscription
         Auth::login($user);
-        $view = $this->authService->checkRoleRedirect($user);
-        return view($view , compact('user'));
+
+        // Utiliser la méthode checkRoleRedirect pour obtenir le nom de la route
+        $route = $this->authService->checkRoleRedirect($user);
+
+        // Rediriger vers la route au lieu de la vue
+        return redirect()->route($route);
     }
 
     public function logout(Request $request)
