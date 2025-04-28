@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Modifier la tâche')
 @section('breadcrumb', 'Modifier la tâche')
@@ -33,16 +33,11 @@
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
                     <select name="category" id="category" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                        <option value="">Sélectionner</option>
-                        <option value="Lieu" {{ $task->category === 'Lieu' ? 'selected' : '' }}>Lieu</option>
-                        <option value="Traiteur" {{ $task->category === 'Traiteur' ? 'selected' : '' }}>Traiteur</option>
-                        <option value="Décoration" {{ $task->category === 'Décoration' ? 'selected' : '' }}>Décoration</option>
-                        <option value="Tenue" {{ $task->category === 'Tenue' ? 'selected' : '' }}>Tenue</option>
-                        <option value="Beauté" {{ $task->category === 'Beauté' ? 'selected' : '' }}>Beauté</option>
-                        <option value="Photo/Vidéo" {{ $task->category === 'Photo/Vidéo' ? 'selected' : '' }}>Photo/Vidéo</option>
-                        <option value="Musique" {{ $task->category === 'Musique' ? 'selected' : '' }}>Musique</option>
-                        <option value="Transport" {{ $task->category === 'Transport' ? 'selected' : '' }}>Transport</option>
-                        <option value="Administration" {{ $task->category === 'Administration' ? 'selected' : '' }}>Administration</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->name }}" {{ $category->name == $task->$category ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
                         <option value="Autre" {{ $task->category === 'Autre' ? 'selected' : '' }}>Autre</option>
                     </select>
                     @error('category')

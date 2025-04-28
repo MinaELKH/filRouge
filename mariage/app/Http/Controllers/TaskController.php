@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CategoryService;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
 
@@ -11,15 +12,17 @@ class TaskController extends Controller
      * @var TaskService
      */
     protected $taskService;
+    protected $categoryService;
 
     /**
      * TaskController constructor.
      *
      * @param TaskService $taskService
      */
-    public function __construct(TaskService $taskService)
+    public function __construct(TaskService $taskService , CategoryService $categoryService)
     {
         $this->taskService = $taskService;
+        $this->categoryService = $categoryService;
         $this->middleware('auth');
     }
 
@@ -31,7 +34,8 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = $this->taskService->getAllUserTasks();
-        return view('client.tasks.index', compact('tasks'));
+        $categories = $this->categoryService->getAll() ;
+        return view('client.tasks.index', compact('tasks' , 'categories'));
     }
 
     /**
@@ -75,7 +79,8 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = $this->taskService->getTask($id);
-        return view('client.tasks.edit', compact('task'));
+        $categories = $this->categoryService->getAll() ;
+        return view('client.tasks.edit', compact('task' , 'categories'));
     }
 
     /**

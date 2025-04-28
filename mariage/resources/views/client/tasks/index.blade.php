@@ -103,16 +103,12 @@
                         <div>
                             <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
                             <select name="category" id="category" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                <option value="">Sélectionner</option>
-                                <option value="Lieu">Lieu</option>
-                                <option value="Traiteur">Traiteur</option>
-                                <option value="Décoration">Décoration</option>
-                                <option value="Tenue">Tenue</option>
-                                <option value="Beauté">Beauté</option>
-                                <option value="Photo/Vidéo">Photo/Vidéo</option>
-                                <option value="Musique">Musique</option>
-                                <option value="Transport">Transport</option>
-                                <option value="Administration">Administration</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->name }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+
                                 <option value="Autre">Autre</option>
                             </select>
                         </div>
