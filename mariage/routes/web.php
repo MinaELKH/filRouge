@@ -212,3 +212,17 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
 
 
+
+
+// task pour le client
+
+Route::middleware(['auth', 'role:client'])->group(function () {
+    Route::get('/client/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('client.tasks');
+    Route::get('/client/tasks/create', [App\Http\Controllers\TaskController::class, 'create'])->name('client.tasks.create');
+    Route::post('/client/tasks', [App\Http\Controllers\TaskController::class, 'store'])->name('client.tasks.store');
+    Route::get('/client/tasks/{task}/edit', [App\Http\Controllers\TaskController::class, 'edit'])->name('client.tasks.edit');
+    Route::put('/client/tasks/{task}', [App\Http\Controllers\TaskController::class, 'update'])->name('client.tasks.update');
+    Route::delete('/client/tasks/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('client.tasks.destroy');
+    Route::patch('/client/tasks/{task}/complete', [App\Http\Controllers\TaskController::class, 'complete'])->name('client.tasks.complete');
+    Route::patch('/client/tasks/{task}/pending', [App\Http\Controllers\TaskController::class, 'pending'])->name('client.tasks.pending');
+});

@@ -2,16 +2,21 @@
 
 namespace App\Services;
 
-use App\Repositories\Contracts\TaskRepositoryInterface;
-
+use App\Repositories\Interfaces\TaskRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 class TaskService
 {
-
+    /**
+     * @var TaskRepositoryInterface
+     */
     protected $taskRepository;
 
-
+    /**
+     * TaskService constructor.
+     *
+     * @param TaskRepositoryInterface $taskRepository
+     */
     public function __construct(TaskRepositoryInterface $taskRepository)
     {
         $this->taskRepository = $taskRepository;
@@ -84,6 +89,11 @@ class TaskService
             'budget' => $data['budget'] ?? $task->budget,
             'reference_number' => $data['reference_number'] ?? $task->reference_number
         ];
+
+        // Si le statut est fourni dans les données, le mettre à jour
+        if (isset($data['status'])) {
+            $taskData['status'] = $data['status'];
+        }
 
         return $this->taskRepository->updateTask($taskId, $taskData);
     }

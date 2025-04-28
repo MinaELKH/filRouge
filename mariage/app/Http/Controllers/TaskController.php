@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-//use App\Http\Requests\TaskRequest;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-
+    /**
+     * @var TaskService
+     */
     protected $taskService;
 
     /**
      * TaskController constructor.
      *
-     * @param TaskServiceInterface $taskService
+     * @param TaskService $taskService
      */
-    public function __construct(TaskServiceInterface $taskService)
+    public function __construct(TaskService $taskService)
     {
         $this->taskService = $taskService;
         $this->middleware('auth');
@@ -46,12 +47,20 @@ class TaskController extends Controller
     /**
      * Enregistre une nouvelle tâche.
      *
-     * @param TaskRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TaskRequest $request)
+    public function store(Request $request)
     {
-        $this->taskService->createTask($request->validated());
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category' => 'nullable|string|max:255',
+            'budget' => 'nullable|string|max:255',
+            'reference_number' => 'nullable|string|max:255',
+        ]);
+
+        $this->taskService->createTask($validatedData);
 
         return redirect()->route('client.tasks')
             ->with('success', 'Tâche ajoutée avec succès');
@@ -72,13 +81,22 @@ class TaskController extends Controller
     /**
      * Met à jour une tâche existante.
      *
-     * @param TaskRequest $request
+     * @param Request $request
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(TaskRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $this->taskService->updateTask($id, $request->validated());
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category' => 'nullable|string|max:255',
+            'budget' => 'nullable|string|max:255',
+            'reference_number' => 'nullable|string|max:255',
+            'status' => 'nullable|in:pending,completed',
+        ]);
+
+        $this->taskService->updateTask($id, $validatedData);
 
         return redirect()->route('client.tasks')
             ->with('success', 'Tâche mise à jour avec succès');
