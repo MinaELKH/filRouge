@@ -24,7 +24,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Statut Devis</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Montant</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Paiement</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Devis</th>
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -89,7 +89,7 @@
                                     @endif
                                 </td>
 
-                                <!-- Actions -->
+                                <!-- devis -->
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
                                         @if ($reservation->devis)

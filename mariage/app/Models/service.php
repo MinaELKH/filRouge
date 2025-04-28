@@ -48,6 +48,14 @@ class Service extends Model
     {
         return $this->hasMany(Reservation::class);  // Une relation one-to-many
     }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'service_id', 'user_id')->withTimestamps();
+    }
 }
 

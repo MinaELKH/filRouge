@@ -79,6 +79,17 @@ class User extends Authenticatable
     {
         return $this->role === 'client';
     }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 
-
+    public function favoritedServices()
+    {
+        return $this->belongsToMany(Service::class, 'favorites', 'user_id', 'service_id')->withTimestamps();
+    }
+    public function isFavorite($serviceId)
+    {
+        return $this->favorites()->where('service_id', $serviceId)->exists();
+    }
 }

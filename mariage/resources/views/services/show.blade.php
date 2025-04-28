@@ -195,10 +195,76 @@
                     </button>
 
                     <!-- Actions favorites -->
-                    <button class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center">
-                        <i class="far fa-heart mr-2"></i>
-                        <span>Ajouter aux favoris</span>
+
+                    <button class="toggle-favorite w-full bg-white border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center {{ auth()->check() && auth()->user()->isFavorite($service->id) ? 'text-wedding-pink border-wedding-pink' : 'text-gray-700 border-gray-300' }}"
+                            data-service-id="{{ $service->id }}">
+                        <i class="{{ auth()->check() && auth()->user()->isFavorite($service->id) ? 'fas' : 'far' }} fa-heart mr-2"></i>
+                        <span>{{ auth()->check() && auth()->user()->isFavorite($service->id) ? 'Retirer des favoris' : 'Ajouter aux favoris' }}</span>
                     </button>
+                    <!-- Script pour la fonctionnalité favoris -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const favButtons = document.querySelectorAll('.toggle-favorite');
+
+                            favButtons.forEach(btn => {
+                                btn.addEventListener('click', function(e) {
+                                    e.preventDefault();
+                                    const serviceId = this.getAttribute('data-service-id');
+                                    const isFavorite = this.classList.contains('text-wedding-pink');
+                                    const buttonText = this.querySelector('span');
+                                    const icon = this.querySelector('i');
+
+                                    const method = isFavorite ? 'DELETE' : 'POST';
+                                    const url = `/client/favorites/${serviceId}`;
+
+                                    fetch(url, {
+                                        method: method,
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                // Mettre à jour l'icône
+                                                icon.classList.toggle('far');
+                                                icon.classList.toggle('fas');
+
+                                                // Mettre à jour le style et le texte du bouton
+                                                if (method === 'POST') {
+                                                    this.classList.add('text-wedding-pink', 'border-wedding-pink');
+                                                    this.classList.remove('text-gray-700', 'border-gray-300');
+                                                    buttonText.textContent = 'Retirer des favoris';
+                                                } else {
+                                                    this.classList.add('text-gray-700', 'border-gray-300');
+                                                    this.classList.remove('text-wedding-pink', 'border-wedding-pink');
+                                                    buttonText.textContent = 'Ajouter aux favoris';
+                                                }
+                                            }
+                                        })
+                                        .catch(error => console.error('Erreur:', error));
+                                });
+                            });
+                        });
+                    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <!-- Très sollicité à Paris -->
                     <div class="mt-4 text-sm text-gray-600">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\EntrepriseController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FrontHomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReservationController;
@@ -224,4 +225,14 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::delete('/client/tasks/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('client.tasks.destroy');
     Route::patch('/client/tasks/{task}/complete', [App\Http\Controllers\TaskController::class, 'complete'])->name('client.tasks.complete');
     Route::patch('/client/tasks/{task}/pending', [App\Http\Controllers\TaskController::class, 'pending'])->name('client.tasks.pending');
+});
+
+
+// favorite
+// Dans routes/web.php
+Route::middleware(['auth', 'role:client'])->group(function () {
+    // Routes pour les favoris
+    Route::get('/client/favorites', [FavoriteController::class, 'index'])->name('client.favorites');
+    Route::post('/client/favorites/{service}', [FavoriteController::class, 'store'])->name('client.favorites.store');
+    Route::delete('/client/favorites/{service}', [FavoriteController::class, 'destroy'])->name('client.favorites.destroy');
 });
