@@ -7,6 +7,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FrontHomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -237,3 +238,10 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::delete('/client/favorites/{service}', [FavoriteController::class, 'destroy'])->name('client.favorites.destroy');
 });
 
+// reviews
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+});
