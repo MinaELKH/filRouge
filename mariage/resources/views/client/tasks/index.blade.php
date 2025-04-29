@@ -305,6 +305,41 @@
                     noTasksMessage.remove();
                 }
             }
+
+
+            // Gestion du modal pour ajouter une tâche
+            const addTaskBtn = document.getElementById('addTaskBtn');
+            const taskModal = document.getElementById('taskModal');
+
+            if (addTaskBtn && taskModal) {
+                // Ouvrir le modal lorsqu'on clique sur le bouton "Ajouter une tâche"
+                addTaskBtn.addEventListener('click', function() {
+                    taskModal.classList.remove('hidden');
+                });
+
+                // Fermer le modal lorsqu'on clique en dehors du contenu du modal
+                taskModal.addEventListener('click', function(event) {
+                    if (event.target === taskModal) {
+                        taskModal.classList.add('hidden');
+                    }
+                });
+
+                // Ajouter un bouton de fermeture dans le modal (si ce n'est pas déjà fait)
+                const closeButtons = taskModal.querySelectorAll('.close-modal');
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        taskModal.classList.add('hidden');
+                    });
+                });
+            }
+
+// Ajoutez également cette fonction pour fermer le modal avec la touche Escape
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && taskModal && !taskModal.classList.contains('hidden')) {
+                    taskModal.classList.add('hidden');
+                }
+            });
+
         });
     </script>
 @endsection
