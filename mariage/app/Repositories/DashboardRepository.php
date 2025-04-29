@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Contracts\DashboardRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class DashboardRepository implements DashboardRepositoryInterface
@@ -11,10 +12,11 @@ class DashboardRepository implements DashboardRepositoryInterface
         return DB::table('services as s')
             ->join('categories as c', 's.category_id', '=', 'c.id')
             ->where('s.user_id', $userId)
-            ->select('c.name as categorie', DB::raw('count(*) as nbService'))
+            ->select('c.name as categorie', DB::raw('COUNT(s.id) as nbService'))
             ->groupBy('c.name')
             ->get();
     }
+
 
     public function countReservationsByStatus($userId)
     {

@@ -10,7 +10,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -244,4 +244,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+});
+
+
+
+
+
+Route::middleware(['auth', 'role:prestataire'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('prestataire.dashboard');
 });

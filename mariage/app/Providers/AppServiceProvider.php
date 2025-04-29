@@ -7,6 +7,7 @@ use App\Repositories\CommentRepository;
 
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\DashboardRepositoryInterface;
 use App\Repositories\Contracts\DevisItemRepositoryInterface;
 use App\Repositories\Contracts\DevisRepositoryInterface;
 use App\Repositories\Contracts\EntrepriseRepositoryInterface;
@@ -16,7 +17,6 @@ use App\Repositories\Contracts\ServiceRepositoryInterface;
 use App\Repositories\Contracts\TaskRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\DashboardRepository;
-use App\Repositories\DashboardRepositoryInterface;
 use App\Repositories\DevisItemRepository;
 use App\Repositories\DevisRepository;
 use App\Repositories\EntrepriseRepository;

@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\DashboardRepositoryInterface;
+use App\Repositories\Contracts\DashboardRepositoryInterface;
+
 
 class DashboardService
 {
