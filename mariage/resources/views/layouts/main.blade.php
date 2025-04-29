@@ -220,13 +220,8 @@
             <nav class="flex border-t border-gray-200 overflow-x-auto scrollbar-hide">
                 <ul class="flex space-x-1 -mb-px py-1 whitespace-nowrap">
                     <li>
-                        <a href="{{ route('client.dashboard') }}" class="inline-block px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
+                        <a href="{{ route('home') }}" class="inline-block px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
                             <i class="fas fa-home mr-1 sm:mr-2"></i><span>Accueil</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('client.profile') }}" class="inline-block px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium {{ request()->routeIs('client.profile') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
-                            <i class="fas fa-user-circle mr-1 sm:mr-2"></i><span class="hidden xs:inline">Mes informations</span><span class="inline xs:hidden">Profil</span>
                         </a>
                     </li>
                     <li>

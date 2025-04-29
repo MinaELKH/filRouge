@@ -67,7 +67,7 @@
                         @csrf
                         <a href="#" onclick="document.getElementById('logoutForm').submit();" class="text-sm font-medium text-gray-600 hover:text-wedding-pink">
                             <i class="fas fa-sign-out-alt mr-1"></i>
-                            Déconnexion
+
                         </a>
                     </form>
                 @endguest
