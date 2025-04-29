@@ -253,3 +253,20 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:prestataire'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('prestataire.dashboard');
 });
+
+
+
+// Routes pour le budget
+Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
+    Route::get('/budget', [App\Http\Controllers\BudgetController::class, 'index'])->name('budget');
+    Route::post('/budget/update', [App\Http\Controllers\BudgetController::class, 'updateBudget'])->name('budget.update');
+});
+
+
+// Routes pour le profil client
+Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
+    Route::get('/profile', [App\Http\Controllers\ClientProfileController::class, 'edit'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\ClientProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/picture', [App\Http\Controllers\ClientProfileController::class, 'updateProfilePicture'])->name('profile.picture');
+    Route::get('/dashboard', [App\Http\Controllers\ClientProfileController::class, 'dashboard'])->name('dashboard');
+});

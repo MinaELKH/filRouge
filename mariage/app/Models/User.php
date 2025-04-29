@@ -97,4 +97,52 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+
+
+    public function profilClient()
+    {
+        return $this->hasOne(ProfilClient::class);
+    }
+
+    /**
+     * Get the user's budget from profile.
+     *
+     * @return float|null
+     */
+    public function getBudgetAttribute()
+    {
+        return $this->profilClient ? $this->profilClient->budget : null;
+    }
+
+    /**
+     * Get the user's remaining budget from profile.
+     *
+     * @return float
+     */
+    public function getRemainingBudgetAttribute()
+    {
+        return $this->profilClient ? $this->profilClient->remaining_budget : 0;
+    }
+
+    /**
+     * Get the user's budget spent from profile.
+     *
+     * @return float|null
+     */
+    public function getBudgetSpentAttribute()
+    {
+        return $this->profilClient ? $this->profilClient->budget_spent : null;
+    }
+
+    /**
+     * Get the user's budget spent percentage from profile.
+     *
+     * @return float
+     */
+    public function getBudgetSpentPercentageAttribute()
+    {
+        return $this->profilClient ? $this->profilClient->budget_spent_percentage : 0;
+    }
+
 }
