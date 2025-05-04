@@ -22,10 +22,50 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = $this->serviceService->getAllServices();
-        return view('services.index', compact('services'));
+        $data = $this->serviceService->getAllServices();
+        $services = $data['services'];
+        $categories = $data['categories'];
+        $villes = $data['villes'];
+        // dd($villes) ;
+        // Retourner la vue avec les résultats
+        return view('pages.home', compact('services', 'categories', 'villes'));
+
+
     }
 
+    /**
+     * @param  $category
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function getServicesByCategory($id)
+    {
+        $data = $this->serviceService->getAllServices();
+        $categories = $data['categories'];
+        $villes = $data['villes'];
+        $services = $this->serviceService->getServiceByCategory($id) ;
+        return view('services.serviceByCategory', compact('services', 'categories', 'villes'));
+    }
+    public function getServicesByVille($id)
+    {
+        $services = $this->serviceService->getServiceByVille($id) ;
+        return view('services.serviceByCategory', compact('services'));
+    }
+
+    public function search(Request $request)
+    {
+        // Récupérer les paramètres de recherche
+        $categoryId = $request->input('category_id');
+        $villeId = $request->input('ville_id');
+       // dd("hello");
+        // Utiliser le se$data)rvice pour effectuer la recherche
+        $data = $this->serviceService->searchServices($categoryId, $villeId);
+        $services = $data['services'];
+        $categories = $data['categories'];
+        $villes = $data['villes'];
+
+        return view('services.serviceByCategory', compact('services', 'categories', 'villes'));
+    }
 
     /**
      * Afficher un service spécifique.
@@ -39,21 +79,7 @@ class ServiceController extends Controller
         return view('services.show', compact('service'));
     }
 
-    /**
-     * @param  $category
-     * @return \Illuminate\Http\JsonResponse
-     */
 
-    public function getServicesByCategory($id)
-    {
-        $services = $this->serviceService->getServiceByCategory($id) ;
-        return view('services.serviceByCategory', compact('services'));
-    }
-    public function getServicesByVille($id)
-    {
-        $services = $this->serviceService->getServiceByVille($id) ;
-        return view('services.serviceByCategory', compact('services'));
-    }
     public function store(Request $request)
     {
         $this->authorize('create', Service::class);
@@ -68,7 +94,7 @@ class ServiceController extends Controller
             'ville_id'    => 'required|exists:villes,id',
         ]);
 
-        // Upload cover image
+
         if ($request->hasFile('cover_image')) {
             $coverImageName = time() . '_' . $request->file('cover_image')->getClientOriginalName();
             $request->file('cover_image')->move(public_path('images/services'), $coverImageName);
@@ -76,7 +102,7 @@ class ServiceController extends Controller
             $coverImageName = null;
         }
 
-        // Upload gallery images
+
         $gallery = [];
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $image) {
@@ -98,8 +124,10 @@ class ServiceController extends Controller
             'user_id'      => auth()->id(),
             'status'       => 'pending',
         ]);
+           //dd($service);
+     //   return response()->json($service, 201);
+        return redirect()->route('prestataire.services')->with('success', 'Service ajouté avec succès !');
 
-        return response()->json($service, 201);
     }
 
 

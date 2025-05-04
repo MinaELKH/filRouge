@@ -105,6 +105,7 @@ class User extends Authenticatable
         return $this->hasOne(ProfilClient::class);
     }
 
+
     /**
      * Get the user's budget from profile.
      *

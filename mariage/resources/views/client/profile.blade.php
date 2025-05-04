@@ -30,97 +30,10 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-sm p-5">
-                <div class="flex flex-col">
-                    <h3 class="text-gray-500 text-sm font-medium">Restant</h3>
-                    <div class="text-2xl font-bold {{ $budgetRemaining > 0 ? 'text-green-600' : 'text-red-500' }}">
-                        {{ number_format($budgetRemaining ?? 0, 2, ',', ' ') }} €
-                    </div>
-                </div>
-            </div>
+
         </div>
 
-        <!-- Tableau des dépenses par service -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="text-lg font-semibold text-gray-800">Dépenses par service</h2>
-            </div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Service
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Montant
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Pourcentage du budget
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse($serviceExpenses as $expense)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $expense->service_name }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ number_format($expense->total_spent, 2, ',', ' ') }} €</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($profil->budget > 0)
-                                    <div class="flex items-center">
-                                        <div class="text-sm text-gray-900 mr-2">
-                                            {{ number_format(($expense->total_spent / $profil->budget) * 100, 1) }}%
-                                        </div>
-                                        <div class="w-24 bg-gray-200 rounded-full h-2">
-                                            <div class="bg-wedding-pink h-2 rounded-full" style="width: {{ min(100, ($expense->total_spent / $profil->budget) * 100) }}%"></div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="text-sm text-gray-500">Aucun budget défini</div>
-                                @endif
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">
-                                Aucune dépense enregistrée
-                            </td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                    @if(count($serviceExpenses) > 0)
-                        <tfoot class="bg-gray-50">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap font-medium">
-                                Total
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap font-medium">
-                                {{ number_format($totalSpent, 2, ',', ' ') }} €
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($profil->budget > 0)
-                                    <div class="flex items-center">
-                                        <div class="text-sm font-medium text-gray-900 mr-2">
-                                            {{ number_format(($totalSpent / $profil->budget) * 100, 1) }}%
-                                        </div>
-                                        <div class="w-24 bg-gray-200 rounded-full h-2">
-                                            <div class="{{ ($totalSpent > $profil->budget) ? 'bg-red-500' : 'bg-wedding-pink' }} h-2 rounded-full"
-                                                 style="width: {{ min(100, ($totalSpent / $profil->budget) * 100) }}%"></div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </td>
-                        </tr>
-                        </tfoot>
-                    @endif
-                </table>
-            </div>
-        </div>
     </div>
 
     <!-- Modal pour modifier le budget -->

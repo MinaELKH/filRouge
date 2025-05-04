@@ -91,43 +91,9 @@ class ClientProfileController extends Controller
         $user = Auth::user();
         $profilClient = $user->profilClient;
 
-        // Récupérer les statistiques pour le dashboard
-        $totalTasks = $user->tasks()->count();
-        $completedTasks = $user->tasks()->where('status', 'completed')->count();
-        $pendingTasks = $totalTasks - $completedTasks;
-
-        $daysToEvent = null;
-        if ($profilClient && $profilClient->date_event) {
-            $daysToEvent = now()->diffInDays($profilClient->date_event, false);
-        }
-
-        $recentMessages = $user->receivedMessages()
-            ->with('sender')
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
-
-        $favoriteProviders = $user->favorites()
-            ->with('provider')
-            ->take(4)
-            ->get();
-
-        $upcomingReservations = $user->reservations()
-            ->with('provider')
-            ->where('date', '>=', now())
-            ->orderBy('date')
-            ->take(3)
-            ->get();
-
         return view('client.dashboard', compact(
             'profilClient',
-            'totalTasks',
-            'completedTasks',
-            'pendingTasks',
-            'daysToEvent',
-            'recentMessages',
-            'favoriteProviders',
-            'upcomingReservations'
+
         ));
     }
 }

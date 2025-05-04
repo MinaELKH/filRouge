@@ -23,7 +23,22 @@ class ServiceService
 
     public function getAllServices()
     {
-        return $this->serviceRepository->getAll();
+        $categories = $this->categoryService->getAll();
+        $villes = $this->villeService->getAll();
+        $services = $this->serviceRepository->getAll();
+        $data = ['categories' => $categories , 'villes' => $villes , 'services' => $services ];
+        return $data;
+    }
+
+
+    public function getAllCategoriesVilles()
+    {
+        $categories = $this->categoryService->getAll();
+        $villes = $this->villeService->getAll();
+        $services = $this->serviceRepository->getAll();
+        $data = [  'categories' => $categories , 'villes' => $villes , 'services' => $services ];
+
+        return $data;
     }
 
     public function getServiceById($id)
@@ -96,6 +111,16 @@ class ServiceService
         return $services;
     }
 
+    public function searchServices($categoryId = null, $villeId = null)
+    {
+
+        // Récupération des données pour les filtres de la page via les services appropriés
+        $categories = $this->categoryService->getAll();
+        $villes = $this->villeService->getAll();
+        $services = $this->serviceRepository->searchServices($categoryId, $villeId);
+        $data = [  'categories' => $categories , 'villes' => $villes , 'services' => $services ];
+        return $data ;
+    }
 
 
 }

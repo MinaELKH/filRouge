@@ -104,7 +104,7 @@
             </div>
         </div>
 
-        <div class="container mx-auto px-4 py-6 sm:py-8 md:px-8 lg:px-16 xl:px-32">
+        <div class="container mx-auto px-4 py-6 sm:py-8 md:px-8 ">
             @if(session('success'))
                 <div class="bg-green-50 border-l-4 border-green-500 p-3 sm:p-4 mb-6 rounded-r-lg">
                     <div class="flex">
@@ -222,6 +222,12 @@
                     <li>
                         <a href="{{ route('home') }}" class="inline-block px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
                             <i class="fas fa-home mr-1 sm:mr-2"></i><span>Accueil</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('client.budget') }}" class="inline-block px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium {{ request()->routeIs('client.budget') ? 'text-wedding-pink border-b-2 border-wedding-pink' : 'text-gray-600 hover:text-wedding-pink hover:border-b-2 hover:border-wedding-pink' }}">
+                            <i class="fas fa-money-bill-wave mr-1 sm:mr-2"></i><span>Budget</span>
                         </a>
                     </li>
                     <li>

@@ -89,17 +89,25 @@
                 </p>
 
                 <div class="flex w-full max-w-md border border-gray-300 rounded-md overflow-hidden">
-                    <div class="relative flex-grow">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input
-                            type="text"
-                            placeholder="Nom ou catégorie de prestataire"
-                            class="w-full pl-10 py-2 border-0 focus:outline-none focus:ring-0"
-                        >
-                    </div>
-                    <button class="bg-wedding-pink hover:bg-pink-600 text-white px-6 py-2 transition-colors">
-                        Rechercher
-                    </button>
+                    <form action="{{ route('services.search') }}" method="GET" class="flex w-full">
+                        <div class="relative flex-grow flex">
+                            <select name="category_id" class="w-1/2 pl-3 py-2 border-0 border-r border-gray-300 focus:outline-none focus:ring-0">
+                                <option value="">Catégorie</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            <select name="ville_id" class="w-1/2 pl-3 py-2 border-0 focus:outline-none focus:ring-0">
+                                <option value="">Ville</option>
+                                @foreach($villes as $ville)
+                                    <option value="{{ $ville->id }}">{{ $ville->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="bg-wedding-pink hover:bg-pink-600 text-white px-6 py-2 transition-colors">
+                            Rechercher
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -114,6 +122,15 @@
     </div>
 </section>
 
+
+<!-- Contenu principal -->
+<main class="flex-grow bg-white">
+    <div class="container mx-auto px-4 py-8">
+        @yield('content')
+    </div>
+</main>
+
+<!-- Footer -->
 <!-- Section catégories -->
 <section class="bg-gray-50 py-12">
     <div class="container mx-auto px-4">
@@ -152,14 +169,6 @@
     </div>
 </section>
 
-<!-- Contenu principal -->
-<main class="flex-grow bg-white">
-    <div class="container mx-auto px-4 py-8">
-        @yield('content')
-    </div>
-</main>
-
-<!-- Footer -->
 <footer class="bg-wedding-dark text-white py-10 mt-auto">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

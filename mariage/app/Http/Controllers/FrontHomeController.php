@@ -15,12 +15,15 @@ class FrontHomeController
         $this->serviceService = $serviceService;
     }
     public function index(){
-        $services = $this->serviceService->getAllServices();
-     //   $services = 1 ;
-        $categories =$this->categoryService->getAll();
-      //  $categories = Category::withCount('services')->get();
 
-        return view('pages.home', compact('services','categories'));
+        $data = $this->serviceService->getAllServices();
+        $services = $data['services'];
+        $categories = $data['categories'];
+        $villes = $data['villes'];
+       // dd($villes) ;
+        // Retourner la vue avec les résultats
+        return view('pages.home', compact('services', 'categories', 'villes'));
+
     }
 
 }

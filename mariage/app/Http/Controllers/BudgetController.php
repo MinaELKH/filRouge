@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ProfilClient;
 use App\Models\Reservation;
 use App\Models\Service;
+use App\Models\Devis;
+use App\Models\DevisItem;
 use Illuminate\Support\Facades\DB;
 
 class BudgetController extends Controller
@@ -27,15 +29,21 @@ class BudgetController extends Controller
             $profil = ProfilClient::create(['user_id' => $user->id]);
         }
 
-        // Récupérer les dépenses par service
-        $serviceExpenses = Reservation::select(
-            'services.id as service_id',
-            'services.name as service_name',
-            DB::raw('SUM(reservations.amount) as total_spent')
-        )
-            ->join('services', 'reservations.service_id', '=', 'services.id')
-            ->where('reservations.user_id', $user->id)
-            ->groupBy('services.id', 'services.name')
+        // Récupérer les dépenses par service en utilisant la bonne requête
+        $serviceExpenses = DB::table('devis_items as dt')
+            ->join('devis as d', 'd.id', '=', 'dt.devis_id')
+            ->join('reservations as r', 'd.reservation_id', '=', 'r.id')
+            ->join('services as s', 'r.service_id', '=', 's.id')
+            ->where('r.user_id', $user->id)
+            ->where('d.status', 'accepted')
+            ->select(
+                's.id as service_id',
+                's.title as service_name',
+                DB::raw('SUM(dt.quantity * dt.unit_price) as total_spent'),
+                'dt.devis_id',
+                'r.id as reservation_id'
+            )
+            ->groupBy('dt.devis_id', 'd.status', 'r.id', 's.id', 's.title')
             ->orderBy('total_spent', 'desc')
             ->get();
 

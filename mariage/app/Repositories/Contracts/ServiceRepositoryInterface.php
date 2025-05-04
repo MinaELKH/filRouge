@@ -22,4 +22,6 @@ interface ServiceRepositoryInterface
     public function findById($id) ;
     public function save(Service $service) ;
 
+    public function searchServices(mixed $categoryId, mixed $villeId);
+
 }

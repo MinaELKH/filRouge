@@ -13,8 +13,9 @@ class ServiceRepository implements ServiceRepositoryInterface
         return Service::with(['category', 'user', 'ville'])->get();
     }
 
-    public function getById(int $id)
+    public function getById(mixed $id)
     {
+        $id = (int) $id;
         return Service::with(['category', 'user', 'ville'])->findOrFail($id);
     }
 
@@ -89,4 +90,25 @@ class ServiceRepository implements ServiceRepositoryInterface
         // Passe la variable $services à la vue
         return $services;
     }
+
+    public function searchServices(mixed $categoryId, mixed $villeId)
+    {
+        $query = Service::with(['user', 'category', 'ville']);
+
+        // Filtrer par catégorie si présente
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+
+        // Filtrer par ville si présente
+        if ($villeId) {
+            $query->where('ville_id', $villeId);
+        }
+
+        // Retourner les résultats paginés
+        return $query->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+    }
+
 }
