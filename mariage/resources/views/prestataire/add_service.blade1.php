@@ -19,7 +19,7 @@
         </div>
 
         <div>
-            <label for="price" class="block text-sm font-medium text-gray-700">Prix (€)</label>
+            <label for="price" class="block text-sm font-medium text-gray-700">Prix (DH)</label>
             <input type="number" name="price" id="price" value="{{ old('price') }}"
                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm" required>
         </div>

@@ -68,7 +68,7 @@
                                 <!-- Montant -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($reservation->devis)
-                                        <div class="text-sm text-gray-900 font-medium">{{ number_format($reservation->devis->getTotalAmountAttribute(), 2, ',', ' ') }} €</div>
+                                        <div class="text-sm text-gray-900 font-medium">{{ number_format($reservation->devis->getTotalAmountAttribute(), 2, ',', ' ') }} DH</div>
                                     @else
                                         <span class="text-sm text-gray-500">-</span>
                                     @endif

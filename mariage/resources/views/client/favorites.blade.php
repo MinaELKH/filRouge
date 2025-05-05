@@ -51,7 +51,7 @@
 
                     <!-- Prix -->
                     <div class="absolute bottom-48 right-3 bg-wedding-pink text-white text-sm font-bold py-1 px-3 rounded-lg">
-                        {{ number_format($service->price, 0, ',', ' ') }} €
+                        {{ number_format($service->price, 0, ',', ' ') }} DH
                     </div>
 
                     <div class="p-5">

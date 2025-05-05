@@ -320,23 +320,23 @@
                 <tr>
                     <td>{{ $item->service_name }}</td>
                     <td>{{ $item->quantity }}</td>
-                    <td>{{ number_format($item->unit_price, 2) }} €</td>
-                    <td>{{ number_format($item->quantity * $item->unit_price, 2) }} €</td>
+                    <td>{{ number_format($item->unit_price, 2) }} DH</td>
+                    <td>{{ number_format($item->quantity * $item->unit_price, 2) }} DH</td>
                 </tr>
             @endforeach
             </tbody>
             <tfoot>
             <tr>
                 <td colspan="3" style="text-align: right;">Total HT</td>
-                <td>{{ number_format($devis->total_amount / 1.2, 2) }} €</td>
+                <td>{{ number_format($devis->total_amount / 1.2, 2) }} DH</td>
             </tr>
             <tr>
                 <td colspan="3" style="text-align: right;">TVA (20%)</td>
-                <td>{{ number_format($devis->total_amount - ($devis->total_amount / 1.2), 2) }} €</td>
+                <td>{{ number_format($devis->total_amount - ($devis->total_amount / 1.2), 2) }} DH</td>
             </tr>
             <tr>
                 <td colspan="3" style="text-align: right;">Total TTC</td>
-                <td>{{ number_format($devis->total_amount, 2) }} €</td>
+                <td>{{ number_format($devis->total_amount, 2) }} DH</td>
             </tr>
             </tfoot>
         </table>
@@ -346,7 +346,7 @@
     <div class="total-section">
         <div class="total-container">
             <p class="total-label">Total TTC</p>
-            <p class="total-amount">{{ number_format($devis->total_amount, 2) }} €</p>
+            <p class="total-amount">{{ number_format($devis->total_amount, 2) }} DH</p>
         </div>
     </div>
 

@@ -241,7 +241,7 @@
                     <!-- Prix -->
                     <div class="flex items-center mb-6">
                         <i class="fas fa-euro-sign mr-2 text-gray-600"></i>
-                        <span class="text-gray-700">à partir de {{ number_format($service->price, 0, ',', ' ') }}€</span>
+                        <span class="text-gray-700">à partir de {{ number_format($service->price, 0, ',', ' ') }}DH</span>
                     </div>
 
                     <!-- Capacité -->

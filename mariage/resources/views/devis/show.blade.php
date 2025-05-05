@@ -128,23 +128,23 @@
                             <tr class="border-b border-gray-100 hover:bg-gray-50">
                                 <td class="py-3 px-4 text-gray-700">{{ $item->service_name }}</td>
                                 <td class="py-3 px-4 text-center text-gray-700">{{ $item->quantity }}</td>
-                                <td class="py-3 px-4 text-right text-gray-700">{{ number_format($item->unit_price, 2) }} €</td>
-                                <td class="py-3 px-4 text-right font-medium text-gray-700">{{ number_format($item->quantity * $item->unit_price, 2) }} €</td>
+                                <td class="py-3 px-4 text-right text-gray-700">{{ number_format($item->unit_price, 2) }} DH</td>
+                                <td class="py-3 px-4 text-right font-medium text-gray-700">{{ number_format($item->quantity * $item->unit_price, 2) }} DH</td>
                             </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
                         <tr class="bg-gray-50">
                             <td colspan="3" class="py-3 px-4 text-right font-medium text-gray-600">Total HT</td>
-                            <td class="py-3 px-4 text-right font-medium text-gray-700">{{ number_format($devis->total_amount / 1.2, 2) }} €</td>
+                            <td class="py-3 px-4 text-right font-medium text-gray-700">{{ number_format($devis->total_amount / 1.2, 2) }} DH</td>
                         </tr>
                         <tr class="bg-gray-50">
                             <td colspan="3" class="py-3 px-4 text-right font-medium text-gray-600">TVA (20%)</td>
-                            <td class="py-3 px-4 text-right font-medium text-gray-700">{{ number_format($devis->total_amount - ($devis->total_amount / 1.2), 2) }} €</td>
+                            <td class="py-3 px-4 text-right font-medium text-gray-700">{{ number_format($devis->total_amount - ($devis->total_amount / 1.2), 2) }} DH</td>
                         </tr>
                         <tr class="bg-wedding-pink bg-opacity-5">
                             <td colspan="3" class="py-3 px-4 text-right font-semibold text-wedding-pink">Total TTC</td>
-                            <td class="py-3 px-4 text-right font-bold text-wedding-pink">{{ number_format($devis->total_amount, 2) }} €</td>
+                            <td class="py-3 px-4 text-right font-bold text-wedding-pink">{{ number_format($devis->total_amount, 2) }} DH</td>
                         </tr>
                         </tfoot>
                     </table>

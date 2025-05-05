@@ -19,14 +19,14 @@
             <div class="bg-white rounded-lg shadow-sm p-5">
                 <div class="flex flex-col">
                     <h3 class="text-gray-500 text-sm font-medium">Budget total</h3>
-                    <div class="text-2xl font-bold text-wedding-dark">{{ number_format($profil->budget ?? 0, 2, ',', ' ') }} €</div>
+                    <div class="text-2xl font-bold text-wedding-dark">{{ number_format($profil->budget ?? 0, 2, ',', ' ') }} DH</div>
                 </div>
             </div>
 
             <div class="bg-white rounded-lg shadow-sm p-5">
                 <div class="flex flex-col">
                     <h3 class="text-gray-500 text-sm font-medium">Dépensé</h3>
-                    <div class="text-2xl font-bold text-wedding-dark">{{ number_format($totalSpent ?? 0, 2, ',', ' ') }} €</div>
+                    <div class="text-2xl font-bold text-wedding-dark">{{ number_format($totalSpent ?? 0, 2, ',', ' ') }} DH</div>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                 <div class="flex flex-col">
                     <h3 class="text-gray-500 text-sm font-medium">Restant</h3>
                     <div class="text-2xl font-bold {{ $budgetRemaining > 0 ? 'text-green-600' : 'text-red-500' }}">
-                        {{ number_format($budgetRemaining ?? 0, 2, ',', ' ') }} €
+                        {{ number_format($budgetRemaining ?? 0, 2, ',', ' ') }} DH
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                                 <div class="text-sm font-medium text-gray-900">{{ $expense->service_name }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ number_format($expense->total_spent, 2, ',', ' ') }} €</div>
+                                <div class="text-sm text-gray-900">{{ number_format($expense->total_spent, 2, ',', ' ') }} DH</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($profil->budget > 0)
@@ -108,7 +108,7 @@
                                 Total
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap font-medium">
-                                {{ number_format($totalSpent, 2, ',', ' ') }} €
+                                {{ number_format($totalSpent, 2, ',', ' ') }} DH
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($profil->budget > 0)
@@ -144,7 +144,7 @@
                 @csrf
                 <div class="space-y-4">
                     <div>
-                        <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">Budget total (€)</label>
+                        <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">Budget total (DH)</label>
                         <input type="number" name="budget" id="budget" min="0" step="100" value="{{ $profil->budget ?? 0 }}"
                                class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-wedding-pink focus:border-transparent">
                         <p class="mt-1 text-xs text-gray-500">Entrez le montant total que vous souhaitez consacrer à votre mariage.</p>

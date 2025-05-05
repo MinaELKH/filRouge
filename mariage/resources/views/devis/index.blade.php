@@ -19,7 +19,7 @@
                 <tr class="border-t text-sm">
                     <td class="py-2 px-4">{{ $devis->id }}</td>
                     <td class="py-2 px-4">{{ $devis->reservation_id }}</td>
-                    <td class="py-2 px-4">{{ number_format($devis->total_amount, 2) }} €</td>
+                    <td class="py-2 px-4">{{ number_format($devis->total_amount, 2) }} DH</td>
                     <td class="py-2 px-4">
                         <span class="px-2 py-1 rounded-full text-white text-xs
                             {{ $devis->status === 'approved' ? 'bg-green-500' :

@@ -43,7 +43,7 @@
                         </p>
                     </div>
                     <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium">À partir de {{ number_format($service->price, 0, ',', ' ') }}€</div>
+                        <div class="text-sm font-medium">À partir de {{ number_format($service->price, 0, ',', ' ') }}DH</div>
                         <a href="{{ route('contact.provider', $service->id) }}" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md text-sm">
                             Nous contacter
                         </a>

@@ -42,10 +42,10 @@
                     </div>
                     <div class="mt-4 space-y-2">
                         @foreach ([
-                            'Moins de 500€',
-                            '500€ - 1.000€',
-                            '1.000€ - 1.500€',
-                            'Plus de 1.500€'
+                            'Moins de 500DH',
+                            '500DH - 1.000DH',
+                            '1.000DH - 1.500DH',
+                            'Plus de 1.500DH'
                         ] as $i => $prix)
                             <div class="flex items-center">
                                 <input id="price-{{ $i }}" type="checkbox" class="h-4 w-4 text-coral-500 rounded border-gray-300 focus:ring-coral-500">
@@ -104,7 +104,7 @@
                                 </p>
                             </div>
                             <div class="flex justify-between items-center">
-                                <div class="text-sm font-medium">À partir de {{ number_format($service->price, 0, ',', ' ') }}€</div>
+                                <div class="text-sm font-medium">À partir de {{ number_format($service->price, 0, ',', ' ') }}DH</div>
                                 <button
                                     class="openModalBtn bg-gradient-to-r from-wedding-pink to-wedding-pink text-white py-3 rounded-lg font-medium hover:from-from-wedding-pink hover:to-rose-500 transition-colors  py-2 px-4 rounded z-10"
                                     data-receiver-id="{{ $service->user_id }}"

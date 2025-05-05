@@ -46,7 +46,7 @@
                         <!-- Prix en badge sur l'image -->
                         <div class="absolute bottom-3 right-3">
                 <span class="bg-[#f76c6f] text-white font-bold py-1 px-3 rounded-lg">
-                    {{ $service->price }} €
+                    {{ $service->price }} DH
                 </span>
                         </div>
                     </div>
